@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include "Vexample.h"
+#include "Vlight.h"
 
 #include "verilated.h"
 #include "verilated_vcd_c.h"
@@ -9,21 +9,27 @@
 #define MAX_SIM_TIME 20
 vluint64_t sim_time = 0;
 
+void single_cycle() {
+  top->clk = 0; top->eval();
+  top->clk = 1; top->eval();
+}
+
+void reset(int n) {
+  top->rst = 1;
+  while (n -- > 0) single_cycle();
+  top->rst = 0;
+}
+
 int main(){
   Verilated::traceEverOn(true);
-  Vexample *top = new Vexample;
+  Vlight *top = new Vlight;
   VerilatedVcdC *tfp = new VerilatedVcdC;
   top->trace(tfp,10);
-  tfp->open("test.vcd");
+  tfp->open("light.vcd");
 
+  reset(10);
   while (sim_time < MAX_SIM_TIME) {
-    int a = rand() & 1;
-    int b = rand() & 1;
-    top->a = a;
-    top->b = b;
-    top->eval();
-    printf("a = %d, b = %d, f = %d\n", a, b, top->f);
-    assert(top->f == a ^ b);
+    single_cycle();
 
     tfp->dump(sim_time);
     sim_time++;
