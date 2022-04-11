@@ -1,8 +1,8 @@
 TOPNAME = top
 NXDC_FILES = constr/top.nxdc
-INC_PATH ?=
+INC_PATH ?= $(abspath ./vsrc)
 
-NVBOARD_HOME = /home/ad/ysyx-workbench/nvboard
+# NVBOARD_HOME = /home/ad/ysyx-workbench/nvboard
 
 VERILATOR = verilator
 VERILATOR_CFLAGS += -MMD --build -cc  \
@@ -10,11 +10,13 @@ VERILATOR_CFLAGS += -MMD --build -cc  \
 
 BUILD_DIR = ./build
 OBJ_DIR = $(BUILD_DIR)/obj_dir
+OUTPUT_DIR = ./output
 BIN = $(BUILD_DIR)/$(TOPNAME)
 
 default: $(BIN)
 
 $(shell mkdir -p $(BUILD_DIR))
+$(shell mkdir -p $(OUTPUT_DIR))
 
 # constraint file
 SRC_AUTO_BIND = $(abspath $(BUILD_DIR)/auto_bind.cpp)
@@ -25,6 +27,7 @@ $(SRC_AUTO_BIND): $(NXDC_FILES)
 VSRCS = $(shell find $(abspath ./vsrc) -name "*.v")
 CSRCS = $(shell find $(abspath ./csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
 CSRCS += $(SRC_AUTO_BIND)
+TESTS = $(shell find $(abspath ./test) -name "*.cpp")
 
 # rules for NVBoard
 include $(NVBOARD_HOME)/scripts/nvboard.mk
@@ -35,7 +38,6 @@ CFLAGS += $(INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\""
 LDFLAGS += -lSDL2 -lSDL2_image
 
 $(BIN): $(VSRCS) $(CSRCS) $(NVBOARD_ARCHIVE)
-	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	@rm -rf $(OBJ_DIR)
 	$(VERILATOR) $(VERILATOR_CFLAGS) \
 		--top-module $(TOPNAME) $^ \
@@ -43,17 +45,30 @@ $(BIN): $(VSRCS) $(CSRCS) $(NVBOARD_ARCHIVE)
 		--Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
 
 all: default
+	@echo "make all"
 
-run: $(BIN)
+nvboard: $(BIN)
+	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	@$^
+
+sim: $(TESTS) $(VSRCS)
+	@for sub in $(TESTS); do	\
+		$(VERILATOR) $(VERILATOR_CFLAGS) \
+			--top-module $(mod) \
+			$$sub $(VSRCS) --Mdir $(OBJ_DIR) \
+			--exe --trace; \
+	done
+	./build/obj_dir/V$(mod)
+	gtkwave ./output/$(mod).vcd
+	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 
 clean:
 	rm -rf $(BUILD_DIR)
+	rm -rf $(OUTPUT_DIR)
 
-.PHONY: default all clean run
+.PHONY: default all clean nvboard sim
 
-
-
+include ../Makefile
 
 
 # # rules for NVBoard
@@ -78,4 +93,4 @@ clean:
 # clean:
 # 	rm -r obj_dir
 
-include ../Makefile
+# include ../Makefile
