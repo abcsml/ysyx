@@ -52,12 +52,10 @@ nvboard: $(BIN)
 	@$^
 
 sim: $(TESTS) $(VSRCS)
-	@for sub in $(TESTS); do	\
-		$(VERILATOR) $(VERILATOR_CFLAGS) \
-			--top-module $(mod) \
-			$$sub $(VSRCS) --Mdir $(OBJ_DIR) \
-			--exe --trace; \
-	done
+	$(VERILATOR) $(VERILATOR_CFLAGS) \
+		--top-module $(mod) \
+		$(abspath ./test)/$(mod).cpp $(VSRCS) --Mdir $(OBJ_DIR) \
+		--exe --trace;
 	./build/obj_dir/V$(mod)
 	gtkwave ./output/$(mod).vcd
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
@@ -69,28 +67,3 @@ clean:
 .PHONY: default all clean nvboard sim
 
 include ../Makefile
-
-
-# # rules for NVBoard
-# include $(NVBOARD_HOME)/scripts/nvboard.mk
-
-# # VSRCS = $(shell find $(abspath ./vsrc) -name "*.v")
-# # CSRCS = $(shell find $(abspath ./csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
-
-# all:
-# 	@echo "make all"
-
-# sim: vsrc/light.v csrc/main.cpp
-# #	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-# 	@echo "git commit and verilator sim"
-# 	verilator -Wall --cc vsrc/light.v --exe --build csrc/main.cpp --trace
-# 	./obj_dir/Vlight
-
-# run: $(NVBOARD_ARCHIVE)
-# 	verilator -Wall --cc vsrc/light.v --exe --build csrc/main.cpp --trace
-# 	./obj_dir/Vlight
-
-# clean:
-# 	rm -r obj_dir
-
-# include ../Makefile
