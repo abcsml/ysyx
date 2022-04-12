@@ -1,14 +1,11 @@
 #include "verilated.h"
 #include "verilated_vcd_c.h"
+#include "Vmux2.h"
 
-#include <Vmux2.h>
+VerilatedContext* contextp = NULL;
+VerilatedVcdC* tfp = NULL;
 
-#define MAX_SIM_TIME 20
-vluint64_t sim_time = 0;
-
-Vmux2* top = new Vmux2;
-VerilatedVcdC* tfp = new VerilatedVcdC;
-VerilatedContext* contextp = new VerilatedContext;
+static Vmux2* top;
 
 void step_and_dump_wave(){
   top->eval();
@@ -16,6 +13,10 @@ void step_and_dump_wave(){
   tfp->dump(contextp->time());
 }
 void sim_init(){
+  contextp = new VerilatedContext;
+  tfp = new VerilatedVcdC;
+  top = new Vmux2;
+  contextp->traceEverOn(true);
   top->trace(tfp, 0);
   tfp->open("output/mux2.vcd");
 }
@@ -26,7 +27,6 @@ void sim_exit(){
 }
 
 int main() {
-  Verilated::traceEverOn(true);
   sim_init();
 
   top->s=0; top->a=0; top->b=0;  step_and_dump_wave();   // 将s，a和b均初始化为“0”

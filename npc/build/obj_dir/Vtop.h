@@ -5,32 +5,46 @@
 // The class here is then constructed to instantiate the design.
 // See the Verilator manual for examples.
 
-#ifndef VERILATED_VMUX2_H_
-#define VERILATED_VMUX2_H_  // guard
+#ifndef VERILATED_VTOP_H_
+#define VERILATED_VTOP_H_  // guard
 
 #include "verilated_heavy.h"
 
-class Vmux2__Syms;
-class Vmux2___024root;
-class VerilatedVcdC;
-class Vmux2_VerilatedVcd;
-
+class Vtop__Syms;
+class Vtop___024root;
 
 // This class is the main interface to the Verilated model
-class Vmux2 VL_NOT_FINAL {
+class Vtop VL_NOT_FINAL {
   private:
     // Symbol table holding complete model state (owned by this class)
-    Vmux2__Syms* const vlSymsp;
+    Vtop__Syms* const vlSymsp;
 
   public:
 
     // PORTS
     // The application code writes and reads these signals to
     // propagate new values into/out from the Verilated model.
-    VL_IN8(&a,0,0);
-    VL_IN8(&b,0,0);
-    VL_IN8(&s,0,0);
-    VL_OUT8(&y,0,0);
+    VL_IN8(&clk,0,0);
+    VL_IN8(&rst,0,0);
+    VL_IN16(&sw,15,0);
+    VL_IN8(&ps2_clk,0,0);
+    VL_IN8(&ps2_data,0,0);
+    VL_OUT16(&ledr,15,0);
+    VL_OUT8(&VGA_CLK,0,0);
+    VL_OUT8(&VGA_HSYNC,0,0);
+    VL_OUT8(&VGA_VSYNC,0,0);
+    VL_OUT8(&VGA_BLANK_N,0,0);
+    VL_OUT8(&VGA_R,7,0);
+    VL_OUT8(&VGA_G,7,0);
+    VL_OUT8(&VGA_B,7,0);
+    VL_OUT8(&seg0,7,0);
+    VL_OUT8(&seg1,7,0);
+    VL_OUT8(&seg2,7,0);
+    VL_OUT8(&seg3,7,0);
+    VL_OUT8(&seg4,7,0);
+    VL_OUT8(&seg5,7,0);
+    VL_OUT8(&seg6,7,0);
+    VL_OUT8(&seg7,7,0);
 
     // CELLS
     // Public to allow access to /* verilator public */ items.
@@ -38,19 +52,19 @@ class Vmux2 VL_NOT_FINAL {
 
     // Root instance pointer to allow access to model internals,
     // including inlined /* verilator public_flat_* */ items.
-    Vmux2___024root* const rootp;
+    Vtop___024root* const rootp;
 
     // CONSTRUCTORS
     /// Construct the model; called by application code
     /// If contextp is null, then the model will use the default global context
     /// If name is "", then makes a wrapper with a
     /// single model invisible with respect to DPI scope names.
-    explicit Vmux2(VerilatedContext* contextp, const char* name = "TOP");
-    explicit Vmux2(const char* name = "TOP");
+    explicit Vtop(VerilatedContext* contextp, const char* name = "TOP");
+    explicit Vtop(const char* name = "TOP");
     /// Destroy the model; called (often implicitly) by application code
-    virtual ~Vmux2();
+    virtual ~Vtop();
   private:
-    VL_UNCOPYABLE(Vmux2);  ///< Copying not allowed
+    VL_UNCOPYABLE(Vtop);  ///< Copying not allowed
 
   public:
     // API METHODS
@@ -63,8 +77,6 @@ class Vmux2 VL_NOT_FINAL {
     void eval_end_step() {}
     /// Simulation complete, run final blocks.  Application must call on completion.
     void final();
-    /// Trace signals in the model; called by application code
-    void trace(VerilatedVcdC* tfp, int levels, int options = 0);
     /// Return current simulation context for this model.
     /// Used to get to e.g. simulation time via contextp()->time()
     VerilatedContext* contextp() const;

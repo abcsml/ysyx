@@ -48,8 +48,8 @@ all: default
 	@echo "make all"
 
 nvboard: $(BIN)
-	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	@$^
+	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 
 sim: $(TESTS) $(VSRCS)
 	$(VERILATOR) $(VERILATOR_CFLAGS) \

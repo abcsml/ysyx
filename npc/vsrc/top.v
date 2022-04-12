@@ -1,7 +1,7 @@
 module top (
     input clk,
     input rst,
-    input [7:0] sw,
+    input [15:0] sw,
     input ps2_clk,
     input ps2_data,
     output [15:0] ledr,
@@ -22,9 +22,15 @@ module top (
     output [7:0] seg7
 );
 
-light led1(
-    .clk(clk),
-    .rst(rst),
-    .ledr(ledr)
+// light led1(
+//     .clk(clk),
+//     .rst(rst),
+//     .ledr(ledr)
+// );
+
+mux4way2 m1(
+    .a(sw[9:2]),
+    .s(sw[1:0]),
+    .y(ledr[1:0])
 );
 endmodule
