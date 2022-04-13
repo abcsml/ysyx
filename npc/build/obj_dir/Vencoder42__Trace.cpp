@@ -26,6 +26,15 @@ void Vencoder42___024root__traceChgSub0(Vencoder42___024root* vlSelf, VerilatedV
         tracep->chgCData(oldp+0,(vlSelf->x),4);
         tracep->chgBit(oldp+1,(vlSelf->en));
         tracep->chgCData(oldp+2,(vlSelf->y),2);
+        tracep->chgBit(oldp+3,(((IData)((2U == (0xfU 
+                                                & (IData)(vlSelf->x)))) 
+                                & (IData)(vlSelf->en))));
+        tracep->chgBit(oldp+4,(((IData)((8U == (0xfU 
+                                                & (IData)(vlSelf->x)))) 
+                                & (IData)(vlSelf->en))));
+        tracep->chgBit(oldp+5,(((IData)((4U == (0xfU 
+                                                & (IData)(vlSelf->x)))) 
+                                & (IData)(vlSelf->en))));
     }
 }
 

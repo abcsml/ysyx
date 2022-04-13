@@ -12,32 +12,12 @@ VL_INLINE_OPT void Vencoder42___024root___combo__TOP__1(Vencoder42___024root* vl
     Vencoder42__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vencoder42___024root___combo__TOP__1\n"); );
     // Body
-    vlSelf->y = ((2U & (IData)(vlSelf->y)) | ((IData)(
-                                                      (2U 
-                                                       == 
-                                                       (0xfU 
-                                                        & (IData)(vlSelf->x)))) 
-                                              & (IData)(vlSelf->en)));
-    vlSelf->y = ((2U & (IData)(vlSelf->y)) | ((IData)(
-                                                      (8U 
-                                                       == 
-                                                       (0xfU 
-                                                        & (IData)(vlSelf->x)))) 
-                                              & (IData)(vlSelf->en)));
-    vlSelf->y = ((1U & (IData)(vlSelf->y)) | (((IData)(
-                                                       (4U 
-                                                        == 
-                                                        (0xfU 
-                                                         & (IData)(vlSelf->x)))) 
-                                               & (IData)(vlSelf->en)) 
-                                              << 1U));
-    vlSelf->y = ((1U & (IData)(vlSelf->y)) | (((IData)(
-                                                       (8U 
-                                                        == 
-                                                        (0xfU 
-                                                         & (IData)(vlSelf->x)))) 
-                                               & (IData)(vlSelf->en)) 
-                                              << 1U));
+    vlSelf->y = (((((IData)((4U == (0xfU & (IData)(vlSelf->x)))) 
+                    | (IData)((8U == (0xfU & (IData)(vlSelf->x))))) 
+                   & (IData)(vlSelf->en)) << 1U) | 
+                 (((IData)((2U == (0xfU & (IData)(vlSelf->x)))) 
+                   | (IData)((8U == (0xfU & (IData)(vlSelf->x))))) 
+                  & (IData)(vlSelf->en)));
 }
 
 void Vencoder42___024root___eval(Vencoder42___024root* vlSelf) {

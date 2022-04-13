@@ -28,6 +28,10 @@ void Vencoder42___024root__traceInitSub0(Vencoder42___024root* vlSelf, Verilated
         tracep->declBus(c+1,"encoder42 x", false,-1, 3,0);
         tracep->declBit(c+2,"encoder42 en", false,-1);
         tracep->declBus(c+3,"encoder42 y", false,-1, 1,0);
+        tracep->declBit(c+4,"encoder42 a", false,-1);
+        tracep->declBit(c+5,"encoder42 b", false,-1);
+        tracep->declBit(c+6,"encoder42 c", false,-1);
+        tracep->declBit(c+5,"encoder42 d", false,-1);
     }
 }
 
@@ -67,5 +71,14 @@ void Vencoder42___024root__traceFullSub0(Vencoder42___024root* vlSelf, Verilated
         tracep->fullCData(oldp+1,(vlSelf->x),4);
         tracep->fullBit(oldp+2,(vlSelf->en));
         tracep->fullCData(oldp+3,(vlSelf->y),2);
+        tracep->fullBit(oldp+4,(((IData)((2U == (0xfU 
+                                                 & (IData)(vlSelf->x)))) 
+                                 & (IData)(vlSelf->en))));
+        tracep->fullBit(oldp+5,(((IData)((8U == (0xfU 
+                                                 & (IData)(vlSelf->x)))) 
+                                 & (IData)(vlSelf->en))));
+        tracep->fullBit(oldp+6,(((IData)((4U == (0xfU 
+                                                 & (IData)(vlSelf->x)))) 
+                                 & (IData)(vlSelf->en))));
     }
 }
