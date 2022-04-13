@@ -28,9 +28,21 @@ module top (
 //     .ledr(ledr)
 // );
 
-mux4way2 m1(
-    .a(sw[9:2]),
-    .s(sw[1:0]),
-    .y(ledr[1:0])
-);
-endmodule
+// mux4way2 m1(
+//     .a(sw[9:2]),
+//     .s(sw[1:0]),
+//     .y(ledr[1:0])
+// );
+// endmodule
+
+encoder83p e1(
+    .x(sw(7:0))
+    .en(sw[8])
+    .y(ledr[2:0])
+    .ind(ledr[4])
+)
+
+bcd7seg b1(
+    .b({0,ledr[2:0]})
+    .h({1,seg0})
+)
