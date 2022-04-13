@@ -73,13 +73,4 @@ void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->seg5 = 0;
     vlSelf->seg6 = 0;
     vlSelf->seg7 = 0;
-    for (int __Vi0=0; __Vi0<4; ++__Vi0) {
-        vlSelf->top__DOT__m1__DOT__m0__DOT__i0__DOT__pair_list[__Vi0] = 0;
-    }
-    for (int __Vi0=0; __Vi0<4; ++__Vi0) {
-        vlSelf->top__DOT__m1__DOT__m0__DOT__i0__DOT__key_list[__Vi0] = 0;
-    }
-    for (int __Vi0=0; __Vi0<4; ++__Vi0) {
-        vlSelf->top__DOT__m1__DOT__m0__DOT__i0__DOT__data_list[__Vi0] = 0;
-    }
 }

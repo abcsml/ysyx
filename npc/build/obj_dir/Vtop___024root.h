@@ -39,11 +39,6 @@ VL_MODULE(Vtop___024root) {
     VL_IN16(sw,15,0);
     VL_OUT16(ledr,15,0);
 
-    // LOCAL SIGNALS
-    VlUnpacked<CData/*3:0*/, 4> top__DOT__m1__DOT__m0__DOT__i0__DOT__pair_list;
-    VlUnpacked<CData/*1:0*/, 4> top__DOT__m1__DOT__m0__DOT__i0__DOT__key_list;
-    VlUnpacked<CData/*1:0*/, 4> top__DOT__m1__DOT__m0__DOT__i0__DOT__data_list;
-
     // INTERNAL VARIABLES
     Vtop__Syms* vlSymsp;  // Symbol table
 

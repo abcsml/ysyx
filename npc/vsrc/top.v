@@ -36,13 +36,14 @@ module top (
 // endmodule
 
 encoder83p e1(
-    .x(sw(7:0))
-    .en(sw[8])
-    .y(ledr[2:0])
+    .x(sw[7:0]),
+    .en(sw[8]),
+    .y(ledr[2:0]),
     .ind(ledr[4])
-)
+);
 
 bcd7seg b1(
-    .b({0,ledr[2:0]})
-    .h({1,seg0})
-)
+    .b({1'b0,ledr[2:0]}),
+    .h(seg0[7:1])
+);
+endmodule
