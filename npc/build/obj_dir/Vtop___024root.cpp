@@ -33,8 +33,9 @@ VL_INLINE_OPT void Vtop___024root___combo__TOP__1(Vtop___024root* vlSelf) {
     __Vtableidx2 = (7U & (IData)(vlSelf->ledr));
     top__DOT____Vcellout__b1__h = Vtop__ConstPool__TABLE_f35510fa_0
         [__Vtableidx2];
-    vlSelf->seg0 = ((0x80U & (IData)(vlSelf->seg0)) 
-                    | (IData)(top__DOT____Vcellout__b1__h));
+    vlSelf->seg0 = ((1U & (IData)(vlSelf->seg0)) | 
+                    ((IData)(top__DOT____Vcellout__b1__h) 
+                     << 1U));
 }
 
 void Vtop___024root___eval(Vtop___024root* vlSelf) {
