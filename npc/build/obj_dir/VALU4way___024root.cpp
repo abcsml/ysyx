@@ -15,8 +15,11 @@ VL_INLINE_OPT void VALU4way___024root___combo__TOP__1(VALU4way___024root* vlSelf
     vlSelf->ALU4way__DOT__add = (0xfU & ((IData)(vlSelf->a) 
                                          + (IData)(vlSelf->b)));
     vlSelf->ALU4way__DOT____Vcellinp__a2____pinNumber2 
-        = ((8U & (IData)(vlSelf->b)) | (7U & ((IData)(1U) 
-                                              + (~ (IData)(vlSelf->b)))));
+        = ((8U & (IData)(vlSelf->b)) | (7U & ((8U & (IData)(vlSelf->b))
+                                               ? ((IData)(1U) 
+                                                  + 
+                                                  (~ (IData)(vlSelf->b)))
+                                               : (IData)(vlSelf->b))));
     if ((1U & (~ ((IData)(vlSelf->sel) >> 2U)))) {
         if ((1U & (~ ((IData)(vlSelf->sel) >> 1U)))) {
             vlSelf->cf = (1U & ((1U & (IData)(vlSelf->sel))
