@@ -22,36 +22,42 @@ void VALU4way___024root__traceInitSub0(VALU4way___024root* vlSelf, VerilatedVcd*
     if (false && tracep && c) {}  // Prevent unused
     // Body
     {
-        tracep->declBus(c+4,"a", false,-1, 3,0);
-        tracep->declBus(c+5,"b", false,-1, 3,0);
-        tracep->declBus(c+6,"sel", false,-1, 2,0);
-        tracep->declBus(c+7,"out", false,-1, 3,0);
-        tracep->declBit(c+8,"cf", false,-1);
-        tracep->declBit(c+9,"of", false,-1);
-        tracep->declBit(c+10,"zf", false,-1);
-        tracep->declBus(c+4,"ALU4way a", false,-1, 3,0);
-        tracep->declBus(c+5,"ALU4way b", false,-1, 3,0);
-        tracep->declBus(c+6,"ALU4way sel", false,-1, 2,0);
-        tracep->declBus(c+7,"ALU4way out", false,-1, 3,0);
-        tracep->declBit(c+8,"ALU4way cf", false,-1);
-        tracep->declBit(c+9,"ALU4way of", false,-1);
-        tracep->declBit(c+10,"ALU4way zf", false,-1);
+        tracep->declBus(c+6,"a", false,-1, 3,0);
+        tracep->declBus(c+7,"b", false,-1, 3,0);
+        tracep->declBus(c+8,"sel", false,-1, 2,0);
+        tracep->declBus(c+9,"out", false,-1, 3,0);
+        tracep->declBit(c+10,"cf", false,-1);
+        tracep->declBit(c+11,"of", false,-1);
+        tracep->declBit(c+12,"zf", false,-1);
+        tracep->declBus(c+6,"ALU4way a", false,-1, 3,0);
+        tracep->declBus(c+7,"ALU4way b", false,-1, 3,0);
+        tracep->declBus(c+8,"ALU4way sel", false,-1, 2,0);
+        tracep->declBus(c+9,"ALU4way out", false,-1, 3,0);
+        tracep->declBit(c+10,"ALU4way cf", false,-1);
+        tracep->declBit(c+11,"ALU4way of", false,-1);
+        tracep->declBit(c+12,"ALU4way zf", false,-1);
         tracep->declBus(c+1,"ALU4way add", false,-1, 3,0);
         tracep->declBus(c+2,"ALU4way sub", false,-1, 3,0);
-        tracep->declBus(c+11,"ALU4way a1 n", false,-1, 31,0);
-        tracep->declBus(c+4,"ALU4way a1 x", false,-1, 3,0);
-        tracep->declBus(c+5,"ALU4way a1 y", false,-1, 3,0);
+        tracep->declBit(c+13,"ALU4way addcf", false,-1);
+        tracep->declBit(c+14,"ALU4way addof", false,-1);
+        tracep->declBit(c+3,"ALU4way addzf", false,-1);
+        tracep->declBit(c+15,"ALU4way subcf", false,-1);
+        tracep->declBit(c+16,"ALU4way subof", false,-1);
+        tracep->declBit(c+4,"ALU4way subzf", false,-1);
+        tracep->declBus(c+17,"ALU4way a1 n", false,-1, 31,0);
+        tracep->declBus(c+6,"ALU4way a1 x", false,-1, 3,0);
+        tracep->declBus(c+7,"ALU4way a1 y", false,-1, 3,0);
         tracep->declBus(c+1,"ALU4way a1 s", false,-1, 3,0);
-        tracep->declBit(c+8,"ALU4way a1 c", false,-1);
-        tracep->declBit(c+9,"ALU4way a1 o", false,-1);
-        tracep->declBit(c+10,"ALU4way a1 z", false,-1);
-        tracep->declBus(c+11,"ALU4way a2 n", false,-1, 31,0);
-        tracep->declBus(c+4,"ALU4way a2 x", false,-1, 3,0);
-        tracep->declBus(c+3,"ALU4way a2 y", false,-1, 3,0);
+        tracep->declBit(c+13,"ALU4way a1 c", false,-1);
+        tracep->declBit(c+14,"ALU4way a1 o", false,-1);
+        tracep->declBit(c+3,"ALU4way a1 z", false,-1);
+        tracep->declBus(c+17,"ALU4way a2 n", false,-1, 31,0);
+        tracep->declBus(c+6,"ALU4way a2 x", false,-1, 3,0);
+        tracep->declBus(c+5,"ALU4way a2 y", false,-1, 3,0);
         tracep->declBus(c+2,"ALU4way a2 s", false,-1, 3,0);
-        tracep->declBit(c+8,"ALU4way a2 c", false,-1);
-        tracep->declBit(c+9,"ALU4way a2 o", false,-1);
-        tracep->declBit(c+10,"ALU4way a2 z", false,-1);
+        tracep->declBit(c+15,"ALU4way a2 c", false,-1);
+        tracep->declBit(c+16,"ALU4way a2 o", false,-1);
+        tracep->declBit(c+4,"ALU4way a2 z", false,-1);
     }
 }
 
@@ -90,14 +96,36 @@ void VALU4way___024root__traceFullSub0(VALU4way___024root* vlSelf, VerilatedVcd*
     {
         tracep->fullCData(oldp+1,(vlSelf->ALU4way__DOT__add),4);
         tracep->fullCData(oldp+2,(vlSelf->ALU4way__DOT__sub),4);
-        tracep->fullCData(oldp+3,(vlSelf->ALU4way__DOT____Vcellinp__a2____pinNumber2),4);
-        tracep->fullCData(oldp+4,(vlSelf->a),4);
-        tracep->fullCData(oldp+5,(vlSelf->b),4);
-        tracep->fullCData(oldp+6,(vlSelf->sel),3);
-        tracep->fullCData(oldp+7,(vlSelf->out),4);
-        tracep->fullBit(oldp+8,(vlSelf->cf));
-        tracep->fullBit(oldp+9,(vlSelf->of));
-        tracep->fullBit(oldp+10,(vlSelf->zf));
-        tracep->fullIData(oldp+11,(4U),32);
+        tracep->fullBit(oldp+3,((1U & (~ (IData)((0U 
+                                                  != (IData)(vlSelf->ALU4way__DOT__add)))))));
+        tracep->fullBit(oldp+4,((1U & (~ (IData)((0U 
+                                                  != (IData)(vlSelf->ALU4way__DOT__sub)))))));
+        tracep->fullCData(oldp+5,(vlSelf->ALU4way__DOT____Vcellinp__a2____pinNumber2),4);
+        tracep->fullCData(oldp+6,(vlSelf->a),4);
+        tracep->fullCData(oldp+7,(vlSelf->b),4);
+        tracep->fullCData(oldp+8,(vlSelf->sel),3);
+        tracep->fullCData(oldp+9,(vlSelf->out),4);
+        tracep->fullBit(oldp+10,(vlSelf->cf));
+        tracep->fullBit(oldp+11,(vlSelf->of));
+        tracep->fullBit(oldp+12,(vlSelf->zf));
+        tracep->fullBit(oldp+13,((1U & (((IData)(vlSelf->a) 
+                                         + (IData)(vlSelf->b)) 
+                                        >> 4U))));
+        tracep->fullBit(oldp+14,((1U & ((~ (((IData)(vlSelf->a) 
+                                             ^ (IData)(vlSelf->b)) 
+                                            >> 3U)) 
+                                        & (((IData)(vlSelf->ALU4way__DOT__add) 
+                                            ^ (IData)(vlSelf->a)) 
+                                           >> 3U)))));
+        tracep->fullBit(oldp+15,((1U & (((IData)(vlSelf->a) 
+                                         + (IData)(vlSelf->ALU4way__DOT____Vcellinp__a2____pinNumber2)) 
+                                        >> 4U))));
+        tracep->fullBit(oldp+16,((1U & ((~ (((IData)(vlSelf->a) 
+                                             ^ (IData)(vlSelf->ALU4way__DOT____Vcellinp__a2____pinNumber2)) 
+                                            >> 3U)) 
+                                        & (((IData)(vlSelf->ALU4way__DOT__sub) 
+                                            ^ (IData)(vlSelf->a)) 
+                                           >> 3U)))));
+        tracep->fullIData(oldp+17,(4U),32);
     }
 }
