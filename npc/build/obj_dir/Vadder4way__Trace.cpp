@@ -29,7 +29,6 @@ void Vadder4way___024root__traceChgSub0(Vadder4way___024root* vlSelf, VerilatedV
         tracep->chgBit(oldp+3,(vlSelf->c));
         tracep->chgBit(oldp+4,(vlSelf->o));
         tracep->chgBit(oldp+5,(vlSelf->z));
-        tracep->chgCData(oldp+6,((0xfU & (~ (IData)(vlSelf->y)))),4);
     }
 }
 

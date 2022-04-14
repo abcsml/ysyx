@@ -22,5 +22,5 @@ module adder4way (
     output  o,
     output  z
 );
-    adderNway #(4) a1(x,y,1'b1,s,c,o,z);
+    adderNway #(4) a1(x,y,1'b0,s,c,o,z);
 endmodule

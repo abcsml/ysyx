@@ -12,17 +12,14 @@ VL_INLINE_OPT void Vadder4way___024root___combo__TOP__1(Vadder4way___024root* vl
     Vadder4way__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vadder4way___024root___combo__TOP__1\n"); );
     // Body
-    vlSelf->c = (1U & (((IData)(1U) + ((IData)(vlSelf->x) 
-                                       + (0xfU & (~ (IData)(vlSelf->y))))) 
+    vlSelf->c = (1U & (((IData)(vlSelf->x) + (IData)(vlSelf->y)) 
                        >> 4U));
-    vlSelf->s = (0xfU & ((IData)(1U) + ((IData)(vlSelf->x) 
-                                        + (~ (IData)(vlSelf->y)))));
+    vlSelf->s = (0xfU & ((IData)(vlSelf->x) + (IData)(vlSelf->y)));
     vlSelf->z = (1U & (~ (IData)((0U != (IData)(vlSelf->s)))));
-    vlSelf->o = (1U & ((~ (((IData)(vlSelf->x) >> 3U) 
-                           ^ (~ ((IData)(vlSelf->y) 
-                                 >> 3U)))) & (((IData)(vlSelf->s) 
-                                               ^ (IData)(vlSelf->x)) 
-                                              >> 3U)));
+    vlSelf->o = (1U & ((~ (((IData)(vlSelf->x) ^ (IData)(vlSelf->y)) 
+                           >> 3U)) & (((IData)(vlSelf->s) 
+                                       ^ (IData)(vlSelf->x)) 
+                                      >> 3U)));
 }
 
 void Vadder4way___024root___eval(Vadder4way___024root* vlSelf) {
