@@ -40,24 +40,24 @@ void VALU4way___024root__traceChgSub0(VALU4way___024root* vlSelf, VerilatedVcd* 
         tracep->chgBit(oldp+8,(vlSelf->cf));
         tracep->chgBit(oldp+9,(vlSelf->of));
         tracep->chgBit(oldp+10,(vlSelf->zf));
-        tracep->chgBit(oldp+11,((1U & (((IData)(1U) 
+        tracep->chgBit(oldp+11,((1U & (((IData)(vlSelf->a) 
+                                        + (IData)(vlSelf->b)) 
+                                       >> 4U))));
+        tracep->chgBit(oldp+12,((1U & ((~ (((IData)(vlSelf->a) 
+                                            ^ (IData)(vlSelf->b)) 
+                                           >> 3U)) 
+                                       & (((IData)(vlSelf->ALU4way__DOT__add) 
+                                           ^ (IData)(vlSelf->a)) 
+                                          >> 3U)))));
+        tracep->chgBit(oldp+13,((1U & (((IData)(1U) 
                                         + ((IData)(vlSelf->a) 
                                            + (0xfU 
                                               & (~ (IData)(vlSelf->b))))) 
                                        >> 4U))));
-        tracep->chgBit(oldp+12,((1U & ((~ (((IData)(vlSelf->a) 
+        tracep->chgBit(oldp+14,((1U & ((~ (((IData)(vlSelf->a) 
                                             >> 3U) 
                                            ^ (~ ((IData)(vlSelf->b) 
                                                  >> 3U)))) 
-                                       & (((IData)(vlSelf->ALU4way__DOT__add) 
-                                           ^ (IData)(vlSelf->a)) 
-                                          >> 3U)))));
-        tracep->chgBit(oldp+13,((1U & (((IData)(vlSelf->a) 
-                                        + (IData)(vlSelf->b)) 
-                                       >> 4U))));
-        tracep->chgBit(oldp+14,((1U & ((~ (((IData)(vlSelf->a) 
-                                            ^ (IData)(vlSelf->b)) 
-                                           >> 3U)) 
                                        & (((IData)(vlSelf->ALU4way__DOT__sub) 
                                            ^ (IData)(vlSelf->a)) 
                                           >> 3U)))));

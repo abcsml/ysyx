@@ -17,8 +17,8 @@ wire subcf;
 wire subof;
 wire subzf;
 
-adderNway #(4) a1(a,b,1'b1,add,addcf,addof,addzf);
-adderNway #(4) a2(a,b,1'b0,sub,subcf,subof,subzf);
+adderNway #(4) a1(a,b,1'b0,add,addcf,addof,addzf);
+adderNway #(4) a2(a,b,1'b1,sub,subcf,subof,subzf);
 
 always_latch @(*) begin
     case (sel)
