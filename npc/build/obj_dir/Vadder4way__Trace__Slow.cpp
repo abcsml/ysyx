@@ -34,13 +34,15 @@ void Vadder4way___024root__traceInitSub0(Vadder4way___024root* vlSelf, Verilated
         tracep->declBit(c+4,"adder4way c", false,-1);
         tracep->declBit(c+5,"adder4way o", false,-1);
         tracep->declBit(c+6,"adder4way z", false,-1);
-        tracep->declBus(c+7,"adder4way a1 n", false,-1, 31,0);
+        tracep->declBus(c+8,"adder4way a1 n", false,-1, 31,0);
         tracep->declBus(c+1,"adder4way a1 x", false,-1, 3,0);
         tracep->declBus(c+2,"adder4way a1 y", false,-1, 3,0);
+        tracep->declBit(c+9,"adder4way a1 sel", false,-1);
         tracep->declBus(c+3,"adder4way a1 s", false,-1, 3,0);
         tracep->declBit(c+4,"adder4way a1 c", false,-1);
         tracep->declBit(c+5,"adder4way a1 o", false,-1);
         tracep->declBit(c+6,"adder4way a1 z", false,-1);
+        tracep->declBus(c+7,"adder4way a1 t", false,-1, 3,0);
     }
 }
 
@@ -83,6 +85,8 @@ void Vadder4way___024root__traceFullSub0(Vadder4way___024root* vlSelf, Verilated
         tracep->fullBit(oldp+4,(vlSelf->c));
         tracep->fullBit(oldp+5,(vlSelf->o));
         tracep->fullBit(oldp+6,(vlSelf->z));
-        tracep->fullIData(oldp+7,(4U),32);
+        tracep->fullCData(oldp+7,((0xfU & (~ (IData)(vlSelf->y)))),4);
+        tracep->fullIData(oldp+8,(4U),32);
+        tracep->fullBit(oldp+9,(1U));
     }
 }

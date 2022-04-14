@@ -62,7 +62,7 @@ static void _eval_initial_loop(Vadder4way__Syms* __restrict vlSymsp) {
             Verilated::debug(1);
             __Vchange = Vadder4way___024root___change_request(&(vlSymsp->TOP));
             Verilated::debug(__Vsaved_debug);
-            VL_FATAL_MT("/home/ad/ysyx-workbench/npc/vsrc/exp3/adderNway.v", 14, "",
+            VL_FATAL_MT("/home/ad/ysyx-workbench/npc/vsrc/exp3/adderNway.v", 17, "",
                 "Verilated model didn't DC converge\n"
                 "- See https://verilator.org/warn/DIDNOTCONVERGE");
         } else {
@@ -93,7 +93,7 @@ void Vadder4way::eval_step() {
             Verilated::debug(1);
             __Vchange = Vadder4way___024root___change_request(&(vlSymsp->TOP));
             Verilated::debug(__Vsaved_debug);
-            VL_FATAL_MT("/home/ad/ysyx-workbench/npc/vsrc/exp3/adderNway.v", 14, "",
+            VL_FATAL_MT("/home/ad/ysyx-workbench/npc/vsrc/exp3/adderNway.v", 17, "",
                 "Verilated model didn't converge\n"
                 "- See https://verilator.org/warn/DIDNOTCONVERGE");
         } else {
