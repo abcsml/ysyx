@@ -7,9 +7,10 @@ module adderNway #(n = 8) (
     output  o,
     output  z
 );
-    assign t = ( {n{sel}}^y )+ sel;
+    wire [n-1:0] t;
+    assign t = {n{sel}}^y + {{(n-1){1'b0}}, sel};
     assign {c,s} = x + t;
-    assign o = ~(x[n-1] ^ t[n-1]) & (s[n-1] ^ x[n-1]);
+    assign o = (~(x[n-1] ^ t[n-1])) & (s[n-1] ^ x[n-1]);
     assign z = ~(| s);
 endmodule
 
@@ -21,5 +22,5 @@ module adder4way (
     output  o,
     output  z
 );
-    adderNway #(4) a1(x,y,s,c,o,z);
+    adderNway #(4) a1(x,y,1'b1,s,c,o,z);
 endmodule

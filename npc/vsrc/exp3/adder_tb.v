@@ -18,14 +18,14 @@ integer c;
 // wire    [3:0] inputb;
 // wire    [3:0] inputaluop;
 
-adderNway a1(
-    .x(inputa),
-    .y(inputb),
-    .s(outputs),
-    .c(outputc),
-    .o(outputo),
-    .z(outputz)
-);
+// adderNway a1(
+//     .x(inputa),
+//     .y(inputb),
+//     .s(outputs),
+//     .c(outputc),
+//     .o(outputo),
+//     .z(outputz)
+// );
 
 initial begin
 for(i=-8;i<=7;i=i+1) //建议i和j可以是5位以上的带符号数

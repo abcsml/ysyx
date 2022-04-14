@@ -63,7 +63,6 @@ void VALU4way___024root___ctor_var_reset(VALU4way___024root* vlSelf) {
     vlSelf->zf = 0;
     vlSelf->ALU4way__DOT__add = 0;
     vlSelf->ALU4way__DOT__sub = 0;
-    vlSelf->ALU4way__DOT____Vcellinp__a2____pinNumber2 = 0;
     for (int __Vi0=0; __Vi0<2; ++__Vi0) {
         vlSelf->__Vm_traceActivity[__Vi0] = 0;
     }

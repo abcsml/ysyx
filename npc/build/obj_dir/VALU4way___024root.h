@@ -32,7 +32,6 @@ VL_MODULE(VALU4way___024root) {
     CData/*3:0*/ ALU4way__DOT__sub;
 
     // LOCAL VARIABLES
-    CData/*3:0*/ ALU4way__DOT____Vcellinp__a2____pinNumber2;
     VlUnpacked<CData/*0:0*/, 2> __Vm_traceActivity;
 
     // INTERNAL VARIABLES

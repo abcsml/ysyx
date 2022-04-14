@@ -12,39 +12,42 @@ VL_INLINE_OPT void VALU4way___024root___combo__TOP__1(VALU4way___024root* vlSelf
     VALU4way__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    VALU4way___024root___combo__TOP__1\n"); );
     // Body
-    vlSelf->ALU4way__DOT__add = (0xfU & ((IData)(vlSelf->a) 
-                                         + (IData)(vlSelf->b)));
-    vlSelf->ALU4way__DOT____Vcellinp__a2____pinNumber2 
-        = ((8U & ((~ ((IData)(vlSelf->b) >> 3U)) << 3U)) 
-           | (7U & ((IData)(1U) + (~ (IData)(vlSelf->b)))));
     if ((1U & (~ ((IData)(vlSelf->sel) >> 2U)))) {
         if ((1U & (~ ((IData)(vlSelf->sel) >> 1U)))) {
             vlSelf->cf = (1U & ((1U & (IData)(vlSelf->sel))
                                  ? (1U & (((IData)(vlSelf->a) 
-                                           + (IData)(vlSelf->ALU4way__DOT____Vcellinp__a2____pinNumber2)) 
+                                           + (IData)(vlSelf->b)) 
                                           >> 4U)) : 
                                 (1U & (((IData)(vlSelf->a) 
-                                        + (IData)(vlSelf->b)) 
+                                        + (0xfU & (~ 
+                                                   ((IData)(1U) 
+                                                    + (IData)(vlSelf->b))))) 
                                        >> 4U))));
         }
     }
+    vlSelf->ALU4way__DOT__add = (0xfU & ((IData)(vlSelf->a) 
+                                         + (~ ((IData)(1U) 
+                                               + (IData)(vlSelf->b)))));
     vlSelf->ALU4way__DOT__sub = (0xfU & ((IData)(vlSelf->a) 
-                                         + (IData)(vlSelf->ALU4way__DOT____Vcellinp__a2____pinNumber2)));
+                                         + (IData)(vlSelf->b)));
     if ((1U & (~ ((IData)(vlSelf->sel) >> 2U)))) {
         if ((1U & (~ ((IData)(vlSelf->sel) >> 1U)))) {
             vlSelf->of = (1U & ((1U & (IData)(vlSelf->sel))
                                  ? ((~ (((IData)(vlSelf->a) 
-                                         ^ (IData)(vlSelf->ALU4way__DOT____Vcellinp__a2____pinNumber2)) 
+                                         ^ (IData)(vlSelf->b)) 
                                         >> 3U)) & (
                                                    ((IData)(vlSelf->ALU4way__DOT__sub) 
                                                     ^ (IData)(vlSelf->a)) 
                                                    >> 3U))
                                  : ((~ (((IData)(vlSelf->a) 
-                                         ^ (IData)(vlSelf->b)) 
-                                        >> 3U)) & (
-                                                   ((IData)(vlSelf->ALU4way__DOT__add) 
-                                                    ^ (IData)(vlSelf->a)) 
-                                                   >> 3U))));
+                                         >> 3U) ^ (~ 
+                                                   (1U 
+                                                    & (((IData)(1U) 
+                                                        + (IData)(vlSelf->b)) 
+                                                       >> 3U))))) 
+                                    & (((IData)(vlSelf->ALU4way__DOT__add) 
+                                        ^ (IData)(vlSelf->a)) 
+                                       >> 3U))));
         }
     }
     if ((4U & (IData)(vlSelf->sel))) {

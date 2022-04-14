@@ -32,33 +32,39 @@ void VALU4way___024root__traceChgSub0(VALU4way___024root* vlSelf, VerilatedVcd* 
             tracep->chgBit(oldp+3,((1U & (~ (IData)(
                                                     (0U 
                                                      != (IData)(vlSelf->ALU4way__DOT__sub)))))));
-            tracep->chgCData(oldp+4,(vlSelf->ALU4way__DOT____Vcellinp__a2____pinNumber2),4);
         }
-        tracep->chgCData(oldp+5,(vlSelf->a),4);
-        tracep->chgCData(oldp+6,(vlSelf->b),4);
-        tracep->chgCData(oldp+7,(vlSelf->sel),3);
-        tracep->chgCData(oldp+8,(vlSelf->out),4);
-        tracep->chgBit(oldp+9,(vlSelf->cf));
-        tracep->chgBit(oldp+10,(vlSelf->of));
-        tracep->chgBit(oldp+11,(vlSelf->zf));
-        tracep->chgBit(oldp+12,((1U & (((IData)(vlSelf->a) 
-                                        + (IData)(vlSelf->b)) 
+        tracep->chgCData(oldp+4,(vlSelf->a),4);
+        tracep->chgCData(oldp+5,(vlSelf->b),4);
+        tracep->chgCData(oldp+6,(vlSelf->sel),3);
+        tracep->chgCData(oldp+7,(vlSelf->out),4);
+        tracep->chgBit(oldp+8,(vlSelf->cf));
+        tracep->chgBit(oldp+9,(vlSelf->of));
+        tracep->chgBit(oldp+10,(vlSelf->zf));
+        tracep->chgBit(oldp+11,((1U & (((IData)(vlSelf->a) 
+                                        + (0xfU & (~ 
+                                                   ((IData)(1U) 
+                                                    + (IData)(vlSelf->b))))) 
                                        >> 4U))));
-        tracep->chgBit(oldp+13,((1U & ((~ (((IData)(vlSelf->a) 
-                                            ^ (IData)(vlSelf->b)) 
-                                           >> 3U)) 
+        tracep->chgBit(oldp+12,((1U & ((~ (((IData)(vlSelf->a) 
+                                            >> 3U) 
+                                           ^ (~ (1U 
+                                                 & (((IData)(1U) 
+                                                     + (IData)(vlSelf->b)) 
+                                                    >> 3U))))) 
                                        & (((IData)(vlSelf->ALU4way__DOT__add) 
                                            ^ (IData)(vlSelf->a)) 
                                           >> 3U)))));
-        tracep->chgBit(oldp+14,((1U & (((IData)(vlSelf->a) 
-                                        + (IData)(vlSelf->ALU4way__DOT____Vcellinp__a2____pinNumber2)) 
+        tracep->chgBit(oldp+13,((1U & (((IData)(vlSelf->a) 
+                                        + (IData)(vlSelf->b)) 
                                        >> 4U))));
-        tracep->chgBit(oldp+15,((1U & ((~ (((IData)(vlSelf->a) 
-                                            ^ (IData)(vlSelf->ALU4way__DOT____Vcellinp__a2____pinNumber2)) 
+        tracep->chgBit(oldp+14,((1U & ((~ (((IData)(vlSelf->a) 
+                                            ^ (IData)(vlSelf->b)) 
                                            >> 3U)) 
                                        & (((IData)(vlSelf->ALU4way__DOT__sub) 
                                            ^ (IData)(vlSelf->a)) 
                                           >> 3U)))));
+        tracep->chgCData(oldp+15,((0xfU & (~ ((IData)(1U) 
+                                              + (IData)(vlSelf->b))))),4);
     }
 }
 
