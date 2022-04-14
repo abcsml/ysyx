@@ -8,8 +8,8 @@ module adderNway #(n = 8) (
     output  z
 );
     wire [n-1:0] t;
-    assign t = {n{sel}}^y + {{(n-1){1'b0}}, sel};
-    assign {c,s} = x + t;
+    assign t = {n{sel}}^y;
+    assign {c,s} = x + t + {{(n-1){1'b0}}, sel};
     assign o = (~(x[n-1] ^ t[n-1])) & (s[n-1] ^ x[n-1]);
     assign z = ~(| s);
 endmodule

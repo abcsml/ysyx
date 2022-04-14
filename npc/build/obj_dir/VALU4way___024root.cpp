@@ -18,16 +18,16 @@ VL_INLINE_OPT void VALU4way___024root___combo__TOP__1(VALU4way___024root* vlSelf
                                  ? (1U & (((IData)(vlSelf->a) 
                                            + (IData)(vlSelf->b)) 
                                           >> 4U)) : 
-                                (1U & (((IData)(vlSelf->a) 
-                                        + (0xfU & (~ 
-                                                   ((IData)(1U) 
-                                                    + (IData)(vlSelf->b))))) 
+                                (1U & (((IData)(1U) 
+                                        + ((IData)(vlSelf->a) 
+                                           + (0xfU 
+                                              & (~ (IData)(vlSelf->b))))) 
                                        >> 4U))));
         }
     }
-    vlSelf->ALU4way__DOT__add = (0xfU & ((IData)(vlSelf->a) 
-                                         + (~ ((IData)(1U) 
-                                               + (IData)(vlSelf->b)))));
+    vlSelf->ALU4way__DOT__add = (0xfU & ((IData)(1U) 
+                                         + ((IData)(vlSelf->a) 
+                                            + (~ (IData)(vlSelf->b)))));
     vlSelf->ALU4way__DOT__sub = (0xfU & ((IData)(vlSelf->a) 
                                          + (IData)(vlSelf->b)));
     if ((1U & (~ ((IData)(vlSelf->sel) >> 2U)))) {
@@ -41,10 +41,8 @@ VL_INLINE_OPT void VALU4way___024root___combo__TOP__1(VALU4way___024root* vlSelf
                                                    >> 3U))
                                  : ((~ (((IData)(vlSelf->a) 
                                          >> 3U) ^ (~ 
-                                                   (1U 
-                                                    & (((IData)(1U) 
-                                                        + (IData)(vlSelf->b)) 
-                                                       >> 3U))))) 
+                                                   ((IData)(vlSelf->b) 
+                                                    >> 3U)))) 
                                     & (((IData)(vlSelf->ALU4way__DOT__add) 
                                         ^ (IData)(vlSelf->a)) 
                                        >> 3U))));

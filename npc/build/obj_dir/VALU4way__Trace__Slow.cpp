@@ -111,17 +111,15 @@ void VALU4way___024root__traceFullSub0(VALU4way___024root* vlSelf, VerilatedVcd*
         tracep->fullBit(oldp+9,(vlSelf->cf));
         tracep->fullBit(oldp+10,(vlSelf->of));
         tracep->fullBit(oldp+11,(vlSelf->zf));
-        tracep->fullBit(oldp+12,((1U & (((IData)(vlSelf->a) 
-                                         + (0xfU & 
-                                            (~ ((IData)(1U) 
-                                                + (IData)(vlSelf->b))))) 
+        tracep->fullBit(oldp+12,((1U & (((IData)(1U) 
+                                         + ((IData)(vlSelf->a) 
+                                            + (0xfU 
+                                               & (~ (IData)(vlSelf->b))))) 
                                         >> 4U))));
         tracep->fullBit(oldp+13,((1U & ((~ (((IData)(vlSelf->a) 
                                              >> 3U) 
-                                            ^ (~ (1U 
-                                                  & (((IData)(1U) 
-                                                      + (IData)(vlSelf->b)) 
-                                                     >> 3U))))) 
+                                            ^ (~ ((IData)(vlSelf->b) 
+                                                  >> 3U)))) 
                                         & (((IData)(vlSelf->ALU4way__DOT__add) 
                                             ^ (IData)(vlSelf->a)) 
                                            >> 3U)))));
@@ -134,8 +132,7 @@ void VALU4way___024root__traceFullSub0(VALU4way___024root* vlSelf, VerilatedVcd*
                                         & (((IData)(vlSelf->ALU4way__DOT__sub) 
                                             ^ (IData)(vlSelf->a)) 
                                            >> 3U)))));
-        tracep->fullCData(oldp+16,((0xfU & (~ ((IData)(1U) 
-                                               + (IData)(vlSelf->b))))),4);
+        tracep->fullCData(oldp+16,((0xfU & (~ (IData)(vlSelf->b)))),4);
         tracep->fullIData(oldp+17,(4U),32);
         tracep->fullBit(oldp+18,(1U));
         tracep->fullBit(oldp+19,(0U));
