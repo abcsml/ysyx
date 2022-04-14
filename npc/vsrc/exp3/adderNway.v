@@ -1,13 +1,15 @@
 module adderNway #(n = 8) (
     input   [n-1:0] x,
     input   [n-1:0] y,
+    input   sel,    // add or sub
     output  [n-1:0] s,
     output  c,
     output  o,
     output  z
 );
-    assign {c,s} = x + y;
-    assign o = ~(x[n-1] ^ y[n-1]) & (s[n-1] ^ x[n-1]);
+    assign t = ( {n{sel}}^y )+ sel;
+    assign {c,s} = x + t;
+    assign o = ~(x[n-1] ^ t[n-1]) & (s[n-1] ^ x[n-1]);
     assign z = ~(| s);
 endmodule
 
