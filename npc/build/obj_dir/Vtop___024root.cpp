@@ -7,35 +7,140 @@
 
 //==========
 
-extern const VlUnpacked<CData/*2:0*/, 512> Vtop__ConstPool__TABLE_2ab4c310_0;
-extern const VlUnpacked<CData/*6:0*/, 16> Vtop__ConstPool__TABLE_f35510fa_0;
-
 VL_INLINE_OPT void Vtop___024root___combo__TOP__1(Vtop___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___combo__TOP__1\n"); );
     // Variables
-    CData/*2:0*/ top__DOT____Vcellout__e1__y;
-    CData/*6:0*/ top__DOT____Vcellout__b1__h;
-    CData/*3:0*/ __Vtableidx2;
-    SData/*8:0*/ __Vtableidx1;
+    CData/*0:0*/ top__DOT____Vcellout__alu1__zf;
+    CData/*3:0*/ top__DOT__alu1__DOT__add;
+    CData/*3:0*/ top__DOT__alu1__DOT__sub;
     // Body
-    vlSelf->ledr = ((0xffefU & (IData)(vlSelf->ledr)) 
-                    | ((IData)((0U != (0xffU & (IData)(vlSelf->sw)))) 
-                       << 4U));
-    __Vtableidx1 = ((0x1feU & ((IData)(vlSelf->sw) 
-                               << 1U)) | (1U & ((IData)(vlSelf->sw) 
-                                                >> 8U)));
-    top__DOT____Vcellout__e1__y = Vtop__ConstPool__TABLE_2ab4c310_0
-        [__Vtableidx1];
-    vlSelf->ledr = ((0xfff8U & (IData)(vlSelf->ledr)) 
-                    | (IData)(top__DOT____Vcellout__e1__y));
-    __Vtableidx2 = (7U & (IData)(vlSelf->ledr));
-    top__DOT____Vcellout__b1__h = Vtop__ConstPool__TABLE_f35510fa_0
-        [__Vtableidx2];
-    vlSelf->seg0 = ((1U & (IData)(vlSelf->seg0)) | 
-                    ((IData)(top__DOT____Vcellout__b1__h) 
-                     << 1U));
+    if ((1U & (~ ((IData)(vlSelf->sw) >> 0xaU)))) {
+        if ((1U & (~ ((IData)(vlSelf->sw) >> 9U)))) {
+            vlSelf->top__DOT____Vcellout__alu1__cf 
+                = (1U & ((0x100U & (IData)(vlSelf->sw))
+                          ? (1U & (((IData)(1U) + (
+                                                   (0xfU 
+                                                    & ((IData)(vlSelf->sw) 
+                                                       >> 4U)) 
+                                                   + 
+                                                   (0xfU 
+                                                    & (~ (IData)(vlSelf->sw))))) 
+                                   >> 4U)) : (1U & 
+                                              (((0xfU 
+                                                 & ((IData)(vlSelf->sw) 
+                                                    >> 4U)) 
+                                                + (0xfU 
+                                                   & (IData)(vlSelf->sw))) 
+                                               >> 4U))));
+        }
+    }
+    top__DOT__alu1__DOT__add = (0xfU & (((IData)(vlSelf->sw) 
+                                         >> 4U) + (IData)(vlSelf->sw)));
+    top__DOT__alu1__DOT__sub = (0xfU & ((IData)(1U) 
+                                        + (((IData)(vlSelf->sw) 
+                                            >> 4U) 
+                                           + (~ (IData)(vlSelf->sw)))));
+    if ((1U & (~ ((IData)(vlSelf->sw) >> 0xaU)))) {
+        if ((1U & (~ ((IData)(vlSelf->sw) >> 9U)))) {
+            vlSelf->top__DOT____Vcellout__alu1__of 
+                = (1U & ((0x100U & (IData)(vlSelf->sw))
+                          ? ((~ (((IData)(vlSelf->sw) 
+                                  >> 7U) ^ (~ ((IData)(vlSelf->sw) 
+                                               >> 3U)))) 
+                             & (((IData)(top__DOT__alu1__DOT__sub) 
+                                 >> 3U) ^ ((IData)(vlSelf->sw) 
+                                           >> 7U)))
+                          : ((~ (((IData)(vlSelf->sw) 
+                                  >> 7U) ^ ((IData)(vlSelf->sw) 
+                                            >> 3U))) 
+                             & (((IData)(top__DOT__alu1__DOT__add) 
+                                 >> 3U) ^ ((IData)(vlSelf->sw) 
+                                           >> 7U)))));
+        }
+    }
+    if ((0x400U & (IData)(vlSelf->sw))) {
+        vlSelf->top__DOT____Vcellout__alu1__out = (0xfU 
+                                                   & ((0x200U 
+                                                       & (IData)(vlSelf->sw))
+                                                       ? 
+                                                      ((0x100U 
+                                                        & (IData)(vlSelf->sw))
+                                                        ? 
+                                                       (((0xfU 
+                                                          & ((IData)(vlSelf->sw) 
+                                                             >> 4U)) 
+                                                         == 
+                                                         (0xfU 
+                                                          & (IData)(vlSelf->sw)))
+                                                         ? 1U
+                                                         : 0U)
+                                                        : 
+                                                       (1U 
+                                                        & ((1U 
+                                                            & VL_REDXOR_32(
+                                                                           (0x88U 
+                                                                            & (IData)(vlSelf->sw))))
+                                                            ? 
+                                                           ((IData)(vlSelf->sw) 
+                                                            >> 7U)
+                                                            : 
+                                                           ((0x80U 
+                                                             & (IData)(vlSelf->sw))
+                                                             ? 
+                                                            ((0xfU 
+                                                              & ((IData)(vlSelf->sw) 
+                                                                 >> 4U)) 
+                                                             > 
+                                                             (0xfU 
+                                                              & (IData)(vlSelf->sw)))
+                                                             : 
+                                                            ((0xfU 
+                                                              & ((IData)(vlSelf->sw) 
+                                                                 >> 4U)) 
+                                                             < 
+                                                             (0xfU 
+                                                              & (IData)(vlSelf->sw)))))))
+                                                       : 
+                                                      ((0x100U 
+                                                        & (IData)(vlSelf->sw))
+                                                        ? 
+                                                       (((IData)(vlSelf->sw) 
+                                                         >> 4U) 
+                                                        ^ (IData)(vlSelf->sw))
+                                                        : 
+                                                       (((IData)(vlSelf->sw) 
+                                                         >> 4U) 
+                                                        | (IData)(vlSelf->sw)))));
+    } else if ((0x200U & (IData)(vlSelf->sw))) {
+        vlSelf->top__DOT____Vcellout__alu1__out = (0xfU 
+                                                   & ((0x100U 
+                                                       & (IData)(vlSelf->sw))
+                                                       ? 
+                                                      (((IData)(vlSelf->sw) 
+                                                        >> 4U) 
+                                                       & (IData)(vlSelf->sw))
+                                                       : 
+                                                      (~ 
+                                                       ((IData)(vlSelf->sw) 
+                                                        >> 4U))));
+    } else if ((0x100U & (IData)(vlSelf->sw))) {
+        vlSelf->top__DOT____Vcellout__alu1__out = top__DOT__alu1__DOT__sub;
+        top__DOT____Vcellout__alu1__zf = (1U & (~ (0U 
+                                                   != (IData)(top__DOT__alu1__DOT__sub))));
+    } else {
+        vlSelf->top__DOT____Vcellout__alu1__out = top__DOT__alu1__DOT__add;
+        top__DOT____Vcellout__alu1__zf = (1U & (~ (0U 
+                                                   != (IData)(top__DOT__alu1__DOT__add))));
+    }
+    top__DOT____Vcellout__alu1__zf = (1U & (~ (0U != (IData)(vlSelf->top__DOT____Vcellout__alu1__out))));
+    vlSelf->ledr = ((0xff80U & (IData)(vlSelf->ledr)) 
+                    | (((IData)(top__DOT____Vcellout__alu1__zf) 
+                        << 6U) | (((IData)(vlSelf->top__DOT____Vcellout__alu1__of) 
+                                   << 5U) | (((IData)(vlSelf->top__DOT____Vcellout__alu1__cf) 
+                                              << 4U) 
+                                             | (IData)(vlSelf->top__DOT____Vcellout__alu1__out)))));
 }
 
 void Vtop___024root___eval(Vtop___024root* vlSelf) {

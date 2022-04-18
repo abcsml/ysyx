@@ -16,11 +16,13 @@ wire addzf;
 wire subcf;
 wire subof;
 wire subzf;
+reg  cout;
 
 adderNway #(4) a1(a,b,1'b0,add,addcf,addof,addzf);
 adderNway #(4) a2(a,b,1'b1,sub,subcf,subof,subzf);
+compareS4Way c1(a,b,cout);
 
-always_latch @(*) begin
+always @(*) begin
     case (sel)
         3'b000: begin
             out = add;
@@ -38,7 +40,7 @@ always_latch @(*) begin
         3'b011: out = a&b;
         3'b100: out = a|b;
         3'b101: out = a^b;
-        3'b110: out = a<b ? 4'b1 : 4'b0;
+        3'b110: out = {3'b0,cout};
         3'b111: out = a==b ? 4'b1 : 4'b0;
         default: out = add;
     endcase

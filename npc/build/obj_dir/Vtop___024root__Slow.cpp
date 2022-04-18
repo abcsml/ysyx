@@ -73,4 +73,7 @@ void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->seg5 = 0;
     vlSelf->seg6 = 0;
     vlSelf->seg7 = 0;
+    vlSelf->top__DOT____Vcellout__alu1__of = 0;
+    vlSelf->top__DOT____Vcellout__alu1__cf = 0;
+    vlSelf->top__DOT____Vcellout__alu1__out = 0;
 }
