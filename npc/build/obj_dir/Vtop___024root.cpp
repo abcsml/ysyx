@@ -16,19 +16,24 @@ VL_INLINE_OPT void Vtop___024root___combo__TOP__1(Vtop___024root* vlSelf) {
                                                    >> 8U));
 }
 
-VL_INLINE_OPT void Vtop___024root___sequent__TOP__4(Vtop___024root* vlSelf) {
+VL_INLINE_OPT void Vtop___024root___sequent__TOP__3(Vtop___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
-    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___sequent__TOP__4\n"); );
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___sequent__TOP__3\n"); );
     // Body
-    vlSelf->top__DOT____Vcellout__l1__out = ((0x80U 
-                                              & (VL_REDXOR_32(
-                                                              (0x1dU 
-                                                               & (IData)(vlSelf->top__DOT____Vcellout__l1__out))) 
-                                                 << 7U)) 
-                                             | (0x7fU 
-                                                & ((IData)(vlSelf->top__DOT____Vcellout__l1__out) 
-                                                   >> 1U)));
+    vlSelf->top__DOT____Vcellout__l1__out = (0xffU 
+                                             & ((0x200U 
+                                                 & (IData)(vlSelf->sw))
+                                                 ? (IData)(vlSelf->sw)
+                                                 : 
+                                                ((0x80U 
+                                                  & (VL_REDXOR_32(
+                                                                  (0x1dU 
+                                                                   & (IData)(vlSelf->top__DOT____Vcellout__l1__out))) 
+                                                     << 7U)) 
+                                                 | (0x7fU 
+                                                    & ((IData)(vlSelf->top__DOT____Vcellout__l1__out) 
+                                                       >> 1U)))));
     vlSelf->ledr = ((0xff00U & (IData)(vlSelf->ledr)) 
                     | (IData)(vlSelf->top__DOT____Vcellout__l1__out));
 }
@@ -41,7 +46,7 @@ void Vtop___024root___eval(Vtop___024root* vlSelf) {
     Vtop___024root___combo__TOP__1(vlSelf);
     if (((IData)(vlSelf->top__DOT____Vcellinp__l1__clk) 
          & (~ (IData)(vlSelf->__Vclklast__TOP__top__DOT____Vcellinp__l1__clk)))) {
-        Vtop___024root___sequent__TOP__4(vlSelf);
+        Vtop___024root___sequent__TOP__3(vlSelf);
     }
     // Final
     vlSelf->__Vclklast__TOP__top__DOT____Vcellinp__l1__clk 

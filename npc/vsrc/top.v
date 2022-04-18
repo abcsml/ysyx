@@ -59,6 +59,7 @@ module top (
 
 LFSR8 l1(
     .clk(sw[8]),
+    .load(sw[9]),
     .in(sw[7:0]),
     .out(ledr[7:0])
 );
