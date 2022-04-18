@@ -25,10 +25,32 @@ void Vtop___024root::__Vconfigure(Vtop__Syms* _vlSymsp, bool first) {
 Vtop___024root::~Vtop___024root() {
 }
 
+void Vtop___024root___initial__TOP__3(Vtop___024root* vlSelf) {
+    if (false && vlSelf) {}  // Prevent unused
+    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___initial__TOP__3\n"); );
+    // Body
+    vlSelf->top__DOT____Vcellout__l1__out = (0xffU 
+                                             & (IData)(vlSelf->sw));
+}
+
+void Vtop___024root___settle__TOP__5(Vtop___024root* vlSelf) {
+    if (false && vlSelf) {}  // Prevent unused
+    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___settle__TOP__5\n"); );
+    // Body
+    vlSelf->ledr = ((0xff00U & (IData)(vlSelf->ledr)) 
+                    | (IData)(vlSelf->top__DOT____Vcellout__l1__out));
+}
+
 void Vtop___024root___eval_initial(Vtop___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_initial\n"); );
+    // Body
+    Vtop___024root___initial__TOP__3(vlSelf);
+    vlSelf->__Vclklast__TOP__top__DOT____Vcellinp__l1__clk 
+        = vlSelf->top__DOT____Vcellinp__l1__clk;
 }
 
 void Vtop___024root___combo__TOP__1(Vtop___024root* vlSelf);
@@ -39,6 +61,7 @@ void Vtop___024root___eval_settle(Vtop___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_settle\n"); );
     // Body
     Vtop___024root___combo__TOP__1(vlSelf);
+    Vtop___024root___settle__TOP__5(vlSelf);
 }
 
 void Vtop___024root___final(Vtop___024root* vlSelf) {
@@ -73,7 +96,6 @@ void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->seg5 = 0;
     vlSelf->seg6 = 0;
     vlSelf->seg7 = 0;
-    vlSelf->top__DOT____Vcellout__alu1__of = 0;
-    vlSelf->top__DOT____Vcellout__alu1__cf = 0;
-    vlSelf->top__DOT____Vcellout__alu1__out = 0;
+    vlSelf->top__DOT____Vcellout__l1__out = 0;
+    vlSelf->top__DOT____Vcellinp__l1__clk = 0;
 }

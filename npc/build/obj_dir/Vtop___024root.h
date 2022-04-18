@@ -40,9 +40,9 @@ VL_MODULE(Vtop___024root) {
     VL_OUT16(ledr,15,0);
 
     // LOCAL VARIABLES
-    CData/*0:0*/ top__DOT____Vcellout__alu1__of;
-    CData/*0:0*/ top__DOT____Vcellout__alu1__cf;
-    CData/*3:0*/ top__DOT____Vcellout__alu1__out;
+    CData/*0:0*/ top__DOT____Vcellinp__l1__clk;
+    CData/*7:0*/ top__DOT____Vcellout__l1__out;
+    CData/*0:0*/ __Vclklast__TOP__top__DOT____Vcellinp__l1__clk;
 
     // INTERNAL VARIABLES
     Vtop__Syms* vlSymsp;  // Symbol table

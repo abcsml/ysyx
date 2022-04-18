@@ -47,14 +47,20 @@ module top (
 //     .h(seg0[7:1])
 // );
 
-ALU4way alu1(
-    .a(sw[7:4]),
-    .b(sw[3:0]),
-    .sel(sw[10:8]),
-    .out(ledr[3:0]),
-    .cf(ledr[4]),
-    .of(ledr[5]),
-    .zf(ledr[6])
+// ALU4way alu1(
+//     .a(sw[7:4]),
+//     .b(sw[3:0]),
+//     .sel(sw[10:8]),
+//     .out(ledr[3:0]),
+//     .cf(ledr[4]),
+//     .of(ledr[5]),
+//     .zf(ledr[6])
+// );
+
+LFSR8 l1(
+    .clk(sw[8]),
+    .in(sw[7:0]),
+    .out(ledr[7:0])
 );
 
 endmodule
