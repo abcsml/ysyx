@@ -42,10 +42,14 @@ VL_INLINE_OPT void Vtop___024root___sequent__TOP__1(Vtop___024root* vlSelf) {
         }
         if ((IData)((4U == (6U & (IData)(vlSelf->top__DOT__inst__DOT__ps2_clk_sync))))) {
             if ((0xaU == (IData)(vlSelf->top__DOT__inst__DOT__count))) {
-                if ((((~ (IData)(vlSelf->top__DOT__inst__DOT__buffer)) 
-                      & (IData)(vlSelf->ps2_data)) 
-                     & VL_REDXOR_32((0x1ffU & ((IData)(vlSelf->top__DOT__inst__DOT__buffer) 
-                                               >> 1U))))) {
+                if (VL_UNLIKELY((((~ (IData)(vlSelf->top__DOT__inst__DOT__buffer)) 
+                                  & (IData)(vlSelf->ps2_data)) 
+                                 & VL_REDXOR_32((0x1ffU 
+                                                 & ((IData)(vlSelf->top__DOT__inst__DOT__buffer) 
+                                                    >> 1U)))))) {
+                    VL_WRITEF("receive %x\n",8,(0xffU 
+                                                & ((IData)(vlSelf->top__DOT__inst__DOT__buffer) 
+                                                   >> 1U)));
                     __Vdlyvval__top__DOT__inst__DOT__fifo__v0 
                         = (0xffU & ((IData)(vlSelf->top__DOT__inst__DOT__buffer) 
                                     >> 1U));
