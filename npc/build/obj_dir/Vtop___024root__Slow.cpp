@@ -30,11 +30,19 @@ void Vtop___024root___settle__TOP__2(Vtop___024root* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___settle__TOP__2\n"); );
     // Body
-    vlSelf->ledr = ((0xfc00U & (IData)(vlSelf->ledr)) 
-                    | (((IData)(vlSelf->top__DOT____Vcellout__inst__overflow) 
-                        << 9U) | (((IData)(vlSelf->top__DOT____Vcellout__inst__ready) 
-                                   << 8U) | vlSelf->top__DOT__inst__DOT__fifo
-                                  [vlSelf->top__DOT__inst__DOT__r_ptr])));
+    vlSelf->top__DOT__p2__DOT__nextdata_n = 1U;
+    vlSelf->top__DOT__p2__DOT__data = vlSelf->top__DOT__p2__DOT__p1__DOT__fifo
+        [vlSelf->top__DOT__p2__DOT__p1__DOT__r_ptr];
+}
+
+void Vtop___024root___initial__TOP__3(Vtop___024root* vlSelf) {
+    if (false && vlSelf) {}  // Prevent unused
+    Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
+    VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___initial__TOP__3\n"); );
+    // Body
+    vlSelf->top__DOT__p2__DOT__nextdata_n = 0U;
+    vlSelf->top__DOT__p2__DOT__ifpress = 0U;
+    vlSelf->top__DOT__p2__DOT__over = 0U;
 }
 
 void Vtop___024root___eval_initial(Vtop___024root* vlSelf) {
@@ -43,7 +51,10 @@ void Vtop___024root___eval_initial(Vtop___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_initial\n"); );
     // Body
     vlSelf->__Vclklast__TOP__clk = vlSelf->clk;
+    Vtop___024root___initial__TOP__3(vlSelf);
 }
+
+void Vtop___024root___combo__TOP__4(Vtop___024root* vlSelf);
 
 void Vtop___024root___eval_settle(Vtop___024root* vlSelf) {
     if (false && vlSelf) {}  // Prevent unused
@@ -51,6 +62,7 @@ void Vtop___024root___eval_settle(Vtop___024root* vlSelf) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_settle\n"); );
     // Body
     Vtop___024root___settle__TOP__2(vlSelf);
+    Vtop___024root___combo__TOP__4(vlSelf);
 }
 
 void Vtop___024root___final(Vtop___024root* vlSelf) {
@@ -85,15 +97,23 @@ void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->seg5 = 0;
     vlSelf->seg6 = 0;
     vlSelf->seg7 = 0;
-    vlSelf->top__DOT____Vcellout__inst__overflow = 0;
-    vlSelf->top__DOT____Vcellout__inst__ready = 0;
-    vlSelf->top__DOT__inst__DOT__buffer = 0;
+    vlSelf->top__DOT__num = 0;
+    vlSelf->top__DOT__ascii = 0;
+    vlSelf->top__DOT__sum = 0;
+    vlSelf->top__DOT__p2__DOT__data = 0;
+    vlSelf->top__DOT__p2__DOT__ready = 0;
+    vlSelf->top__DOT__p2__DOT__overflow = 0;
+    vlSelf->top__DOT__p2__DOT__nextdata_n = 0;
+    vlSelf->top__DOT__p2__DOT__ifpress = 0;
+    vlSelf->top__DOT__p2__DOT__over = 0;
+    vlSelf->top__DOT__p2__DOT__p1__DOT__buffer = 0;
     for (int __Vi0=0; __Vi0<8; ++__Vi0) {
-        vlSelf->top__DOT__inst__DOT__fifo[__Vi0] = 0;
+        vlSelf->top__DOT__p2__DOT__p1__DOT__fifo[__Vi0] = 0;
     }
-    vlSelf->top__DOT__inst__DOT__w_ptr = 0;
-    vlSelf->top__DOT__inst__DOT__r_ptr = 0;
-    vlSelf->top__DOT__inst__DOT__count = 0;
-    vlSelf->top__DOT__inst__DOT__ps2_clk_sync = 0;
-    vlSelf->top__DOT__inst__DOT____Vlvbound1 = 0;
+    vlSelf->top__DOT__p2__DOT__p1__DOT__w_ptr = 0;
+    vlSelf->top__DOT__p2__DOT__p1__DOT__r_ptr = 0;
+    vlSelf->top__DOT__p2__DOT__p1__DOT__count = 0;
+    vlSelf->top__DOT__p2__DOT__p1__DOT__ps2_clk_sync = 0;
+    vlSelf->top__DOT__p2__DOT__p1__DOT____Vlvbound1 = 0;
+    vlSelf->__Vchglast__TOP__top__DOT__p2__DOT__over = 0;
 }

@@ -40,18 +40,26 @@ VL_MODULE(Vtop___024root) {
     VL_OUT16(ledr,15,0);
 
     // LOCAL SIGNALS
-    CData/*2:0*/ top__DOT__inst__DOT__w_ptr;
-    CData/*2:0*/ top__DOT__inst__DOT__r_ptr;
-    CData/*3:0*/ top__DOT__inst__DOT__count;
-    CData/*2:0*/ top__DOT__inst__DOT__ps2_clk_sync;
-    SData/*9:0*/ top__DOT__inst__DOT__buffer;
-    VlUnpacked<CData/*7:0*/, 8> top__DOT__inst__DOT__fifo;
+    CData/*7:0*/ top__DOT__num;
+    CData/*7:0*/ top__DOT__ascii;
+    CData/*7:0*/ top__DOT__sum;
+    CData/*7:0*/ top__DOT__p2__DOT__data;
+    CData/*0:0*/ top__DOT__p2__DOT__ready;
+    CData/*0:0*/ top__DOT__p2__DOT__overflow;
+    CData/*0:0*/ top__DOT__p2__DOT__nextdata_n;
+    CData/*2:0*/ top__DOT__p2__DOT__p1__DOT__w_ptr;
+    CData/*2:0*/ top__DOT__p2__DOT__p1__DOT__r_ptr;
+    CData/*3:0*/ top__DOT__p2__DOT__p1__DOT__count;
+    CData/*2:0*/ top__DOT__p2__DOT__p1__DOT__ps2_clk_sync;
+    SData/*9:0*/ top__DOT__p2__DOT__p1__DOT__buffer;
+    IData/*31:0*/ top__DOT__p2__DOT__ifpress;
+    IData/*31:0*/ top__DOT__p2__DOT__over;
+    VlUnpacked<CData/*7:0*/, 8> top__DOT__p2__DOT__p1__DOT__fifo;
 
     // LOCAL VARIABLES
-    CData/*0:0*/ top__DOT____Vcellout__inst__overflow;
-    CData/*0:0*/ top__DOT____Vcellout__inst__ready;
-    CData/*0:0*/ top__DOT__inst__DOT____Vlvbound1;
+    CData/*0:0*/ top__DOT__p2__DOT__p1__DOT____Vlvbound1;
     CData/*0:0*/ __Vclklast__TOP__clk;
+    IData/*31:0*/ __Vchglast__TOP__top__DOT__p2__DOT__over;
 
     // INTERNAL VARIABLES
     Vtop__Syms* vlSymsp;  // Symbol table

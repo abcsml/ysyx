@@ -72,15 +72,40 @@ module top (
 //     .state(ledr[7:4])
 // );
 
-ps2_keyboard inst(
+wire [7:0] num;
+wire [7:0] ascii;
+wire [7:0] sum;
+bcd7seg b1(
+    .b(num[3:0]),
+    .h(seg0[7:1])
+);
+bcd7seg b2(
+    .b(num[7:4]),
+    .h(seg1[7:1])
+);
+bcd7seg b3(
+    .b(ascii[3:0]),
+    .h(seg2[7:1])
+);
+bcd7seg b4(
+    .b(ascii[7:4]),
+    .h(seg3[7:1])
+);
+bcd7seg b5(
+    .b(sum[3:0]),
+    .h(seg4[7:1])
+);
+bcd7seg b6(
+    .b(sum[7:4]),
+    .h(seg5[7:1])
+);
+ps2_ascii p2(
     .clk(clk),
-    .clrn(sw[0]),
     .ps2_clk(ps2_clk),
     .ps2_data(ps2_data),
-    .data(ledr[7:0]),
-    .ready(ledr[8]),
-    .nextdata_n(sw[1]),
-    .overflow(ledr[9])
+    .num(num),
+    .ascii(ascii),
+    .sum(sum)
 );
 
 endmodule
