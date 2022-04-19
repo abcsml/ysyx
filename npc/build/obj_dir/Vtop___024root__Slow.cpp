@@ -30,10 +30,11 @@ void Vtop___024root___settle__TOP__2(Vtop___024root* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___settle__TOP__2\n"); );
     // Body
-    vlSelf->top__DOT____Vcellinp__l1__clk = (1U & ((IData)(vlSelf->sw) 
-                                                   >> 8U));
-    vlSelf->ledr = ((0xff00U & (IData)(vlSelf->ledr)) 
-                    | (IData)(vlSelf->top__DOT____Vcellout__l1__out));
+    vlSelf->ledr = ((0xfc00U & (IData)(vlSelf->ledr)) 
+                    | (((IData)(vlSelf->top__DOT____Vcellout__inst__overflow) 
+                        << 9U) | (((IData)(vlSelf->top__DOT____Vcellout__inst__ready) 
+                                   << 8U) | vlSelf->top__DOT__inst__DOT__fifo
+                                  [vlSelf->top__DOT__inst__DOT__r_ptr])));
 }
 
 void Vtop___024root___eval_initial(Vtop___024root* vlSelf) {
@@ -41,8 +42,7 @@ void Vtop___024root___eval_initial(Vtop___024root* vlSelf) {
     Vtop__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vtop___024root___eval_initial\n"); );
     // Body
-    vlSelf->__Vclklast__TOP__top__DOT____Vcellinp__l1__clk 
-        = vlSelf->top__DOT____Vcellinp__l1__clk;
+    vlSelf->__Vclklast__TOP__clk = vlSelf->clk;
 }
 
 void Vtop___024root___eval_settle(Vtop___024root* vlSelf) {
@@ -85,6 +85,15 @@ void Vtop___024root___ctor_var_reset(Vtop___024root* vlSelf) {
     vlSelf->seg5 = 0;
     vlSelf->seg6 = 0;
     vlSelf->seg7 = 0;
-    vlSelf->top__DOT____Vcellout__l1__out = 0;
-    vlSelf->top__DOT____Vcellinp__l1__clk = 0;
+    vlSelf->top__DOT____Vcellout__inst__overflow = 0;
+    vlSelf->top__DOT____Vcellout__inst__ready = 0;
+    vlSelf->top__DOT__inst__DOT__buffer = 0;
+    for (int __Vi0=0; __Vi0<8; ++__Vi0) {
+        vlSelf->top__DOT__inst__DOT__fifo[__Vi0] = 0;
+    }
+    vlSelf->top__DOT__inst__DOT__w_ptr = 0;
+    vlSelf->top__DOT__inst__DOT__r_ptr = 0;
+    vlSelf->top__DOT__inst__DOT__count = 0;
+    vlSelf->top__DOT__inst__DOT__ps2_clk_sync = 0;
+    vlSelf->top__DOT__inst__DOT____Vlvbound1 = 0;
 }

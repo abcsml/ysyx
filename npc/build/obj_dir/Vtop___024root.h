@@ -39,10 +39,19 @@ VL_MODULE(Vtop___024root) {
     VL_IN16(sw,15,0);
     VL_OUT16(ledr,15,0);
 
+    // LOCAL SIGNALS
+    CData/*2:0*/ top__DOT__inst__DOT__w_ptr;
+    CData/*2:0*/ top__DOT__inst__DOT__r_ptr;
+    CData/*3:0*/ top__DOT__inst__DOT__count;
+    CData/*2:0*/ top__DOT__inst__DOT__ps2_clk_sync;
+    SData/*9:0*/ top__DOT__inst__DOT__buffer;
+    VlUnpacked<CData/*7:0*/, 8> top__DOT__inst__DOT__fifo;
+
     // LOCAL VARIABLES
-    CData/*0:0*/ top__DOT____Vcellinp__l1__clk;
-    CData/*7:0*/ top__DOT____Vcellout__l1__out;
-    CData/*0:0*/ __Vclklast__TOP__top__DOT____Vcellinp__l1__clk;
+    CData/*0:0*/ top__DOT____Vcellout__inst__overflow;
+    CData/*0:0*/ top__DOT____Vcellout__inst__ready;
+    CData/*0:0*/ top__DOT__inst__DOT____Vlvbound1;
+    CData/*0:0*/ __Vclklast__TOP__clk;
 
     // INTERNAL VARIABLES
     Vtop__Syms* vlSymsp;  // Symbol table

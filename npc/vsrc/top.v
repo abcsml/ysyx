@@ -57,11 +57,30 @@ module top (
 //     .zf(ledr[6])
 // );
 
-LFSR8 l1(
-    .clk(sw[8]),
-    .load(sw[9]),
-    .in(sw[7:0]),
-    .out(ledr[7:0])
+// LFSR8 l1(
+//     .clk(sw[8]),
+//     .load(sw[9]),
+//     .in(sw[7:0]),
+//     .out(ledr[7:0])
+// );
+
+// FSM f1(
+//     .w(sw[1]),
+//     .reset(sw[0]),
+//     .clk(sw[15]),
+//     .z(ledr[0]),
+//     .state(ledr[7:4])
+// );
+
+ps2_keyboard inst(
+    .clk(clk),
+    .clrn(sw[0]),
+    .ps2_clk(ps2_clk),
+    .ps2_data(ps2_data),
+    .data(ledr[7:0]),
+    .ready(ledr[8]),
+    .nextdata_n(sw[1]),
+    .overflow(ledr[9])
 );
 
 endmodule
