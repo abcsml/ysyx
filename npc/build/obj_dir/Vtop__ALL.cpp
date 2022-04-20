@@ -2,6 +2,5 @@
 #define VL_INCLUDE_OPT include
 #include "Vtop.cpp"
 #include "Vtop___024root.cpp"
-#include "Vtop__ConstPool_0.cpp"
 #include "Vtop___024root__Slow.cpp"
 #include "Vtop__Syms.cpp"

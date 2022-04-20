@@ -12,6 +12,8 @@
 vluint64_t sim_time = 0;
 
 static TOP_NAME top;
+// Vtop *top = new Vtop;
+// VerilatedVcdC *tfp = new VerilatedVcdC;
 
 void nvboard_bind_all_pins(Vtop* top);
 
@@ -27,6 +29,9 @@ void reset(int n) {
 }
 
 int main(){
+  // Verilated::traceEverOn(true);
+  // top->trace(tfp,10);
+  // tfp->open("light.vcd");
 
   nvboard_bind_all_pins(&top);
   nvboard_init();
@@ -34,7 +39,11 @@ int main(){
   reset(10);
   while (true) {
     single_cycle();
+
+    // tfp->dump(sim_time);
+    // sim_time++;
     nvboard_update();
   }
   nvboard_quit();
+  // tfp->close();
 }
