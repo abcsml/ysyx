@@ -155,7 +155,7 @@ static uint32_t eval(int p, int q, bool *success) {
     // find the position of 主运算符 in the token expression
     int op = 0;
     int stack = 0;
-    for (int i = stack; i <= q; i++) {
+    for (int i = p; i <= q; i++) {
       if (tokens[i].type == '(')
         stack++;
       else if (tokens[i].type == ')')
