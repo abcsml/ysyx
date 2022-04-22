@@ -75,8 +75,8 @@ static int cmd_x(char *args) {
     return 0;
   }
   bool success;
-  expr(e, &success);
-  printf("test %s %s %d\n", n, e, success);
+  uint32_t ans = expr(e, &success);
+  printf("n:%d, expr:%s, ans:%d, success:%d\n", atoi(n), e, ans, success);
   return 0;
 }
 
