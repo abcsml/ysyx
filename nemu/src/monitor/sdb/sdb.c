@@ -32,7 +32,6 @@ static int cmd_c(char *args) {
   return 0;
 }
 
-
 static int cmd_q(char *args) {
   return -1;
 }
@@ -70,11 +69,13 @@ static int cmd_x(char *args) {
     return 0;
   }
   char *n = strtok(args, " ");
+  printf("test %s\n", args);
   char *begin_addr = strtok(NULL, " ");
   if (begin_addr == NULL) {
     printf("x: error: need tow args\n");
     return 0;
   }
+  // expr()
   printf("test %s %s %d %d\n", n, begin_addr, atoi(n), atoi(begin_addr));
   return 0;
 }
