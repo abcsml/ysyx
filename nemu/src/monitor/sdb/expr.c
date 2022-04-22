@@ -124,7 +124,11 @@ static bool check_parentheses(int p, int q, bool *success) {
       return false;
     }
   }
-  if (tokens[p].type == '(' && tokens[q].type == ')' && p == 0) {
+  if (stack != 0) {
+    *success = false;
+    return false;
+  }
+  if (tokens[p].type == '(' && tokens[q].type == ')') {
     return true;
   }
   return false;
