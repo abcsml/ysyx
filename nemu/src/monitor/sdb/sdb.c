@@ -69,7 +69,7 @@ static int cmd_x(char *args) {
     return 0;
   }
   char *n = strtok(args, " ");
-  printf("test %s\n", args + strlen(n));
+  printf("test %s\n", args + strlen(n) + 1);
   char *begin_addr = strtok(NULL, " ");
   if (begin_addr == NULL) {
     printf("x: error: need tow args\n");
