@@ -38,8 +38,32 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_si(char *args) {
-  // cpu_exec(-1);
-  printf("test %d",atoi(args));
+  cpu_exec(atoi(args));
+  return 0;
+}
+
+static int cmd_info(char *args) {
+  if (strcmp(args, "r") == 0) {
+    printf("got r\n");
+    isa_reg_display();
+  }
+  else if (strcmp(args, "w") == 0) {
+    printf("got w\n");
+  }
+  else {
+    printf("info: no args\n");
+  }
+  return 0;
+}
+
+static int cmd_x(char *args) {
+  char *n = strtok(args, " ");
+  char *begin_addr = strtok(NULL, " ");
+  if (n == NULL || begin_addr == NULL) {
+    printf("x: args error");
+    return 0;
+  }
+  printf("test %s %s %d %d\n", n, begin_addr, atoi(n), atoi(begin_addr));
   return 0;
 }
 
@@ -53,7 +77,9 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-  { "si", "si [N] \t Run [N] step of the program", cmd_si},
+  { "si", "si [N] \t Run [N] step of the program", cmd_si },
+  { "info", "info SUBCMD \t r: register info ; w: watch point info", cmd_info },
+  { "x", "x N addr \t scan mem, begin at addr for N len", cmd_x },
 
   /* TODO: Add more commands */
 
