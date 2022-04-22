@@ -69,14 +69,14 @@ static int cmd_x(char *args) {
     return 0;
   }
   char *n = strtok(args, " ");
-  printf("test %s\n", args + strlen(n) + 1);
-  char *begin_addr = strtok(NULL, " ");
-  if (begin_addr == NULL) {
+  char *e = args + strlen(n) + 1;
+  if (e == NULL) {
     printf("x: error: need tow args\n");
     return 0;
   }
-  // expr()
-  printf("test %s %s %d %d\n", n, begin_addr, atoi(n), atoi(begin_addr));
+  bool success;
+  expr(e, &success);
+  printf("test %s %s %d\n", n, e, success);
   return 0;
 }
 
