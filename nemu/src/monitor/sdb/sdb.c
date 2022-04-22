@@ -38,11 +38,19 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_si(char *args) {
+  if (args == NULL) {
+    printf("si: error: no args\n");
+    return 0;
+  }
   cpu_exec(atoi(args));
   return 0;
 }
 
 static int cmd_info(char *args) {
+  if (args == NULL) {
+    printf("info: error: no args\n");
+    return 0;
+  }
   if (strcmp(args, "r") == 0) {
     printf("got r\n");
     isa_reg_display();
@@ -51,16 +59,20 @@ static int cmd_info(char *args) {
     printf("got w\n");
   }
   else {
-    printf("info: no args\n");
+    printf("???\n");
   }
   return 0;
 }
 
 static int cmd_x(char *args) {
+  if (args == NULL) {
+    printf("x: error: no args\n");
+    return 0;
+  }
   char *n = strtok(args, " ");
   char *begin_addr = strtok(NULL, " ");
   if (n == NULL || begin_addr == NULL) {
-    printf("x: args error");
+    printf("x: error: need tow args\n");
     return 0;
   }
   printf("test %s %s %d %d\n", n, begin_addr, atoi(n), atoi(begin_addr));
