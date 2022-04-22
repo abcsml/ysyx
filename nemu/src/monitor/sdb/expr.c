@@ -164,7 +164,7 @@ static uint32_t eval(int p, int q, bool *success) {
         stack++;
       else if (tokens[i].type == ')')
         stack--;
-      else if (tokens[i].type != TK_MUN) {
+      else if (tokens[i].type != TK_MUN && stack == 0) {
         if (tokens[i].type == '+' || tokens[i].type == '-')
           op = i;
         else {
