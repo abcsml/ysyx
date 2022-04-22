@@ -39,7 +39,7 @@ static int cmd_q(char *args) {
 
 static int cmd_si(char *args) {
   if (args == NULL) {
-    printf("si: error: no args\n");
+    cpu_exec(1);
     return 0;
   }
   cpu_exec(atoi(args));
@@ -71,11 +71,35 @@ static int cmd_x(char *args) {
   }
   char *n = strtok(args, " ");
   char *begin_addr = strtok(NULL, " ");
-  if (n == NULL || begin_addr == NULL) {
+  if (begin_addr == NULL) {
     printf("x: error: need tow args\n");
     return 0;
   }
   printf("test %s %s %d %d\n", n, begin_addr, atoi(n), atoi(begin_addr));
+  return 0;
+}
+
+static int cmd_p(char *args) {
+  if (args == NULL) {
+    printf("p: error: no args\n");
+    return 0;
+  }
+  return 0;
+}
+
+static int cmd_w(char *args) {
+  if (args == NULL) {
+    printf("w: error: no args\n");
+    return 0;
+  }
+  return 0;
+}
+
+static int cmd_d(char *args) {
+  if (args == NULL) {
+    printf("d: error: no args\n");
+    return 0;
+  }
   return 0;
 }
 
@@ -87,11 +111,15 @@ static struct {
   int (*handler) (char *);
 } cmd_table [] = {
   { "help", "Display informations about all supported commands", cmd_help },
+  { "h", "alias help", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-  { "si", "si [N] \t Run [N] step of the program", cmd_si },
-  { "info", "info SUBCMD \t r: register info ; w: watch point info", cmd_info },
-  { "x", "x N addr \t scan mem, begin at addr for N len", cmd_x },
+  { "si", "si [N] \t Run [N] step of the program, default 1", cmd_si },
+  { "info", "info {rw} \t r: register info ; w: watch point info", cmd_info },
+  { "x", "x <N> <EXPR> \t scan mem, begin at EXPR for N len", cmd_x },
+  { "p", "p <EXPR> \t get EXPR val", cmd_p },
+  { "w", "w <EXPR> \t set watch point, program stop when EXPR changed", cmd_w },
+  { "d", "d <N> \t delete nember N watch point", cmd_d },
 
   /* TODO: Add more commands */
 
