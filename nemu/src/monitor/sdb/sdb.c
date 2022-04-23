@@ -3,6 +3,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
+#include <memory/vaddr.h>
 
 static int is_batch_mode = false;
 
@@ -76,7 +77,12 @@ static int cmd_x(char *args) {
   }
   bool success;
   uint32_t ans = expr(e, &success);
-  printf("n:%d, expr:%s, ans:%d, success:%d\n", atoi(n), e, ans, success);
+  // printf("n:%d, expr:%s, ans:%d, success:%d\n", atoi(n), e, ans, success);
+  if (success) {
+    printf("%08x: %08lx", ans, vaddr_read(ans, atoi(n)));
+  } else {
+    printf("x: error: EXPR wrong");
+  }
   return 0;
 }
 
