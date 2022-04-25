@@ -9,7 +9,9 @@ enum {
   TK_NOTYPE = 256,
   TK_EQ = 255,
   TK_MUN = 254,
-  TK_HEX = 253
+  TK_HEX = 1,
+  TK_BIN,
+  TK_OCT,
 
   /* TODO: Add more token types */
 
@@ -28,7 +30,9 @@ static struct rule {
   {"\\+", '+'},         // plus
   {"==", TK_EQ},        // equal
 
-  {"0[xX][0-9]+", TK_HEX},
+  {"0[xX][0-9a-fA-F]+", TK_HEX},
+  {"0[bB][0-1]+", TK_BIN},
+  {"0[0-8]+", TK_OCT},
   {"[0-9]+", TK_MUN},
   {"-", '-'},
   // {" -", TK_NEGETIVE},
@@ -115,17 +119,19 @@ static bool make_token(char *e) {
 }
 
 static word_t num2int(char *num) {
-  int x = 0;
+  word_t x = 0;
   if (*num != '0') { return atoi(num); }
   num ++;
   switch (*num) {
   case 'b': case 'B':
+    num ++;
     while (*num >= '0' && *num <= '1') {
       x = x * 2 + *num - '0';
       num ++;
     }
     return x;
   case 'x': case 'X':
+    num ++;
     while (*num != '\0') {
       if (*num >= '0' && *num <= '9') {
         x = x * 16 + *num - '0';
@@ -235,7 +241,7 @@ word_t expr(char *e, bool *success) {
   *success = true;
   if (!make_token(e)) {
     *success = false;
-    return num2int(0);
+    return 0;
   }
 
   /* TODO: Insert codes to evaluate the expression. */

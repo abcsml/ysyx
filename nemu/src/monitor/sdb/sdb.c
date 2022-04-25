@@ -79,7 +79,7 @@ static int cmd_x(char *args) {
   uint32_t ans = expr(e, &success);
   // printf("n:%d, expr:%s, ans:%d, success:%d\n", atoi(n), e, ans, success);
   if (success) {
-    printf("%08x: %08lx", ans, vaddr_read(ans, atoi(n)));
+    printf("%08x: %lx", ans, vaddr_read(ans, atoi(n)));
   } else {
     printf("x: error: EXPR wrong");
   }
