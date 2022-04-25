@@ -65,7 +65,7 @@ static int cmd_info(char *args) {
 }
 
 static void test() {
-  FILE *fp = fopen("/home/ad/ysyx-workbench/nemu/tools/gen-expr/test", "r");
+  FILE *fp = fopen("/home/ad/ysyx-workbench/nemu/tools/gen-expr/input", "r");
     char line[25565];
     while(!feof(fp)) {
       char *a = fgets(line,25565,fp);
