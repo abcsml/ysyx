@@ -74,7 +74,7 @@ static void test() {
       char *e = line + strlen(n) + 1;
       bool success;
       word_t ans = expr(e, &success);
-      printf("success:%d , n:%d , e:%s , ans:%ld\n", success,atoi(n),e,ans);
+      printf("success:%d , n:%lu , e:%s , ans:%lu\n", success,strtol(n,NULL,10),e,ans);
     }
     fclose(fp);
 }
