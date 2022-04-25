@@ -28,6 +28,7 @@ static struct rule {
   {"\\+", '+'},         // plus
   {"==", TK_EQ},        // equal
 
+  {"0[xX][0-9]+", TK_HEX},
   {"[0-9]+", TK_MUN},
   {"-", '-'},
   // {" -", TK_NEGETIVE},
@@ -36,7 +37,7 @@ static struct rule {
   {"\\(", '('},
   {"\\)", ')'},
   {"\\s", ' '},
-  {"0[xX][0-9]+", TK_HEX},
+  // {"0[xX][0-9]+", TK_HEX},
 };
 
 #define NR_REGEX ARRLEN(rules)
