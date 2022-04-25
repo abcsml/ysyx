@@ -165,11 +165,11 @@ static bool check_parentheses(int p, int q, bool *success) {
       stack++;
     else if (tokens[i].type == ')')
       stack--;
-    // if (stack < 0) {
-    //   printf("()error \n");
-    //   *success = false;
-    //   return false;
-    // }
+    if (stack < 0) {
+      printf("()error p:%d,q:%d \n",p,q);
+      *success = false;
+      return false;
+    }
   }
   if (stack != 0) {
     *success = false;
