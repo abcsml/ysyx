@@ -223,12 +223,15 @@ static word_t eval(int p, int q, bool *success) {
       else if (tokens[i].type == ')')
         stack--;
       else if (tokens[i].type != TK_MUN && stack == 0) {
-        if (tokens[i].type == '+' || tokens[i].type == '-')
-          op = i;
-        else {
+        if (tokens[i].type == '+' || tokens[i].type == '-') {
+          // op = i;
           if (op == '*' || op == '/')
             op = i;
         }
+        // else {
+        //   if (op == '*' || op == '/')
+        //     op = i;
+        // }
       }
       // if (stack < 0) {
       //   *success = false;
