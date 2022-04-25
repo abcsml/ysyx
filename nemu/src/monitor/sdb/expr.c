@@ -4,11 +4,15 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
+#include <errno.h>
 
 enum {
   TK_NOTYPE = 256,
   TK_EQ = 255,
-  TK_MUN = 254
+  TK_MUN = 254,
+  TK_HEX = 1,
+  TK_BIN,
+  TK_OCT,
 
   /* TODO: Add more token types */
 
@@ -27,6 +31,9 @@ static struct rule {
   {"\\+", '+'},         // plus
   {"==", TK_EQ},        // equal
 
+  {"0[xX][0-9a-fA-F]+", TK_HEX},
+  {"0[bB][0-1]+", TK_BIN},
+  {"0[0-8]+", TK_OCT},
   {"[0-9]+", TK_MUN},
   {"-", '-'},
   // {" -", TK_NEGETIVE},
@@ -35,6 +42,7 @@ static struct rule {
   {"\\(", '('},
   {"\\)", ')'},
   {"\\s", ' '},
+  // {"0[xX][0-9]+", TK_HEX},
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -63,7 +71,7 @@ typedef struct token {
   char str[32];
 } Token;
 
-static Token tokens[32] __attribute__((used)) = {};
+static Token tokens[32000] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
@@ -80,8 +88,8 @@ static bool make_token(char *e) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
 
-        Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
-            i, rules[i].regex, position, substr_len, substr_len, substr_start);
+        // Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
+        //     i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
         position += substr_len;
 
@@ -95,6 +103,7 @@ static bool make_token(char *e) {
           default:
             tokens[nr_token].type = rules[i].token_type;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
+            tokens[nr_token].str[substr_len] = '\0';    // bug fix
             nr_token++;
         }
 
@@ -111,6 +120,44 @@ static bool make_token(char *e) {
   return true;
 }
 
+// static word_t num2int(char *num) {
+//   word_t x = 0;
+//   if (*num != '0') { return atoi(num); }
+//   num ++;
+//   switch (*num) {
+//   case 'b': case 'B':
+//     num ++;
+//     while (*num >= '0' && *num <= '1') {
+//       x = x * 2 + *num - '0';
+//       num ++;
+//     }
+//     return x;
+//   case 'x': case 'X':
+//     num ++;
+//     while (*num != '\0') {
+//       if (*num >= '0' && *num <= '9') {
+//         x = x * 16 + *num - '0';
+//       }
+//       else if (*num >= 'A' && *num <= 'F') {
+//         x = x * 16 + *num - 'A' + 10;
+//       }
+//       else if (*num >= 'a' && *num <= 'f') {
+//         x = x * 16 + *num - 'a' + 10;
+//       }
+//       else {
+//         break;
+//       }
+//       num ++;
+//     }
+//     return x;
+//   }
+//   while (*num >= '0' && *num <= '7') {
+//     x = x * 8 + *num - '0';
+//     num ++;
+//   }
+//   return x;
+// }
+
 static bool check_parentheses(int p, int q, bool *success) {
   int stack = 0;
 
@@ -119,7 +166,12 @@ static bool check_parentheses(int p, int q, bool *success) {
       stack++;
     else if (tokens[i].type == ')')
       stack--;
+
+    if (stack == 0 && i != q) {
+      return false;
+    }
     if (stack < 0) {
+      printf("()error i:%d,p:%d,q:%d \n",i,p,q);
       *success = false;
       return false;
     }
@@ -134,7 +186,11 @@ static bool check_parentheses(int p, int q, bool *success) {
   return false;
 }
 
-static uint32_t eval(int p, int q, bool *success) {
+static find_main_op(int p, int q, bool *success) {
+  TODO();
+}
+
+static word_t eval(int p, int q, bool *success) {
   if (*success == false) {
     return 0;
   }
@@ -147,7 +203,13 @@ static uint32_t eval(int p, int q, bool *success) {
      * For now this token should be a number.
      * Return the value of the number.
      */
-    return atoi(tokens[p].str);      // int?
+    errno = 0;
+    word_t a = strtoll(tokens[p].str, NULL, 0);
+    if (errno == ERANGE) {
+      printf("error: range out\n");
+      *success = false;
+    }
+    return a;
   }
   else if (check_parentheses(p, q, success) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
@@ -165,8 +227,11 @@ static uint32_t eval(int p, int q, bool *success) {
       else if (tokens[i].type == ')')
         stack--;
       else if (tokens[i].type != TK_MUN && stack == 0) {
-        if (tokens[i].type == '+' || tokens[i].type == '-')
+        if (tokens[i].type == '+' || tokens[i].type == '-') {
           op = i;
+          // if (op == '*' || op == '/')
+          //   op = i;
+        }
         else {
           if (op == '*' || op == '/')
             op = i;
@@ -177,10 +242,10 @@ static uint32_t eval(int p, int q, bool *success) {
         return 0;
       }
     }
-    printf("%d op:%c\n", op, tokens[op].type);
+    // printf("%d op:%c\n", op, tokens[op].type);
 
-    uint32_t val1 = eval(p, op - 1, success);
-    uint32_t val2 = eval(op + 1, q, success);
+    word_t val1 = eval(p, op - 1, success);
+    word_t val2 = eval(op + 1, q, success);
 
     switch (tokens[op].type) {
       case '+': return val1 + val2;
@@ -200,5 +265,6 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
+  printf("len:%d\n",nr_token);
   return eval(0, nr_token-1, success);
 }

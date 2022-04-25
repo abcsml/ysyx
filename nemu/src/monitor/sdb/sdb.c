@@ -3,6 +3,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
+#include <memory/vaddr.h>
 
 static int is_batch_mode = false;
 
@@ -63,9 +64,25 @@ static int cmd_info(char *args) {
   return 0;
 }
 
+static void test() {
+  FILE *fp = fopen("/home/ad/ysyx-workbench/nemu/tools/gen-expr/input", "r");
+    char line[25565];
+    while(!feof(fp)) {
+      char *a = fgets(line,25565,fp);
+      a = a+1;
+      char *n = strtok(line, " ");
+      char *e = line + strlen(n) + 1;
+      bool success;
+      word_t ans = expr(e, &success);
+      printf("success:%d , n:%lu , e:%s , ans:%lu\n", success,strtol(n,NULL,10),e,ans);
+    }
+    fclose(fp);
+}
+
 static int cmd_x(char *args) {
   if (args == NULL) {
     printf("x: error: no args\n");
+    test();
     return 0;
   }
   char *n = strtok(args, " ");
@@ -75,8 +92,18 @@ static int cmd_x(char *args) {
     return 0;
   }
   bool success;
-  uint32_t ans = expr(e, &success);
-  printf("n:%d, expr:%s, ans:%d, success:%d\n", atoi(n), e, ans, success);
+  word_t ans = expr(e, &success);
+  if (success) {
+    word_t v = vaddr_read(ans, atoi(n));
+    uint8_t *mem = (uint8_t *) &v;
+    printf("%08lx:", ans);
+    for (int i = 0; i < atoi(n) && i < 8; i++) {
+      printf(" %02x", mem[i]);
+    }
+    printf("\n");
+  } else {
+    printf("x: error: EXPR wrong\n");
+  }
   return 0;
 }
 
