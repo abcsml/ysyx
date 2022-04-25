@@ -69,8 +69,7 @@ static void test() {
     char line[25565];
     while(!feof(fp)) {
       char *a = fgets(line,25565,fp);
-      printf("%s\n", a);
-      printf("line:%s\n", line);
+      a = a+1;
       char *n = strtok(line, " ");
       char *e = line + strlen(n) + 1;
       bool success;

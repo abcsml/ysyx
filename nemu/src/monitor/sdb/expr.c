@@ -193,7 +193,6 @@ static word_t eval(int p, int q, bool *success) {
      * For now this token should be a number.
      * Return the value of the number.
      */
-    printf("val: %s\n",tokens[p].str);
     return strtoll(tokens[p].str, NULL, 0);
   }
   else if (check_parentheses(p, q, success) == true) {
@@ -224,7 +223,7 @@ static word_t eval(int p, int q, bool *success) {
         return 0;
       }
     }
-    printf("%d op:%c\n", op, tokens[op].type);
+    // printf("%d op:%c\n", op, tokens[op].type);
 
     word_t val1 = eval(p, op - 1, success);
     word_t val2 = eval(op + 1, q, success);
