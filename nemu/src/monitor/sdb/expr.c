@@ -4,6 +4,7 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
+#include <errno.h>
 
 enum {
   TK_NOTYPE = 256,
@@ -198,7 +199,13 @@ static word_t eval(int p, int q, bool *success) {
      * For now this token should be a number.
      * Return the value of the number.
      */
-    return strtoll(tokens[p].str, NULL, 0);
+    errno = 0;
+    word_t a = strtoll(tokens[p].str, NULL, 0);
+    if (errno == ERANGE) {
+      printf("error: range out\n");
+      *success = false;
+    }
+    return a;
   }
   else if (check_parentheses(p, q, success) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
