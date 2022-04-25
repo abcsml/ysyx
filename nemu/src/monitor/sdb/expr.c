@@ -102,8 +102,6 @@ static bool make_token(char *e) {
           default:
             tokens[nr_token].type = rules[i].token_type;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
-            Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
-            i, rules[i].regex, position, substr_len, substr_len, substr_start);
             nr_token++;
         }
 
@@ -120,43 +118,43 @@ static bool make_token(char *e) {
   return true;
 }
 
-static word_t num2int(char *num) {
-  word_t x = 0;
-  if (*num != '0') { return atoi(num); }
-  num ++;
-  switch (*num) {
-  case 'b': case 'B':
-    num ++;
-    while (*num >= '0' && *num <= '1') {
-      x = x * 2 + *num - '0';
-      num ++;
-    }
-    return x;
-  case 'x': case 'X':
-    num ++;
-    while (*num != '\0') {
-      if (*num >= '0' && *num <= '9') {
-        x = x * 16 + *num - '0';
-      }
-      else if (*num >= 'A' && *num <= 'F') {
-        x = x * 16 + *num - 'A' + 10;
-      }
-      else if (*num >= 'a' && *num <= 'f') {
-        x = x * 16 + *num - 'a' + 10;
-      }
-      else {
-        break;
-      }
-      num ++;
-    }
-    return x;
-  }
-  while (*num >= '0' && *num <= '7') {
-    x = x * 8 + *num - '0';
-    num ++;
-  }
-  return x;
-}
+// static word_t num2int(char *num) {
+//   word_t x = 0;
+//   if (*num != '0') { return atoi(num); }
+//   num ++;
+//   switch (*num) {
+//   case 'b': case 'B':
+//     num ++;
+//     while (*num >= '0' && *num <= '1') {
+//       x = x * 2 + *num - '0';
+//       num ++;
+//     }
+//     return x;
+//   case 'x': case 'X':
+//     num ++;
+//     while (*num != '\0') {
+//       if (*num >= '0' && *num <= '9') {
+//         x = x * 16 + *num - '0';
+//       }
+//       else if (*num >= 'A' && *num <= 'F') {
+//         x = x * 16 + *num - 'A' + 10;
+//       }
+//       else if (*num >= 'a' && *num <= 'f') {
+//         x = x * 16 + *num - 'a' + 10;
+//       }
+//       else {
+//         break;
+//       }
+//       num ++;
+//     }
+//     return x;
+//   }
+//   while (*num >= '0' && *num <= '7') {
+//     x = x * 8 + *num - '0';
+//     num ++;
+//   }
+//   return x;
+// }
 
 static bool check_parentheses(int p, int q, bool *success) {
   int stack = 0;
@@ -194,7 +192,8 @@ static word_t eval(int p, int q, bool *success) {
      * For now this token should be a number.
      * Return the value of the number.
      */
-    return num2int(tokens[p].str);      // int?
+    printf("val: %s\n",tokens[p].str);
+    return strtoll(tokens[p].str, NULL, 0);
   }
   else if (check_parentheses(p, q, success) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
