@@ -77,12 +77,11 @@ static int cmd_x(char *args) {
   }
   bool success;
   word_t ans = expr(e, &success);
-  // printf("n:%d, expr:%s, ans:%d, success:%d\n", atoi(n), e, ans, success);
   if (success) {
     word_t v = vaddr_read(ans, atoi(n));
     uint8_t *mem = (uint8_t *) &v;
     printf("%08lx:", ans);
-    for (int i = 0; i < atoi(n) && i < 4; i++) {
+    for (int i = 0; i < atoi(n) && i < 8; i++) {
       printf(" %02x", mem[i]);
     }
     printf("\n");
