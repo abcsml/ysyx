@@ -166,6 +166,7 @@ static bool check_parentheses(int p, int q, bool *success) {
     else if (tokens[i].type == ')')
       stack--;
     if (stack < 0) {
+      printf("()error \n");
       *success = false;
       return false;
     }
@@ -218,10 +219,10 @@ static word_t eval(int p, int q, bool *success) {
             op = i;
         }
       }
-      if (stack < 0) {
-        *success = false;
-        return 0;
-      }
+      // if (stack < 0) {
+      //   *success = false;
+      //   return 0;
+      // }
     }
     // printf("%d op:%c\n", op, tokens[op].type);
 
