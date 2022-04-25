@@ -67,6 +67,25 @@ static int cmd_info(char *args) {
 static int cmd_x(char *args) {
   if (args == NULL) {
     printf("x: error: no args\n");
+
+
+
+    FILE *fp = fopen("/home/ad/ysyx-workbench/nemu/tools/gen-expr/test", "r");
+    char line[25565];
+    while(!feof(fp)) {
+      char *a = fgets(line,25565,fp);
+      printf("%s\n", a);
+      char *n = strtok(line, " ");
+      char *e = line + strlen(n) + 1;
+      bool success;
+      word_t ans = expr(e, &success);
+      printf("success:%d , n:%d , e:%s , ans:%ld\n", success,atoi(n),e,ans);
+    }
+    fclose(fp);
+
+
+
+
     return 0;
   }
   char *n = strtok(args, " ");
