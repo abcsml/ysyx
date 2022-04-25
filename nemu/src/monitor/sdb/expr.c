@@ -186,7 +186,7 @@ static word_t eval(int p, int q, bool *success) {
      * For now this token should be a number.
      * Return the value of the number.
      */
-    return atoi(tokens[p].str);      // int?
+    return num2int(tokens[p].str);      // int?
   }
   else if (check_parentheses(p, q, success) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
