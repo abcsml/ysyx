@@ -64,13 +64,8 @@ static int cmd_info(char *args) {
   return 0;
 }
 
-static int cmd_x(char *args) {
-  if (args == NULL) {
-    printf("x: error: no args\n");
-
-
-
-    FILE *fp = fopen("/home/ad/ysyx-workbench/nemu/tools/gen-expr/test", "r");
+static void test() {
+  FILE *fp = fopen("/home/ad/ysyx-workbench/nemu/tools/gen-expr/test", "r");
     char line[25565];
     while(!feof(fp)) {
       char *a = fgets(line,25565,fp);
@@ -82,10 +77,12 @@ static int cmd_x(char *args) {
       printf("success:%d , n:%d , e:%s , ans:%ld\n", success,atoi(n),e,ans);
     }
     fclose(fp);
+}
 
-
-
-
+static int cmd_x(char *args) {
+  if (args == NULL) {
+    printf("x: error: no args\n");
+    test();
     return 0;
   }
   char *n = strtok(args, " ");
