@@ -8,7 +8,8 @@
 enum {
   TK_NOTYPE = 256,
   TK_EQ = 255,
-  TK_MUN = 254
+  TK_MUN = 254,
+  TK_HEX = 253
 
   /* TODO: Add more token types */
 
@@ -35,6 +36,7 @@ static struct rule {
   {"\\(", '('},
   {"\\)", ')'},
   {"\\s", ' '},
+  {"0[xX][0-9]+", TK_HEX},
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -111,6 +113,42 @@ static bool make_token(char *e) {
   return true;
 }
 
+static word_t num2int(char *num) {
+  int x = 0;
+  if (*num != '0') { return atoi(num); }
+  num ++;
+  switch (*num) {
+  case 'b': case 'B':
+    while (*num >= '0' && *num <= '1') {
+      x = x * 2 + *num - '0';
+      num ++;
+    }
+    return x;
+  case 'x': case 'X':
+    while (*num != '\0') {
+      if (*num >= '0' && *num <= '9') {
+        x = x * 16 + *num - '0';
+      }
+      else if (*num >= 'A' && *num <= 'F') {
+        x = x * 16 + *num - 'A' + 10;
+      }
+      else if (*num >= 'a' && *num <= 'f') {
+        x = x * 16 + *num - 'a' + 10;
+      }
+      else {
+        break;
+      }
+      num ++;
+    }
+    return x;
+  }
+  while (*num >= '0' && *num <= '7') {
+    x = x * 8 + *num - '0';
+    num ++;
+  }
+  return x;
+}
+
 static bool check_parentheses(int p, int q, bool *success) {
   int stack = 0;
 
@@ -134,7 +172,7 @@ static bool check_parentheses(int p, int q, bool *success) {
   return false;
 }
 
-static uint32_t eval(int p, int q, bool *success) {
+static word_t eval(int p, int q, bool *success) {
   if (*success == false) {
     return 0;
   }
@@ -179,8 +217,8 @@ static uint32_t eval(int p, int q, bool *success) {
     }
     printf("%d op:%c\n", op, tokens[op].type);
 
-    uint32_t val1 = eval(p, op - 1, success);
-    uint32_t val2 = eval(op + 1, q, success);
+    word_t val1 = eval(p, op - 1, success);
+    word_t val2 = eval(op + 1, q, success);
 
     switch (tokens[op].type) {
       case '+': return val1 + val2;
@@ -196,7 +234,7 @@ word_t expr(char *e, bool *success) {
   *success = true;
   if (!make_token(e)) {
     *success = false;
-    return 0;
+    return num2int(0);
   }
 
   /* TODO: Insert codes to evaluate the expression. */
