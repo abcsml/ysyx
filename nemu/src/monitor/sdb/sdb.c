@@ -76,12 +76,17 @@ static int cmd_x(char *args) {
     return 0;
   }
   bool success;
-  uint32_t ans = expr(e, &success);
+  word_t ans = expr(e, &success);
   // printf("n:%d, expr:%s, ans:%d, success:%d\n", atoi(n), e, ans, success);
   if (success) {
-    printf("%08x: %lx", ans, vaddr_read(ans, atoi(n)));
+    uint8_t *mem = (uint8_t *) vaddr_read(ans, atoi(n));
+    printf("%08lx:", ans);
+    for (int i = 0; i < atoi(n); i++) {
+      printf(" %02x", mem[i]);
+    }
+    printf("\n");
   } else {
-    printf("x: error: EXPR wrong");
+    printf("x: error: EXPR wrong\n");
   }
   return 0;
 }
