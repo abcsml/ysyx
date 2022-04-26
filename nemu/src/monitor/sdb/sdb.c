@@ -80,7 +80,7 @@ static int cmd_x(char *args) {
   if (success) {
     printf("0x%08lx:", ans);
     for (int i = 0; i < atoi(n); i++) {
-      uint8_t mem = vaddr_read(ans, 1);
+      uint8_t mem = vaddr_read(ans+i, 1);
       printf(" %02x", mem);
     }
     printf("\n");
