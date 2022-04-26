@@ -64,25 +64,9 @@ static int cmd_info(char *args) {
   return 0;
 }
 
-static void test() {
-  FILE *fp = fopen("/home/ad/ysyx-workbench/nemu/tools/gen-expr/input", "r");
-    char line[25565];
-    while(!feof(fp)) {
-      char *a = fgets(line,25565,fp);
-      a = a+1;
-      char *n = strtok(line, " ");
-      char *e = line + strlen(n) + 1;
-      bool success;
-      word_t ans = expr(e, &success);
-      printf("success:%d , n:%lu , e:%s , ans:%lu\n", success,strtol(n,NULL,10),e,ans);
-    }
-    fclose(fp);
-}
-
 static int cmd_x(char *args) {
   if (args == NULL) {
     printf("x: error: no args\n");
-    test();
     return 0;
   }
   char *n = strtok(args, " ");
@@ -111,6 +95,14 @@ static int cmd_p(char *args) {
   if (args == NULL) {
     printf("p: error: no args\n");
     return 0;
+  }
+  bool success;
+  word_t ans = expr(args, &success);
+  if (success) {
+    printf("%08lx\n", ans);
+  }
+  else {
+    printf("p: error: EXPR wrong\n");
   }
   return 0;
 }

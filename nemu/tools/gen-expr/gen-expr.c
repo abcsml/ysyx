@@ -12,7 +12,7 @@ static char *code_format =
 "#include <stdio.h>\n"
 "int main() { "
 "  unsigned long long result = %s; "
-"  printf(\"%%lu\", result); "
+"  printf(\"%%llu\", result); "
 "  return 0; "
 "}";
 
