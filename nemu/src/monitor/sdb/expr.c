@@ -12,7 +12,7 @@ enum {
   TK_EQ = 255,
   TK_NUM = 128,
 
-  TK_REG = 129, // 单目运算符
+  TK_REG = 129,
   TK_NEG,
   TK_DER, // 解引用
 
@@ -203,7 +203,7 @@ static int find_main_op(int p, int q, bool *success) {
         break;
       case TK_NEG: case TK_DER:
         if (stack == 0 && (tokens[op_index].type == TK_NEG ||
-          tokens[op_index].type == TK_REG)) {
+          tokens[op_index].type == TK_DER)) {
           op_index = i;
         }
         break;
@@ -234,7 +234,7 @@ static word_t eval(int p, int q, bool *success) {
       return str2val(tokens[p].str, success);
     }
     else if (tokens[p].type == TK_REG) {
-      return isa_reg_str2val(tokens[p].str, success);
+      return isa_reg_str2val(tokens[p].str + 1, success);
     }
     *success = false;
     return 0;
