@@ -12,7 +12,7 @@ static char *code_format =
 "#include <stdio.h>\n"
 "int main() { "
 "  unsigned long long result = %s; "
-"  printf(\"%%lu\", result); "
+"  printf(\"%%llu\", result); "
 "  return 0; "
 "}";
 
@@ -37,7 +37,7 @@ static void gen_num() {
 }
 
 static void gen_rand_op() {
-  switch (choose(4)) {
+  switch (choose(3)) {
     case 0: gen('+'); break;
     case 1: gen('-'); break;
     case 2: gen('*'); break;

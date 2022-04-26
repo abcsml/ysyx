@@ -64,25 +64,9 @@ static int cmd_info(char *args) {
   return 0;
 }
 
-static void test() {
-  FILE *fp = fopen("/home/ad/ysyx-workbench/nemu/tools/gen-expr/input", "r");
-    char line[25565];
-    while(!feof(fp)) {
-      char *a = fgets(line,25565,fp);
-      a = a+1;
-      char *n = strtok(line, " ");
-      char *e = line + strlen(n) + 1;
-      bool success;
-      word_t ans = expr(e, &success);
-      printf("success:%d , n:%lu , e:%s , ans:%lu\n", success,strtol(n,NULL,10),e,ans);
-    }
-    fclose(fp);
-}
-
 static int cmd_x(char *args) {
   if (args == NULL) {
     printf("x: error: no args\n");
-    test();
     return 0;
   }
   char *n = strtok(args, " ");
@@ -94,11 +78,10 @@ static int cmd_x(char *args) {
   bool success;
   word_t ans = expr(e, &success);
   if (success) {
-    word_t v = vaddr_read(ans, atoi(n));
-    uint8_t *mem = (uint8_t *) &v;
-    printf("%08lx:", ans);
-    for (int i = 0; i < atoi(n) && i < 8; i++) {
-      printf(" %02x", mem[i]);
+    printf("0x%08lx:", ans);
+    for (int i = 0; i < atoi(n); i++) {
+      uint8_t mem = vaddr_read(ans+i, 1);
+      printf(" %02x", mem);
     }
     printf("\n");
   } else {
@@ -111,6 +94,14 @@ static int cmd_p(char *args) {
   if (args == NULL) {
     printf("p: error: no args\n");
     return 0;
+  }
+  bool success;
+  word_t ans = expr(args, &success);
+  if (success) {
+    printf("0x%lx\n", ans);
+  }
+  else {
+    printf("p: error: EXPR wrong\n");
   }
   return 0;
 }

@@ -4,15 +4,17 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
-#include <errno.h>
+#include <limits.h>
+#include <memory/vaddr.h>
 
 enum {
   TK_NOTYPE = 256,
   TK_EQ = 255,
-  TK_MUN = 254,
-  TK_HEX = 1,
-  TK_BIN,
-  TK_OCT,
+  TK_NUM = 128,
+
+  TK_REG = 129,
+  TK_NEG,
+  TK_DER, // 解引用
 
   /* TODO: Add more token types */
 
@@ -31,17 +33,24 @@ static struct rule {
   {"\\+", '+'},         // plus
   {"==", TK_EQ},        // equal
 
-  {"0[xX][0-9a-fA-F]+", TK_HEX},
-  {"0[bB][0-1]+", TK_BIN},
-  {"0[0-8]+", TK_OCT},
-  {"[0-9]+", TK_MUN},
+  {"0[xX][0-9a-fA-F]+", TK_NUM},
+  {"0[bB][0-1]+", TK_NUM},
+  {"0[0-8]+", TK_NUM},
+  {"[0-9]+", TK_NUM},
+  // 匹配负数，-(-2) -> -2 ,--2 -> -2
+  // {"(?<=[+-*/][^0-9].)-0[xX][0-9a-fA-F]+", TK_HEX},
+  // {"(?<=[+-*/][^0-9].)-0[bB][0-1]+", TK_BIN},
+  // {"(?<=[+-*/][^0-9].)-0[0-8]+", TK_OCT},
+  // {"(?<=[+-*/][^0-9].)-[0-9]+", TK_NUM},
+  // 寄存器
+  {"\\$[a-z\\$][a-z0-9]+", TK_REG},
   {"-", '-'},
   // {" -", TK_NEGETIVE},
   {"\\*", '*'},
   {"/", '/'},
   {"\\(", '('},
   {"\\)", ')'},
-  {"\\s", ' '},
+  {"\\s", TK_NOTYPE},
   // {"0[xX][0-9]+", TK_HEX},
 };
 
@@ -99,7 +108,7 @@ static bool make_token(char *e) {
          */
 
         switch (rules[i].token_type) {
-          case ' ': case TK_NOTYPE: break;
+          case TK_NOTYPE: break;
           default:
             tokens[nr_token].type = rules[i].token_type;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
@@ -120,58 +129,45 @@ static bool make_token(char *e) {
   return true;
 }
 
-// static word_t num2int(char *num) {
-//   word_t x = 0;
-//   if (*num != '0') { return atoi(num); }
-//   num ++;
-//   switch (*num) {
-//   case 'b': case 'B':
-//     num ++;
-//     while (*num >= '0' && *num <= '1') {
-//       x = x * 2 + *num - '0';
-//       num ++;
-//     }
-//     return x;
-//   case 'x': case 'X':
-//     num ++;
-//     while (*num != '\0') {
-//       if (*num >= '0' && *num <= '9') {
-//         x = x * 16 + *num - '0';
-//       }
-//       else if (*num >= 'A' && *num <= 'F') {
-//         x = x * 16 + *num - 'A' + 10;
-//       }
-//       else if (*num >= 'a' && *num <= 'f') {
-//         x = x * 16 + *num - 'a' + 10;
-//       }
-//       else {
-//         break;
-//       }
-//       num ++;
-//     }
-//     return x;
-//   }
-//   while (*num >= '0' && *num <= '7') {
-//     x = x * 8 + *num - '0';
-//     num ++;
-//   }
-//   return x;
-// }
+static word_t str2val(char *num, bool *success) {
+  word_t x = 0;
+  if (*num != '0') {
+    x = strtoul(num, NULL, 10);
+  }
+  else {
+    num ++;
+    switch (*num) {
+    case 'b': case 'B':
+      num ++;
+      x = strtoul(num, NULL, 2);
+      break;
+    case 'x': case 'X':
+      num ++;
+      x = strtoul(num, NULL, 16);
+      break;
+    default:
+      x = strtoul(num, NULL, 8);
+    }
+  }
+  if (x == ULONG_MAX) {
+    *success = false;
+    // return 0;
+  }
+  return x;
+}
 
 static bool check_parentheses(int p, int q, bool *success) {
   int stack = 0;
-
   for (int i = p; i <= q; i++) {
     if (tokens[i].type == '(')
       stack++;
     else if (tokens[i].type == ')')
       stack--;
-
     if (stack == 0 && i != q) {
       return false;
     }
     if (stack < 0) {
-      printf("()error i:%d,p:%d,q:%d \n",i,p,q);
+      printf("'(',')'error i:%d,p:%d,q:%d \n",i,p,q);
       *success = false;
       return false;
     }
@@ -186,8 +182,39 @@ static bool check_parentheses(int p, int q, bool *success) {
   return false;
 }
 
-static find_main_op(int p, int q, bool *success) {
-  TODO();
+// 从右到左运算
+static int find_main_op(int p, int q, bool *success) {
+  int op_index = p;
+  int stack = 0;
+  for (int i = p; i <= q; i++) {
+    switch (tokens[i].type) {
+      case '(': stack++; break;
+      case ')': stack--; break;
+      case '+': case '-':
+        if (stack == 0) {
+          op_index = i;
+        }
+        break;
+      case '*': case '/':
+        if (stack == 0 && (tokens[op_index].type != '+' ||
+          tokens[op_index].type != '-')) {
+          op_index = i;
+        }
+        break;
+      case TK_NEG: case TK_DER:
+        if (stack == 0 && (tokens[op_index].type == TK_NEG ||
+          tokens[op_index].type == TK_DER)) {
+          op_index = i;
+        }
+        break;
+      default: break;
+    }
+    if (stack < 0) {
+      *success = false;
+      return 0;
+    }
+  }
+  return op_index;
 }
 
 static word_t eval(int p, int q, bool *success) {
@@ -203,13 +230,14 @@ static word_t eval(int p, int q, bool *success) {
      * For now this token should be a number.
      * Return the value of the number.
      */
-    errno = 0;
-    word_t a = strtoll(tokens[p].str, NULL, 0);
-    if (errno == ERANGE) {
-      printf("error: range out\n");
-      *success = false;
+    if (tokens[p].type == TK_NUM) {
+      return str2val(tokens[p].str, success);
     }
-    return a;
+    else if (tokens[p].type == TK_REG) {
+      return isa_reg_str2val(tokens[p].str + 1, success);
+    }
+    *success = false;
+    return 0;
   }
   else if (check_parentheses(p, q, success) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
@@ -219,39 +247,29 @@ static word_t eval(int p, int q, bool *success) {
   }
   else {
     // find the position of 主运算符 in the token expression
-    int op = '*';     // 选择优先级最差的作为初始值
-    int stack = 0;
-    for (int i = p; i <= q; i++) {
-      if (tokens[i].type == '(')
-        stack++;
-      else if (tokens[i].type == ')')
-        stack--;
-      else if (tokens[i].type != TK_MUN && stack == 0) {
-        if (tokens[i].type == '+' || tokens[i].type == '-') {
-          op = i;
-          // if (op == '*' || op == '/')
-          //   op = i;
-        }
-        else {
-          if (op == '*' || op == '/')
-            op = i;
-        }
-      }
-      if (stack < 0) {
-        *success = false;
-        return 0;
-      }
-    }
+    int op_index = find_main_op(p, q, success);
     // printf("%d op:%c\n", op, tokens[op].type);
 
-    word_t val1 = eval(p, op - 1, success);
-    word_t val2 = eval(op + 1, q, success);
+    // word_t val1 = eval(p, op_index - 1, success);
+    // word_t val2 = eval(op_index + 1, q, success);
 
-    switch (tokens[op].type) {
-      case '+': return val1 + val2;
-      case '-': return val1 - val2;
-      case '*': return val1 * val2;
-      case '/': return val1 / val2;
+    switch (tokens[op_index].type) {
+      case '+':
+        return eval(p, op_index - 1, success) +
+        eval(op_index + 1, q, success);
+      case '-':
+        return eval(p, op_index - 1, success) - 
+        eval(op_index + 1, q, success);
+      case '*':
+        return eval(p, op_index - 1, success) * 
+        eval(op_index + 1, q, success);
+      case '/':
+        return eval(p, op_index - 1, success) / 
+        eval(op_index + 1, q, success);
+      case TK_NEG:
+        return -eval(op_index + 1, q, success);
+      case TK_DER:
+        return vaddr_read(eval(op_index + 1, q, success), 4);
       default: assert(0);
     }
   }
@@ -265,6 +283,16 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  printf("len:%d\n",nr_token);
+  // 修正特殊类型
+  for (int i = 0; i < nr_token; i++) {
+    if (tokens[i].type == '-' && (i == 0 || tokens[i - 1].type != TK_NUM)) {
+      tokens[i].type = TK_NEG;
+    }
+    if (tokens[i].type == '*' && (i == 0 || tokens[i - 1].type != TK_NUM)) {
+      tokens[i].type = TK_DER;
+    }
+    printf("type:%d, str:%s\n", tokens[i].type, tokens[i].str);
+  }
+
   return eval(0, nr_token-1, success);
 }
