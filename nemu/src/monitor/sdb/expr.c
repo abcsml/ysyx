@@ -121,6 +121,8 @@ static bool make_token(char *e) {
             if (tokens[i].type == '*' && (i == 0 || tokens[i - 1].type != TK_MUN)) {
               tokens[i].type = TK_REG;
             }
+            Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
+            i, rules[i].regex, position, substr_len, substr_len, substr_start);
         }
 
         break;
@@ -146,17 +148,19 @@ static word_t num2int(char *num, bool *success) {
     switch (*num) {
     case 'b': case 'B':
       num ++;
-      x = strtoul(num, NULL, 2);;
+      x = strtoul(num, NULL, 2);
+      break;
     case 'x': case 'X':
       num ++;
       x = strtoul(num, NULL, 16);
+      break;
     default:
       x = strtoul(num, NULL, 8);
     }
   }
   if (x == ULONG_MAX) {
     *success = false;
-    return 0;
+    // return 0;
   }
   return x;
 }
