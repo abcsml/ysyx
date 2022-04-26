@@ -78,11 +78,10 @@ static int cmd_x(char *args) {
   bool success;
   word_t ans = expr(e, &success);
   if (success) {
-    word_t v = vaddr_read(ans, atoi(n));
-    uint8_t *mem = (uint8_t *) &v;
-    printf("%08lx:", ans);
-    for (int i = 0; i < atoi(n) && i < 8; i++) {
-      printf(" %02x", mem[i]);
+    printf("0x%08lx:", ans);
+    for (int i = 0; i < atoi(n); i++) {
+      uint8_t mem = vaddr_read(ans, 1);
+      printf(" %02x", mem);
     }
     printf("\n");
   } else {
@@ -99,7 +98,7 @@ static int cmd_p(char *args) {
   bool success;
   word_t ans = expr(args, &success);
   if (success) {
-    printf("%08lx\n", ans);
+    printf("0x%lx\n", ans);
   }
   else {
     printf("p: error: EXPR wrong\n");
