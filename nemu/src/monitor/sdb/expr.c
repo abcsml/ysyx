@@ -138,17 +138,21 @@ static bool make_token(char *e) {
 
 static word_t num2int(char *num, bool *success) {
   word_t x = 0;
-  if (*num != '0') { x = strtoul(num, NULL, 10); }
-  num ++;
-  switch (*num) {
-  case 'b': case 'B':
+  if (*num != '0') {
+    x = strtoul(num, NULL, 10);
+  }
+  else {
     num ++;
-    x = strtoul(num, NULL, 2);;
-  case 'x': case 'X':
-    num ++;
-    x = strtoul(num, NULL, 16);
-  default:
-    x = strtoul(num, NULL, 8);
+    switch (*num) {
+    case 'b': case 'B':
+      num ++;
+      x = strtoul(num, NULL, 2);;
+    case 'x': case 'X':
+      num ++;
+      x = strtoul(num, NULL, 16);
+    default:
+      x = strtoul(num, NULL, 8);
+    }
   }
   if (x == ULONG_MAX) {
     *success = false;
@@ -198,12 +202,14 @@ static int find_main_op(int p, int q, bool *success) {
         }
         break;
       case '*': case '/':
-        if (stack == 0 && (tokens[op_index].type != '+' || tokens[op_index].type != '-')) {
+        if (stack == 0 && (tokens[op_index].type != '+' ||
+          tokens[op_index].type != '-')) {
           op_index = i;
         }
         break;
       case TK_NEG: case TK_REG:
-        if (stack == 0 && (tokens[op_index].type == TK_NEG || tokens[op_index].type == TK_REG)) {
+        if (stack == 0 && (tokens[op_index].type == TK_NEG ||
+          tokens[op_index].type == TK_REG)) {
           op_index = i;
         }
         break;
