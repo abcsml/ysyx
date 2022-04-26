@@ -186,6 +186,10 @@ static bool check_parentheses(int p, int q, bool *success) {
   return false;
 }
 
+// static find_main_op(int p, int q, bool *success) {
+//   TODO();
+// }
+
 static word_t eval(int p, int q, bool *success) {
   if (*success == false) {
     return 0;
@@ -224,19 +228,19 @@ static word_t eval(int p, int q, bool *success) {
         stack--;
       else if (tokens[i].type != TK_MUN && stack == 0) {
         if (tokens[i].type == '+' || tokens[i].type == '-') {
-          // op = i;
+          op = i;
+          // if (op == '*' || op == '/')
+          //   op = i;
+        }
+        else {
           if (op == '*' || op == '/')
             op = i;
         }
-        // else {
-        //   if (op == '*' || op == '/')
-        //     op = i;
-        // }
       }
-      // if (stack < 0) {
-      //   *success = false;
-      //   return 0;
-      // }
+      if (stack < 0) {
+        *success = false;
+        return 0;
+      }
     }
     // printf("%d op:%c\n", op, tokens[op].type);
 
