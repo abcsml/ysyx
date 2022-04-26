@@ -43,7 +43,7 @@ static struct rule {
   // {"(?<=[+-*/][^0-9].)-0[0-8]+", TK_OCT},
   // {"(?<=[+-*/][^0-9].)-[0-9]+", TK_NUM},
   // 寄存器
-  {"$[a-z$][a-z0-9]+", TK_REG},
+  {"\\$[a-z\\$][a-z0-9]+", TK_REG},
   {"-", '-'},
   // {" -", TK_NEGETIVE},
   {"\\*", '*'},
@@ -291,7 +291,7 @@ word_t expr(char *e, bool *success) {
     if (tokens[i].type == '*' && (i == 0 || tokens[i - 1].type != TK_NUM)) {
       tokens[i].type = TK_DER;
     }
-    printf("type:%c, str:%s\n", tokens[i].type, tokens[i].str);
+    printf("type:%d, str:%s\n", tokens[i].type, tokens[i].str);
   }
 
   return eval(0, nr_token-1, success);
