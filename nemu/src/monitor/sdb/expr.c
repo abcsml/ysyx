@@ -207,7 +207,7 @@ static int find_main_op(int p, int q, bool *success) {
           op_index = i;
         }
         break;
-      default: break;
+      default: success = false; break;
     }
     if (stack < 0) {
       *success = false;
