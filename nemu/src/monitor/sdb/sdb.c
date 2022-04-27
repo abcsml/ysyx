@@ -52,11 +52,12 @@ static int cmd_info(char *args) {
     return 0;
   }
   if (strcmp(args, "r") == 0) {
-    printf("got r\n");
+    // printf("got r\n");
     isa_reg_display();
   }
   else if (strcmp(args, "w") == 0) {
-    printf("got w\n");
+    // printf("got w\n");
+    wp_display();
   }
   else {
     printf("???\n");
@@ -111,6 +112,15 @@ static int cmd_w(char *args) {
     printf("w: error: no args\n");
     return 0;
   }
+  bool success;
+  word_t ans = expr(args, &success);
+  if (success == true) {
+    WP *p = new_wp(args, ans);
+    wp_info(p);
+  }
+  else {
+    printf("w: error: EXPR wrong\n");
+  }
   return 0;
 }
 
@@ -118,6 +128,10 @@ static int cmd_d(char *args) {
   if (args == NULL) {
     printf("d: error: no args\n");
     return 0;
+  }
+  bool b = free_wp(atoi(args));
+  if (b == false) {
+    printf("d: error: watchpoint not exit\n");
   }
   return 0;
 }
