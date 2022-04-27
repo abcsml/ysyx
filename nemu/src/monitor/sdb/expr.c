@@ -271,7 +271,7 @@ static word_t eval(int p, int q, bool *success) {
       case TK_DER:
         return vaddr_read(eval(op_index + 1, q, success), 4);
       default:
-        success = false;
+        *success = false;
         return 0;
     }
   }
