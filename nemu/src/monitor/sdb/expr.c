@@ -218,9 +218,7 @@ static int find_main_op(int p, int q, bool *success) {
 }
 
 static word_t eval(int p, int q, bool *success) {
-  if (*success == false) {
-    return 0;
-  }
+  if (*success == false) { return 0; }
   if (p > q) {
     *success = false;
     return 0;
@@ -234,7 +232,10 @@ static word_t eval(int p, int q, bool *success) {
       return str2val(tokens[p].str, success);
     }
     else if (tokens[p].type == TK_REG) {
-      return isa_reg_str2val(tokens[p].str + 1, success);
+      bool s;
+      word_t v = isa_reg_str2val(tokens[p].str + 1, &s);
+      if (s == true) { return v; }
+      return false;
     }
     *success = false;
     return 0;
@@ -250,8 +251,7 @@ static word_t eval(int p, int q, bool *success) {
     int op_index = find_main_op(p, q, success);
     // printf("%d op:%c\n", op, tokens[op].type);
 
-    // word_t val1 = eval(p, op_index - 1, success);
-    // word_t val2 = eval(op_index + 1, q, success);
+    // if (*success == false) { return 0; }
 
     switch (tokens[op_index].type) {
       case '+':
@@ -270,7 +270,9 @@ static word_t eval(int p, int q, bool *success) {
         return -eval(op_index + 1, q, success);
       case TK_DER:
         return vaddr_read(eval(op_index + 1, q, success), 4);
-      default: assert(0);
+      default:
+        *success = false;
+        return 0;
     }
   }
 }
@@ -291,7 +293,7 @@ word_t expr(char *e, bool *success) {
     if (tokens[i].type == '*' && (i == 0 || tokens[i - 1].type != TK_NUM)) {
       tokens[i].type = TK_DER;
     }
-    printf("type:%d, str:%s\n", tokens[i].type, tokens[i].str);
+    // printf("type:%d, str:%s\n", tokens[i].type, tokens[i].str);
   }
 
   return eval(0, nr_token-1, success);
