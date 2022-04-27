@@ -1,6 +1,6 @@
 #include "sdb.h"
 
-#define NR_WP 32
+#define NR_WP 5
 
 typedef struct watchpoint {
   int NO;
@@ -52,7 +52,7 @@ bool free_wp(int no) {
   }
   else {
     WP *p = head;
-    while (p != NULL) {
+    while (p->next != NULL) {
       if (p->next->NO == no) {
         wp = p->next;
         p->next = p->next->next;
