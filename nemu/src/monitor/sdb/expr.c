@@ -291,7 +291,7 @@ word_t expr(char *e, bool *success) {
     if (tokens[i].type == '*' && (i == 0 || tokens[i - 1].type != TK_NUM)) {
       tokens[i].type = TK_DER;
     }
-    printf("type:%d, str:%s\n", tokens[i].type, tokens[i].str);
+    // printf("type:%d, str:%s\n", tokens[i].type, tokens[i].str);
   }
 
   return eval(0, nr_token-1, success);
