@@ -78,7 +78,7 @@ static int cmd_x(char *args) {
   }
   bool success;
   word_t ans = expr(e, &success);
-  if (success) {
+  if (success == true) {
     printf("0x%08lx:", ans);
     for (int i = 0; i < atoi(n); i++) {
       uint8_t mem = vaddr_read(ans+i, 1);
@@ -98,7 +98,7 @@ static int cmd_p(char *args) {
   }
   bool success;
   word_t ans = expr(args, &success);
-  if (success) {
+  if (success == true) {
     printf("0x%lx\n", ans);
   }
   else {

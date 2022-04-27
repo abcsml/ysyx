@@ -232,7 +232,10 @@ static word_t eval(int p, int q, bool *success) {
       return str2val(tokens[p].str, success);
     }
     else if (tokens[p].type == TK_REG) {
-      return isa_reg_str2val(tokens[p].str + 1, success);
+      bool s;
+      word_t v = isa_reg_str2val(tokens[p].str + 1, &s);
+      if (s == true) { return v; }
+      return false;
     }
     *success = false;
     return 0;
@@ -290,7 +293,7 @@ word_t expr(char *e, bool *success) {
     if (tokens[i].type == '*' && (i == 0 || tokens[i - 1].type != TK_NUM)) {
       tokens[i].type = TK_DER;
     }
-    // printf("type:%d, str:%s\n", tokens[i].type, tokens[i].str);
+    printf("type:%d, str:%s\n", tokens[i].type, tokens[i].str);
   }
 
   return eval(0, nr_token-1, success);
