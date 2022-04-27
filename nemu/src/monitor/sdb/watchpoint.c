@@ -7,7 +7,7 @@ typedef struct watchpoint {
   struct watchpoint *next;
 
   /* TODO: Add more members if necessary */
-  char *exp;
+  char exp[64]; // maybe a bug
   word_t val;
 } WP;
 
@@ -34,7 +34,9 @@ WP* new_wp(char *exp, word_t val) {
   WP *p = free_;
   free_ = free_->next;
 
-  p->exp = exp;
+  int n = strnlen(exp, 63);
+  strncpy(p->exp, exp, n);
+  p->exp[n] = '\0';
   p->val = val;
 
   p->next = head;
