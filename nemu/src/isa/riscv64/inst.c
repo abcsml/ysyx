@@ -24,7 +24,7 @@ static word_t immI(uint32_t i) { return SEXT(BITS(i, 31, 20), 12); }
 static word_t immU(uint32_t i) { return SEXT(BITS(i, 31, 12), 20) << 12; }
 static word_t immS(uint32_t i) { return (SEXT(BITS(i, 31, 25), 7) << 5) | BITS(i, 11, 7); }
 static word_t immJ(uint32_t i) { return (SEXT(BITS(i, 31, 31), 1) << 20) | (BITS(i, 19, 12) << 12) |
-                                  (BITS(i, 20, 20) << 11) | (BITS(i, 30, 21)); }
+                                  (BITS(i, 20, 20) << 11) | (BITS(i, 30, 21) << 1); }
 
 static void decode_operand(Decode *s, word_t *dest, word_t *src1, word_t *src2, int type) {
   uint32_t i = s->isa.inst.val;
@@ -56,7 +56,9 @@ static int decode_exec(Decode *s) {
   INSTPAT("??????? ????? ????? 011 ????? 01000 11", sd     , S, Mw(src1 + dest, 8, src2));
 
   INSTPAT("??????? ????? ????? 000 ????? 00100 11", addi   , I, R(dest) = src1 + src2);
-  INSTPAT("??????? ????? ????? ??? ????? 11011 11", jal    , J, R(dest) = s->pc + 4; s->pc += src1;printf("src1:%ld\n",src1));
+  INSTPAT("??????? ????? ????? ??? ????? 11011 11", jal    , J, R(dest) = s->pc + 4; s->pc += src1;);
+
+  INSTPAT("0000000 00000 00001 000 00000 11001 11", ret    , N, s->pc = R(1));
 
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
