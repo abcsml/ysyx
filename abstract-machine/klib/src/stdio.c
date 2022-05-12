@@ -32,7 +32,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         n = va_arg(ap, int);
         int n_len = n/10 + 1;
         for (int i = 0 ;i < n_len; i++) {
-          buf[n/10 - i] = n%10+'0';
+          buf[n_len - 1 - i] = n%10+'0';
           n /= 10;
         }
         strncpy(out, buf, n_len);
