@@ -20,7 +20,6 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   memset(buf, 0, sizeof(buf));
 
   while (*fmt != '\0') {
-    panic("Not implemented");
     if (*fmt == '%') {
       fmt++;
       switch (*fmt) {
@@ -46,6 +45,8 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       out ++;
     }
   }
+  strncpy(out, fmt, 1);
+  panic("Not implemented");
   return 0;
 }
 
