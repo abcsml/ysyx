@@ -10,7 +10,42 @@ int printf(const char *fmt, ...) {
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
-  panic("Not implemented");
+  // char *head = out;
+  // char *p = out;
+
+  char *s;
+  int n;
+
+  char buf[65];
+  memset(buf, 0, sizeof(buf));
+
+  while (*fmt != 0) {
+    if (*fmt == '%') {
+      fmt++;
+      switch (*fmt) {
+      case 's':
+        s = va_arg(ap, char *);
+        strncpy(out, s, strlen(s));
+        out += strlen(s);
+        break;
+      case 'd':
+        n = va_arg(ap, int);
+        for (int i = 0 ;i < n/10 + 1; i++) {
+          *buf = n%(i*10)+'0';
+          strncpy(out, buf, 1);
+          out ++;
+        }
+        break;
+      default:
+        assert(0);
+        break;
+      }
+    } else {
+      strncpy(out, fmt, 1);
+      out ++;
+    }
+  }
+  return 0;
 }
 
 int sprintf(char *out, const char *fmt, ...) {
