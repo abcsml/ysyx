@@ -31,10 +31,11 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       case 'd':
         n = va_arg(ap, int);
         for (int i = 0 ;i < n/10 + 1; i++) {
-          *buf = n%((i+1)*10)+'0';
-          strncpy(out, buf, 1);
-          out ++;
+          buf[n/10 - i] = n%10+'0';
+          n /= 10;
         }
+        strncpy(out, buf, n/10 + 1);
+        out += n/10 + 1;
         break;
       default:
         assert(0);
