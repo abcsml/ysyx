@@ -30,7 +30,12 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         break;
       case 'd':
         n = va_arg(ap, int);
-        int n_len = n/10 + 1;
+        int n_len = 1;
+        int n_var = n/10;
+        while (n_var != 0) {
+          n_var /= 10;
+          n_len ++;
+        }
         for (int i = 0 ;i < n_len; i++) {
           buf[n_len - 1 - i] = n%10+'0';
           n /= 10;
