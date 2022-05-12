@@ -19,7 +19,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   char buf[65];
   memset(buf, 0, sizeof(buf));
 
-  while (*fmt != 0) {
+  while (*fmt != '\0') {
     if (*fmt == '%') {
       fmt++;
       switch (*fmt) {
