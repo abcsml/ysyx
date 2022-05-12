@@ -42,8 +42,9 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       }
     } else {
       strncpy(out, fmt, 1);
+      out ++;
     }
-    out ++;
+    fmt ++;
   }
   panic("Not implemented");
   strncpy(out, fmt, 1);
