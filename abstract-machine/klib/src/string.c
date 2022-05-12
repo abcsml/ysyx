@@ -81,8 +81,13 @@ void *memmove(void *dst, const void *src, size_t n) {
   uint8_t *pDst = dst;
   const uint8_t *pSrc = src;
 
-  for (size_t i = 0; i < n; i++)
-    pDst[i] = pSrc[i];
+  if (dst < src) {  // front to back
+    for (size_t i = 0; i < n; i++)
+      pDst[i] = pSrc[i];
+  } else {          // reserve
+    for (size_t i = n-1; i >= 0; i--)
+      pDst[i] = pSrc[i];
+  }
   return dst;
 }
 
@@ -98,8 +103,20 @@ void *memcpy(void *out, const void *in, size_t n) {
 }
 
 int memcmp(const void *s1, const void *s2, size_t n) {
-  // if (s1 == NULL || s2 == NULL)
+  if (s1 == NULL || s2 == NULL)
     return 0;
+  const uint8_t *pS1 = s1;
+  const uint8_t *pS2 = s2;
+  size_t i;
+  for (i = 0; i < n; i++) {
+    if (pS1[i] != pS2[i]) {
+      if (pS1[i] < pS2[i])
+        return -1;
+      else
+        return 1;
+    }
+  }
+  return 0;
 }
 
 #endif
