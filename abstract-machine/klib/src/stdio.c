@@ -25,6 +25,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       switch (*fmt) {
       case 's':
         s = va_arg(ap, char *);
+        panic("Not implemented");
         strncpy(out, s, strlen(s));
         out += strlen(s);
         break;
@@ -46,7 +47,6 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     }
   }
   strncpy(out, fmt, 1);
-  panic("Not implemented");
   return 0;
 }
 
