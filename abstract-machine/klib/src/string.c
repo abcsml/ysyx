@@ -68,10 +68,10 @@ int strncmp(const char *s1, const char *s2, size_t n) {
 void *memset(void *s, int c, size_t n) {
   if (s == NULL || n == 0)
     return NULL;
-  uint8_t *pS = s;
+  uint8_t *ps = s;
 
   for (size_t i = 0; i < n; i++) {
-    pS[i] = (uint8_t) c;
+    ps[i] = (uint8_t) c;
   }
   return s;
 }
@@ -79,15 +79,15 @@ void *memset(void *s, int c, size_t n) {
 void *memmove(void *dst, const void *src, size_t n) {
   if (dst == NULL || src == NULL || n == 0)
     return NULL;
-  uint8_t *pDst = dst;
-  const uint8_t *pSrc = src;
+  uint8_t *pdst = dst;
+  const uint8_t *psrc = src;
 
   if (dst < src) {  // front to back
     for (size_t i = 0; i < n; i++)
-      pDst[i] = pSrc[i];
+      pdst[i] = psrc[i];
   } else {          // reserve
     for (size_t i = n-1; i >= 0; i--)
-      pDst[i] = pSrc[i];
+      pdst[i] = psrc[i];
   }
   return dst;
 }
@@ -95,23 +95,23 @@ void *memmove(void *dst, const void *src, size_t n) {
 void *memcpy(void *out, const void *in, size_t n) {
   if (out == NULL || in == NULL || n == 0)
     return NULL;
-  uint8_t *pOut = out;
-  const uint8_t *pIn = in;
+  uint8_t *pout = out;
+  const uint8_t *pin = in;
 
   for (size_t i = 0; i < n; i++)
-    pOut[i] = pIn[i];
+    pout[i] = pin[i];
   return out;
 }
 
 int memcmp(const void *s1, const void *s2, size_t n) {
   if (s1 == NULL || s2 == NULL)
     return 0;
-  const uint8_t *pS1 = s1;
-  const uint8_t *pS2 = s2;
+  const uint8_t *ps1 = s1;
+  const uint8_t *ps2 = s2;
   size_t i;
   for (i = 0; i < n; i++) {
-    if (pS1[i] != pS2[i]) {
-      if (pS1[i] < pS2[i])
+    if (ps1[i] != ps2[i]) {
+      if (ps1[i] < ps2[i])
         return -1;
       else
         return 1;
