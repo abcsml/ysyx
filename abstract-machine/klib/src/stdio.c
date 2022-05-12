@@ -41,11 +41,11 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         break;
       }
     } else {
-      panic("Not implemented");
       strncpy(out, fmt, 1);
     }
     out ++;
   }
+  panic("Not implemented");
   strncpy(out, fmt, 1);
   return 0;
 }
