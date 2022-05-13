@@ -90,9 +90,13 @@ static void statistic() {
 void assert_fail_msg() {
   isa_reg_display();
   statistic();
-  for (int i = (iringbegin+1)%10; i != iringbegin; i = (i+1)%10) {
-    Log("%s\n", iringbuf[i]);
+#ifdef CONFIG_ITRACE_COND
+  if (ITRACE_COND) {
+    for (int i = (iringbegin+1)%10; i != iringbegin; i = (i+1)%10) {
+      printf("%s %s", ASNI_FMT(">>>", ASNI_FG_RED), iringbuf[i]);
+    }
   }
+#endif
 }
 
 /* Simulate how the CPU works. */
