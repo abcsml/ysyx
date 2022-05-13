@@ -16,8 +16,10 @@ uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 
+#ifdef CONFIG_ITRACE_COND   // iring debug
 static char iringbuf[10][128];
 static int iringbegin = 0;
+#endif
 
 void device_update();
 
@@ -91,11 +93,11 @@ void assert_fail_msg() {
   isa_reg_display();
   statistic();
 #ifdef CONFIG_ITRACE_COND
-  // if (ITRACE_COND) {
+  if (ITRACE_COND) {
     for (int i = (iringbegin+1)%10; i != iringbegin; i = (i+1)%10) {
       Log("%s %s", ASNI_FMT(">>>", ASNI_FG_RED), iringbuf[i]);
     }
-  // }
+  }
 #endif
 }
 
