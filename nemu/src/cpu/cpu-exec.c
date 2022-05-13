@@ -93,7 +93,7 @@ void assert_fail_msg() {
 #ifdef CONFIG_ITRACE_COND
   // if (ITRACE_COND) {
     for (int i = (iringbegin+1)%10; i != iringbegin; i = (i+1)%10) {
-      printf("%s %s", ASNI_FMT(">>>", ASNI_FG_RED), iringbuf[i]);
+      Log("%s %s", ASNI_FMT(">>>", ASNI_FG_RED), iringbuf[i]);
     }
   // }
 #endif
