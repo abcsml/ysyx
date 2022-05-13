@@ -44,7 +44,8 @@ void init_mem() {
 
 word_t paddr_read(paddr_t addr, int len) {
 #ifdef CONFIG_ITRACE
-  Log("%s " FMT_PADDR, ASNI_FMT("physical memory read:", ASNI_FG_YELLOW), addr);
+  if (addr != cpu.pc)
+    Log("%s " FMT_PADDR, ASNI_FMT("physical memory read:", ASNI_FG_YELLOW), addr);
 #endif
   if (likely(in_pmem(addr))) return pmem_read(addr, len);
   IFDEF(CONFIG_DEVICE, return mmio_read(addr, len));
