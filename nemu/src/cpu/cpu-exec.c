@@ -16,11 +16,18 @@ uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 
+static char iringbuf[10][128];
+static int iringbegin = 0;
+
 void device_update();
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
-  if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
+  if (ITRACE_COND) {
+    log_write("%s\n", _this->logbuf);
+    snprintf(iringbuf[iringbegin], sizeof(iringbuf[0]), "%s", _this->logbuf);
+    iringbegin = (iringbegin + 1)%10;
+  }
 #endif
 #ifdef CONFIG_WATCHPOINT
   bool c = wp_check();
@@ -83,6 +90,9 @@ static void statistic() {
 void assert_fail_msg() {
   isa_reg_display();
   statistic();
+  for (int i = (iringbegin+1)%10; i != iringbegin; i = (i+1)%10) {
+    Log("%s\n", iringbuf[i]);
+  }
 }
 
 /* Simulate how the CPU works. */
