@@ -16,17 +16,34 @@ uint64_t g_nr_guest_inst = 0;
 static uint64_t g_timer = 0; // unit: us
 static bool g_print_step = false;
 
+#ifdef CONFIG_ITRACE_COND   // iring debug
+static char iringbuf[10][128];
+static int iringbegin = 0;
+#endif
+
 void device_update();
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_ITRACE_COND
-  if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
+  if (ITRACE_COND) {
+    log_write("%s\n", _this->logbuf);
+    snprintf(iringbuf[iringbegin], sizeof(iringbuf[0]), "%s", _this->logbuf);
+    iringbegin = (iringbegin + 1)%10;
+  }
 #endif
 #ifdef CONFIG_WATCHPOINT
   bool c = wp_check();
   if (c == true) {
     nemu_state.state = NEMU_STOP;
     printf("got watch point\n");
+  }
+#endif
+#ifdef CONFIG_FTRACE
+  uint32_t inst = _this->isa.inst.val;
+  if ((inst & 0xff) == 0xef) {      // jal
+    call_trace(_this->pc, dnpc);
+  } else if (inst == 0x8067) {      // ret
+    ret_trace(_this->pc);
   }
 #endif
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
@@ -83,6 +100,13 @@ static void statistic() {
 void assert_fail_msg() {
   isa_reg_display();
   statistic();
+#ifdef CONFIG_ITRACE_COND
+  if (ITRACE_COND) {
+    for (int i = (iringbegin+1)%10; i != iringbegin; i = (i+1)%10) {
+      Log("%s %s", ASNI_FMT(">>>", ASNI_FG_RED), iringbuf[i]);
+    }
+  }
+#endif
 }
 
 /* Simulate how the CPU works. */
