@@ -16,16 +16,19 @@ static int point = 0;
 
 void init_ftrace(const char *elf_file) {
   printf("%s\n", elf_file);
+#ifndef CONFIG_FTRACE
+  return;
+#endif
   if (elf_file == NULL)
-    return;
-  
+    assert(0);
+
   FILE *fp;
   char buffer[80];
   char cmd[120];
   strcpy(cmd, "readelf -s ");
   strcat(cmd, elf_file);
   fp = popen(cmd, "r");
-  
+
   while (fgets(buffer, sizeof(buffer), fp) != 0) {
     if (buffer[31] == 'F' && buffer[32] == 'U' && buffer[33] == 'N') {
       funcs[funcs_len].addr = strtoul(buffer+8, NULL, 16);
@@ -63,5 +66,5 @@ void ret_trace(word_t call_addr) {
   for (int j = 0; j < point; j++) {
     printf("%s", "  ");
   }
-  printf("ret  [%s]", funcs[fstack[point]].name);
+  printf("ret  [%s]\n", funcs[fstack[point]].name);
 }

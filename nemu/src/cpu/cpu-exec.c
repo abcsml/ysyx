@@ -38,14 +38,14 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
     printf("got watch point\n");
   }
 #endif
-// #ifdef CONFIG_FTRACE
+#ifdef CONFIG_FTRACE
   uint32_t inst = _this->isa.inst.val;
   if ((inst & 0xff) == 0xef) {      // jal
     call_trace(_this->pc, dnpc);
   } else if (inst == 0x8067) {      // ret
     ret_trace(_this->pc);
   }
-// #endif
+#endif
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
 }
