@@ -15,6 +15,7 @@ static uint8_t fstack[512];    // stack record, use funcs index
 static int point = 0;
 
 void init_ftrace(const char *elf_file) {
+  printf("%s\n", elf_file);
   if (elf_file == NULL)
     return;
   FILE *fp;
