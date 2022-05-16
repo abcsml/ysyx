@@ -14,12 +14,13 @@ static int funcs_len = 0;
 static uint8_t fstack[512];    // stack record, use funcs index
 static int point = 0;
 
+char buffer[80];
+
 void init_ftrace(const char *elf_file) {
   printf("%s\n", elf_file);
   if (elf_file == NULL)
     return;
   FILE *fp;
-  char buffer[80];
   fp = popen(strcat("readelf -e", elf_file), "r");
   while (fgets(buffer, sizeof(buffer), fp) != 0) {
     if (buffer[31] == 'F' && buffer[32] == 'U' && buffer[33] == 'N') {
