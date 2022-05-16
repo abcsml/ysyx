@@ -47,7 +47,7 @@ void call_trace(word_t call_addr, word_t f_addr) {
       return;
     }
   }
-  // assert(0);
+  assert(0);
 }
 
 

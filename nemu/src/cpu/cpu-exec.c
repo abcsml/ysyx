@@ -40,7 +40,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #endif
 // #ifdef CONFIG_FTRACE
   uint32_t inst = _this->isa.inst.val;
-  if ((inst & 0x7f) == 0x6f) {      // ral
+  if ((inst & 0x7f) == 0x6f) {      // jal
     call_trace(_this->pc, dnpc);
   } else if (inst == 0x8067) {      // ret
     ret_trace(_this->pc);
