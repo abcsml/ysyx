@@ -11,7 +11,7 @@ typedef struct {
 static Func funcs[128];
 static int funcs_len = 0;
 
-static uint8_t fstack[512];    // stack record, use funcs index
+static uint8_t fstack[256];    // stack record, use funcs index
 static int point = 0;
 
 void init_ftrace(const char *elf_file) {
