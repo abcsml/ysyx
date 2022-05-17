@@ -38,7 +38,7 @@ word_t isa_query_intr();
 
 // ftrace
 void call_trace(word_t call_addr, word_t f_addr);
-void ret_trace(word_t call_addr);
+void ret_trace(word_t call_addr, word_t ret_addr);
 
 // difftest
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc);

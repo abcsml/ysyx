@@ -11,7 +11,7 @@ typedef struct {
 static Func funcs[128];
 static int funcs_len = 0;
 
-static uint8_t fstack[512];    // stack record, use funcs index
+static uint8_t fstack[256];    // stack record, use funcs index
 static int point = 0;
 
 void init_ftrace(const char *elf_file) {
@@ -59,12 +59,25 @@ void call_trace(word_t call_addr, word_t f_addr) {
   assert(0);
 }
 
-
-void ret_trace(word_t call_addr) {
+void ret_trace(word_t call_addr, word_t ret_addr) {
   printf("%08lx: ", call_addr);
   point --;
   for (int j = 0; j < point; j++) {
     printf("%s", "  ");
   }
-  printf("ret  [%s]\n", funcs[fstack[point]].name);
+
+  int call_index = -1;
+  int ret_index = -1;
+  for (int j = 0; j < funcs_len; j++) {
+    if (funcs[j].addr <= call_addr &&
+      call_addr < funcs[j].addr+funcs[j].size) {
+      call_index = j;
+    }
+    if (funcs[j].addr <= ret_addr &&
+      ret_addr < funcs[j].addr+funcs[j].size) {
+      ret_index = j;
+    }
+  }
+  printf("ret  [%s --> %s]\n", funcs[call_index].name, funcs[ret_index].name);
+  // assert(0);
 }

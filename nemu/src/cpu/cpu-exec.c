@@ -42,8 +42,10 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
   uint32_t inst = _this->isa.inst.val;
   if ((inst & 0xff) == 0xef) {      // jal
     call_trace(_this->pc, dnpc);
+  } else if ((inst & 0xff) == 0xe7) {   // jalr
+    call_trace(_this->pc, dnpc);
   } else if (inst == 0x8067) {      // ret
-    ret_trace(_this->pc);
+    ret_trace(_this->pc, dnpc);
   }
 #endif
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
