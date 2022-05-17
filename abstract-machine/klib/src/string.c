@@ -2,7 +2,7 @@
 #include <klib-macros.h>
 #include <stdint.h>
 
-#if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
+#if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)        // 未测试
 
 size_t strlen(const char *s) {
   size_t len = 0;
