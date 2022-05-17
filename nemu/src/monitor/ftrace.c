@@ -79,5 +79,5 @@ void ret_trace(word_t call_addr, word_t ret_addr) {
     }
   }
   printf("ret  [%s --> %s]\n", funcs[call_index].name, funcs[ret_index].name);
-  assert(0);
+  // assert(0);
 }
