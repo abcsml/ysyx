@@ -11,7 +11,7 @@ class MEM extends BlackBox with HasBlackBoxPath {
     val len  = Input(UInt(3.W))
     val data = Output(UInt(32.W))
   })
-  val reg = Reg(Bool())
+  // val reg = Reg(Bool())
   addPath("./playground/src/vsrc/mem.v")
 }
 
@@ -24,7 +24,7 @@ class IFU extends Module {
     val inst = Output(UInt(32.W))
     val snpcOut = Output(UInt(64.W))
   })
-  val mem = Module(new MEM())
+  val mem = withClockAndReset(clk, !rstn){ Module(new MEM()) }
   val reg = RegInit(UInt(64.W), "x80000000".U(64.W))
 
   mem.io.addr := io.snpcIn
