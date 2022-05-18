@@ -10,7 +10,7 @@ class MEM extends BlackBox with HasBlackBoxPath {
     val len  = Input(UInt(3.W))
     val data = Output(UInt(32.W))
   })
-  addPath("../vsrc/mem.v")
+  addPath("./playground/src/vsrc/mem.v")
 }
 
 class IFU extends Module {
