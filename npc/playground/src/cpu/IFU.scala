@@ -6,7 +6,7 @@ import chisel3.util._
 
 class MEM extends BlackBox with HasBlackBoxPath {
   val io = IO(new Bundle {
-    var clk  = Input(Clock())
+    // var clk  = Input(Clock())
     val addr = Input(UInt(64.W))
     val len  = Input(UInt(3.W))
     val data = Output(UInt(32.W))
