@@ -4,7 +4,7 @@ import mill._, scalalib._
  * All chisel modules should extends this trait where the chisel dependency is included.
  */ 
 trait ChiselModule extends ScalaModule {
-  def millSourcePath = os.pwd
+  // def millSourcePath = os.pwd
   def scalaVersion = "2.12.13"
 
   override def ivyDeps = Agg(
