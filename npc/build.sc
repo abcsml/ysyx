@@ -29,6 +29,6 @@ trait ChiselModule extends ScalaModule {
   }
 }
 
-object playground extends ChiselModule {
+object src extends ChiselModule {
   
 }
