@@ -2,7 +2,7 @@ BUILD_DIR = ./build
 
 OBJ_DIR = $(BUILD_DIR)/obj_dir
 VSRCS = $(shell find $(abspath ./build) -name "*.v")
-VSRCS += $(shell find $(abspath ./playground/src/vsrc) -name "*.v")
+# VSRCS += $(shell find $(abspath ./playground/src/vsrc) -name "*.v")
 
 test:
 	mill -i __.test
@@ -33,8 +33,8 @@ clean:
 sim: 
 	verilator -MMD --build -cc  \
 		-O3 --x-assign fast --x-initial fast --noassert \
-		--top-module MEM \
-		$(abspath ./playground/src/csrc)/mem_test.cpp \
+		--top-module CPU \
+		$(abspath ./playground/src/csrc)/cpu.cpp \
 		$(abspath ./playground/src/csrc)/mem.cpp \
 		$(VSRCS) \
 		--Mdir $(OBJ_DIR) --exe --trace
