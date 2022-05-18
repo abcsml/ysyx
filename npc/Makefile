@@ -1,5 +1,9 @@
 BUILD_DIR = ./build
 
+OBJ_DIR = $(BUILD_DIR)/obj_dir
+VSRCS = $(shell find $(abspath ./build) -name "*.v")
+VSRCS += $(shell find $(abspath ./playground/src/vsrc) -name "*.v")
+
 test:
 	mill -i __.test
 
@@ -26,10 +30,17 @@ checkformat:
 clean:
 	-rm -rf $(BUILD_DIR)
 
-.PHONY: test verilog help compile bsp reformat checkformat clean
-
-sim:
-	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
+sim: 
+	verilator -MMD --build -cc  \
+		-O3 --x-assign fast --x-initial fast --noassert \
+		--top-module MEM \
+		$(abspath ./playground/src/csrc)/mem_test.cpp \
+		$(abspath ./playground/src/csrc)/mem.cpp \
+		$(VSRCS) \
+		--Mdir $(OBJ_DIR) --exe --trace
+	# $(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	@echo "Write this Makefile by yourself."
+
+.PHONY: test verilog help compile bsp reformat checkformat clean sim
 
 include ../Makefile
