@@ -25,3 +25,6 @@ sim: $(OBJ_DIR) $(VSRCS)
 	./build/obj_dir/V$(TOP)
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	@echo "Write this Makefile by yourself."
+
+clean-obj:
+	-rm -rf $(OBJ_DIR)
