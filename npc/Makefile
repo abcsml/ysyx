@@ -2,6 +2,9 @@ BUILD_DIR = ./build
 OBJ_DIR = $(BUILD_DIR)/obj_dir
 OUTPUT_DIR = ./output
 
+$(shell mkdir -p $(BUILD_DIR))
+$(shell mkdir -p $(OUTPUT_DIR))
+
 test:
 	mill -i __.test
 
