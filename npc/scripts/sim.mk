@@ -17,9 +17,9 @@ DPICS = $(shell find $(abspath ./src/vsrc) -name "*.v")
 dpi-c: $(DPICS)
 	verilator -cc $(DPICS) --Mdir $(OBJ_DIR)
 
-$(TOP).V: verilog dpi-c
+$(BUILD_DIR)/$(TOP).v: verilog
 
-sim: $(TOP).V
+sim: $(BUILD_DIR)/$(TOP).v
 	$(VERILATOR) $(VERILATOR_CFLAGS) \
 		--top-module $(TOP) \
 		$(CSRCS) $(VSRCS) \
