@@ -6,11 +6,10 @@ VerilatedVcdC* tfp = NULL;
 static VCPU* top;
 
 void step_and_dump_wave() {
-  top->clock = 1;
+  top->clock = top->clock == 1?0:1;
   top->eval();
   contextp->timeInc(1);
   tfp->dump(contextp->time());
-  top->clock = 0;
 }
 void sim_init() {
   contextp = new VerilatedContext;
