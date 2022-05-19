@@ -6,6 +6,9 @@ import chisel3.util._
 class CPU extends Module {
   val io = IO(new Bundle {
     val en = Input(Bool())
+    // use for debug
+    val regs = Vec(32, UInt(64.W))
+    val pc = UInt(64.W)
   })
   val registerFile = Reg(Vec(32, UInt(64.W)))
   val pc = RegInit(UInt(64.W), "x80000000".U(64.W))
@@ -30,4 +33,8 @@ class CPU extends Module {
   registerFile := exu.io.regsOut
   registerFile(0) := 0.U
   pc := exu.io.dnpcOut
+
+  // debug
+  io.regs := registerFile
+  io.pc := pc
 }

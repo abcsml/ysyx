@@ -2,12 +2,13 @@
 // #include "veriuser.h"
 #include "svdpi.h"
 #include "VMEM__Dpi.h"
+#include "mem.h"
 
-void pmem_read(
+void vmem_read(
   const svBitVecVal* addr,
   const svBitVecVal* len,
   svBitVecVal* data
 ) {
   printf("%d,%d,%d", *addr, *len, *data);
-  *data = 0x108093;
+  *data = pmem_read(*addr, *len);
 }
