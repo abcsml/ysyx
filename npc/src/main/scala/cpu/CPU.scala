@@ -7,8 +7,8 @@ class CPU extends Module {
   val io = IO(new Bundle {
     val en = Input(Bool())
     // use for debug
-    val regs = Vec(32, UInt(64.W))
-    val pc = UInt(64.W)
+    val regs = Output(Vec(32, UInt(64.W)))
+    val pc = Output(UInt(64.W))
   })
   val registerFile = Reg(Vec(32, UInt(64.W)))
   val pc = RegInit(UInt(64.W), "x80000000".U(64.W))
