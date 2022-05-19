@@ -14,10 +14,12 @@ DPICS = $(shell find $(abspath ./src/vsrc) -name "*.v")
 
 # $(OBJ_DIR): verilog
 # 	@echo "Make all"
-dpi-c:
+dpi-c: $(DPICS)
 	verilator -cc $(DPICS) --Mdir $(OBJ_DIR)
 
-sim: $(OBJ_DIR) $(VSRCS)
+$(TOP).V: verilog dpi-c
+
+sim: $(TOP).V
 	$(VERILATOR) $(VERILATOR_CFLAGS) \
 		--top-module $(TOP) \
 		$(CSRCS) $(VSRCS) \
