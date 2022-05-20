@@ -34,6 +34,8 @@ class CPU extends Module {
   registerFile(0) := 0.U
   pc := exu.io.dnpcOut
 
+printf("pc: %x", pc);
+
   // debug
   io.regs := registerFile
   io.pc := pc
