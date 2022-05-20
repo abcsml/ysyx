@@ -53,25 +53,16 @@ bool cpu_step() {   // false: over
   // top->reset = 1;
   // top->eval();
   // top->clock = 0;
-  top->reset = 1;
+  // top->reset = 1;
   // top->io_pc = 0x80000000;
-  top->clock = 0; top->eval(); display();
-  top->clock = 1; top->eval(); display();
-  top->reset = 0;
-  // while (true) {
+  // top->clock = 0; top->eval(); display();
+  // top->clock = 1; top->eval(); display();
+  // top->reset = 0;
+  int i = 5;
+  while (i--) {
     display();
     step_and_dump_wave();
-    display();
-    step_and_dump_wave();
-    display();
-    step_and_dump_wave();
-    display();
-    step_and_dump_wave();
-    display();
-    step_and_dump_wave();
-    display();
-    step_and_dump_wave();
-  // }
+  }
   sim_exit();
   // if top->
   return false;
