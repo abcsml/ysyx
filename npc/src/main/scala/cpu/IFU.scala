@@ -25,13 +25,13 @@ class IFU extends Module {
     val snpcOut = Output(UInt(64.W))
   })
   val mem = withClockAndReset(clock, true.B){ Module(new MEM()) }
-  val reg = RegInit(UInt(64.W), "x80000000".U(64.W))
+  // val reg = RegInit(UInt(64.W), "x80000000".U(64.W))
 
   mem.io.clk := clock
   mem.io.addr := io.snpcIn
   mem.io.len := io.len
-  io.inst := reg
-  reg := mem.io.data
+  io.inst := mem.io.data
+  // reg := mem.io.data
   io.snpcOut := io.snpcIn + io.len
 
   // test

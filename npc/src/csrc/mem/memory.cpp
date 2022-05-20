@@ -27,14 +27,19 @@ static inline bool in_pmem(paddr_t addr) {
   return (addr >= CONFIG_MBASE) && (addr < (paddr_t)CONFIG_MBASE + CONFIG_MSIZE);
 }
 
+static void out_of_bound(paddr_t addr) {
+  printf("out of bound addr: 0x%x\n");
+  assert(0);
+}
+
 word_t pmem_read(paddr_t addr, int len) {
-  if (in_pmem == false) out_of_bound(addr);
+  if (in_pmem(addr) == false) out_of_bound(addr);
   word_t ret = host_read(guest_to_host(addr), len);
   return ret;
 }
 
 void pmem_write(paddr_t addr, int len, word_t data) {
-  if (in_pmem == false) out_of_bound(addr);
+  if (in_pmem(addr) == false) out_of_bound(addr);
   host_write(guest_to_host(addr), len, data);
 }
 
@@ -47,9 +52,6 @@ void pmem_write(paddr_t addr, int len, word_t data) {
 //   host_write(guest_to_host(addr), len, data);
 // }
 
-void out_of_bound(paddr_t addr) {
-  printf("out of bound addr: 0x%lx\n");
-  assert(0);
-}
+
 
 

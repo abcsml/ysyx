@@ -6,17 +6,18 @@ static char *img_file = NULL;
 
 long load_img() {
   if (img_file == NULL) {
-    printf("No image is given. Use the default build-in image.");
-    return 4096; // built-in image size
+    img_file = "/home/ad/ysyx-workbench/npc/src/test/dummy-riscv64-nemu.bin";
+    // printf("No image is given. Use the default build-in image.");
+    // return 4096; // built-in image size
   }
 
   FILE *fp = fopen(img_file, "rb");
-  assert(0);
+  assert(fp != NULL);
 
   fseek(fp, 0, SEEK_END);
   long size = ftell(fp);
 
-  printf("The image is %s, size = %ld", img_file, size);
+  printf("The image is %s, size = %ld\n", img_file, size);
 
   fseek(fp, 0, SEEK_SET);
   int ret = fread(guest_to_host(CONFIG_MBASE), size, 1, fp);
@@ -59,12 +60,8 @@ static int parse_args(int argc, char *argv[]) {
 int main(int argc, char *argv[]) {
   printf("hello\n");
   long img_size = load_img();
-
-  sim_init();
   
-  while (true) {
-    step_and_dump_wave();
-  }
-
-  sim_exit();
+  // while (true) {
+    cpu_step();
+  // }
 }

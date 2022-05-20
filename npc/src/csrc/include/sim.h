@@ -7,9 +7,11 @@
 
 #include "common.h"
 
-void step_and_dump_wave();
-void sim_init();
-void sim_exit();
+// void step_and_dump_wave();
+// void sim_init();
+// void sim_exit();
+
+bool cpu_step();
 
 
 #endif

@@ -10,7 +10,7 @@ import "DPI-C" function void vmem_read(
   output bit[31:0] data
 );
 always @(negedge clk) begin
-  pmem_read(addr, len, data);
+  vmem_read(addr, len, data);
 end
 
 endmodule
