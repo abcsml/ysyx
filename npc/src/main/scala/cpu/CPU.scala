@@ -13,6 +13,8 @@ class CPU extends Module {
   val registerFile = Reg(Vec(32, UInt(64.W)))
   val pc = RegInit("x80000000".U(64.W))
 
+  pc := "x80000000".U
+
 // printf("pc: %x\n", pc);
 
   val dnpc = Wire(UInt(64.W))
@@ -34,7 +36,7 @@ class CPU extends Module {
   exu.io.dnpcIn := dnpc
   registerFile := exu.io.regsOut
   registerFile(0) := 0.U
-  pc := exu.io.dnpcOut
+  // pc := exu.io.dnpcOut
 
 
 
