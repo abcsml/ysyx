@@ -35,7 +35,7 @@ void sim_init() {
 }
 
 void sim_exit() {
-  step_and_dump_wave();
+  // step_and_dump_wave();
   tfp->close();
 }
 
@@ -55,7 +55,7 @@ bool cpu_step() {   // false: over
   top->clock = 0;
   top->reset = 0;
   top->io_pc = 0x80000000;
-  // top->clock = 1;
+  top->clock = 1;
   // top->eval();
   // while (true) {
   //   display();
