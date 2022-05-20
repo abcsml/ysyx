@@ -9,7 +9,7 @@ import "DPI-C" function void vmem_read(
   input  bit[2:0]  len,
   output bit[31:0] data
 );
-always @(edge clk) begin
+always @(posedge clk) begin
   vmem_read(addr, len, data);
 end
 
