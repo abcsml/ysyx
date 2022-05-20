@@ -58,6 +58,7 @@ bool cpu_step() {   // false: over
   // top->io_pc = 0x80000000;
   top->clock = 0; top->eval(); display();
   top->clock = 1; top->eval(); display();
+  top->reset = 0;
   // while (true) {
     display();
     step_and_dump_wave();
