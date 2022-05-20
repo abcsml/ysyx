@@ -52,9 +52,9 @@ bool cpu_step() {   // false: over
   sim_init();
   // top->reset = 1;
   // top->eval();
-  top->clock = 0;
-  top->reset = 0;
-  top->io_pc = 0x80000000;
+  // top->clock = 0;
+  // top->reset = 0;
+  // top->io_pc = 0x80000000;
   // top->clock = 0;
   // top->eval();
   // while (true) {
