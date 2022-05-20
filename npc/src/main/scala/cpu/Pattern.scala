@@ -8,7 +8,7 @@ object BaseType extends ChiselEnum {
 	val R, I = Value
 	val	S, U = Value
 	val	B, J = Value
-	val N  Value		// NULL
+	val N = Value		// NULL
 }
 
 object Opcode extends ChiselEnum {
