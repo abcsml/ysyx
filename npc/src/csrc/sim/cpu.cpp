@@ -62,6 +62,7 @@ bool cpu_step() {   // false: over
   while (i--) {
     display();
     step_and_dump_wave();
+    step_and_dump_wave();
   }
   sim_exit();
   // if top->
