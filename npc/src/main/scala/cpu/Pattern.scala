@@ -12,7 +12,7 @@ object BaseType extends ChiselEnum {
 }
 
 object Opcode extends ChiselEnum {
-	val LOAD = 	  	Value("00000011".U)
+	val LOAD = 	  	Value("b0000011".U)
 	val OP_IMM =   	Value("b0010011".U)
 	val AUIPC =	  	Value("b0010111".U)
 	val OP_IMM_32 = Value("b0011011".U)		// RV64I
