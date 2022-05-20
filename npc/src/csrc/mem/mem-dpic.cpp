@@ -7,8 +7,11 @@
 void vmem_read(
   const svBitVecVal* addr,
   const svBitVecVal* len,
-  svBitVecVal* data
+  svBitVecVal* data,
+  const svBit* reset
 ) {
   printf("%x,%x,%x\n", *addr, *len, *data);
-  *data = pmem_read(*addr, *len);
+  if (*reset != 1) {
+    *data = pmem_read(*addr, *len);
+  }
 }

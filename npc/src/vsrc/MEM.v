@@ -1,5 +1,6 @@
 module MEM(
-  input              clk,
+  input              clock,
+  input              reset,
   input       [63:0] addr,
   input       [2:0]  len,
   output      [31:0] data
@@ -7,10 +8,11 @@ module MEM(
 import "DPI-C" function void vmem_read(
   input  bit[63:0] addr,
   input  bit[2:0]  len,
-  output bit[31:0] data
+  output bit[31:0] data,
+  input  bit       reset
 );
 always @(posedge clk) begin
-  vmem_read(addr, len, data);
+  vmem_read(addr, len, data, reset);
 end
 
 endmodule

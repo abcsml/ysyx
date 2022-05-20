@@ -23,7 +23,7 @@ class CPU extends Module {
   val idu = Module(new IDU())
   val exu = Module(new EXU())
 
-  ifu.io.snpcIn := pc
+  ifu.io.snpcIn := Mux(pc === 0.U, "x80000000".U, pc)
   ifu.io.len := 4.U
   dnpc := ifu.io.snpcOut
   idu.io.inst := ifu.io.inst
