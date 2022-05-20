@@ -13,7 +13,7 @@ class CPU extends Module {
   val registerFile = Reg(Vec(32, UInt(64.W)))
   val pc = RegInit("x80000000".U(64.W))
 
-printf("pc: %x\n", pc);
+// printf("pc: %x\n", pc);
 
   val dnpc = Wire(UInt(64.W))
 
