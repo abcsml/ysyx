@@ -18,7 +18,7 @@ const char *regs[] = {
 };
 
 void step_and_dump_wave() {
-  top->clock = 0;
+  top->clock = top->clock == 1?0:1;
   top->eval();
   // top->clock = 1;
   // top->eval();
