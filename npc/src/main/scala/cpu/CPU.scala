@@ -27,6 +27,7 @@ class CPU extends Module {
   ifu.io.len := 4.U
   dnpc := ifu.io.snpcOut
   idu.io.inst := ifu.io.inst
+  idu.io.regs := registerFile
   exu.io.command := idu.io.command
   exu.io.dest := idu.io.dest
   exu.io.src1 := idu.io.src1
