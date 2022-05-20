@@ -13,5 +13,5 @@ void vmem_read(
   if (reset != 1) {
     *data = pmem_read(*addr, *len);
   }
-  printf("%x,%x,%x,%d\n", *addr, *len, *data, reset);
+  printf("%x,%x,0x%08x,%d\n", *addr, *len, *data, reset);
 }
