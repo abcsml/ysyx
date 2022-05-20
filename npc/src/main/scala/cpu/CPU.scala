@@ -36,7 +36,7 @@ class CPU extends Module {
   exu.io.dnpcIn := dnpc
   registerFile := exu.io.regsOut
   registerFile(0) := 0.U
-  // pc := exu.io.dnpcOut
+  pc := exu.io.dnpcOut
 
 
 
