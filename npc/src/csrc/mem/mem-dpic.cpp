@@ -10,7 +10,7 @@ void vmem_read(
   svBitVecVal* data,
   svBit reset
 ) {
-  printf("%x,%x,%x\n", *addr, *len, *data);
+  printf("%x,%x,%x,%d\n", *addr, *len, *data, reset);
   if (reset != 1) {
     *data = pmem_read(*addr, *len);
   }
