@@ -8,12 +8,22 @@ object BaseType extends ChiselEnum {
 	val R, I = Value
 	val	S, U = Value
 	val	B, J = Value
+	val N  Value		// NULL
 }
 
 object Opcode extends ChiselEnum {
-	val OP_IMM = 	Value("b0010011".U)
-	val AUIPC =		Value("b0010111".U)
-	val LUI = 		Value("b0110111".U)
+	val LOAD = 	  	Value("00000011".U)
+	val OP_IMM =   	Value("b0010011".U)
+	val AUIPC =	  	Value("b0010111".U)
+	val OP_IMM_32 = Value("b0011011".U)		// RV64I
+	val STORE =			Value("b0100011".U)
+	val OP = 				Value("b0110011".U)
+	val LUI = 			Value("b0110111".U)
+	val OP_32 = 		Value("b0111011".U)		// RV64I
+	val BRANCH =		Value("b1100011".U)
+	val JALR =			Value("b1100111".U)
+	val JAL = 			Value("b1101111".U)
+	val SYSTEM =		Value("b1110011".U)
 }
 
 object Command extends ChiselEnum {

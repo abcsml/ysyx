@@ -23,7 +23,18 @@ class EXU extends Module {
   io.dnpcOut := io.dnpcIn
   io.regsOut(io.dest) := MuxLookup(io.command.asUInt, io.regsIn(io.dest)
   , Array(
-    addi.asUInt -> (io.regsIn(io.src1) + io.src2),
+    addi.asUInt -> io.src1 + io.src2,
+    auipc.asUInt -> io.pc + io.src1,
+    jal.asUInt -> io.pc + 4,
+    jalr.asUInt -> io.pc + 4,
+    // sd.asUInt -> 
+
+    // ebreak.asUInt -> 
+    // inv.asUInt
+  ))
+  io.dnpcOut := MuxLookup(io.command.asUInt, io.dnpcIn, Array(
+    jal.asUInt -> io.pc + io.src1,
+    jalr.asUInt -> (io.src1 + io.src2) & (~1.U),
   ))
 
   // debug
