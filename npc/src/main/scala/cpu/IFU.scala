@@ -34,7 +34,7 @@ class IFU extends Module {
   // reg := mem.io.data
   io.snpcOut := io.snpcIn + io.len
 
-  printf("snpc: %x\n", io.snpcOut)
+  printf("snpc: %x = %x + %x\n", io.snpcOut, io.snpcIn, io.len)
 
   // test
   // io.inst := ("b0000000"+"00001"+"00001"+   // R(1) = R(1) + 1
