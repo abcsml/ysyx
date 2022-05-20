@@ -49,6 +49,7 @@ class IDU extends Module {
   val funct3 = Wire(UInt((14-12+1).W))
   val funct7 = Wire(UInt((31-25+1).W))
 
+  val regs = io.regs
   op := io.inst(6,0)  
   baseType := MuxLookup(op, BaseType.I, Array(
     // Opcode.OP_IMM.asUInt -> BaseType.I,
