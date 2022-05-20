@@ -102,7 +102,7 @@ class IDU extends Module {
       "b001".U -> sh,
       "b010".U -> sw,
       "b011".U -> sd,
-    ))
+    )),
     Opcode.LUI.asUInt -> lui,
     Opcode.AUIPC.asUInt -> auipc,
     Opcode.JAL.asUInt -> jal,
