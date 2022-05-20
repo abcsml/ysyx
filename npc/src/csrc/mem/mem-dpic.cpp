@@ -9,6 +9,6 @@ void vmem_read(
   const svBitVecVal* len,
   svBitVecVal* data
 ) {
-  printf("%d,%d,%d", *addr, *len, *data);
+  printf("%x,%x,%x\n", *addr, *len, *data);
   *data = pmem_read(*addr, *len);
 }
