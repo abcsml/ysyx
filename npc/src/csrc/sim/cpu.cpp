@@ -58,7 +58,7 @@ bool cpu_step() {   // false: over
   // top->clock = 0; top->eval(); display();
   // top->clock = 1; top->eval(); display();
   // top->reset = 0;
-  int i = 5;
+  int i = 8;
   while (i--) {
     display();
     step_and_dump_wave();
