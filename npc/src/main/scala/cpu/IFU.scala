@@ -6,7 +6,8 @@ import chisel3.util._
 
 class MEM extends BlackBox with HasBlackBoxPath {
   val io = IO(new Bundle {
-    var clk  = Input(Clock())
+    var clock  = Input(Clock())
+    var reset  = Input(Bool())
     val addr = Input(UInt(64.W))
     val len  = Input(UInt(3.W))
     val data = Output(UInt(32.W))
@@ -24,7 +25,7 @@ class IFU extends Module {
     val inst = Output(UInt(32.W))
     val snpcOut = Output(UInt(64.W))
   })
-  val mem = withClockAndReset(clock, true.B){ Module(new MEM()) }
+  val mem = withClockAndReset(clock, reset){ Module(new MEM()) }
   // val reg = RegInit(UInt(64.W), "x80000000".U(64.W))
 
   mem.io.clk := clock
