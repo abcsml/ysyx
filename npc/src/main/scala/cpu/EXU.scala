@@ -33,8 +33,9 @@ class EXU extends Module {
     // inv.asUInt
   ))
   io.dnpcOut := MuxLookup(io.command.asUInt, io.dnpcIn, Array(
-    jal.asUInt ->   (io.pc + io.src1),
-    jalr.asUInt ->  ((io.src1 + io.src2) & (~1.U)),
+    jal.asUInt ->     (io.pc + io.src1),
+    jalr.asUInt ->    ((io.src1 + io.src2) & (~1.U)),
+    ebreak.asUInt ->  ("x87ffffff".U),               // over
   ))
 
   // debug
