@@ -59,6 +59,7 @@ static int parse_args(int argc, char *argv[]) {
 
 int main(int argc, char *argv[]) {
   printf("hello\n");
+  parse_args(argc, argv);
   long img_size = load_img();
   
   // while (true) {
