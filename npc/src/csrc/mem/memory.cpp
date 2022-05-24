@@ -10,6 +10,7 @@ static inline word_t host_read(void *addr, int len) {
     case 1: return *(uint8_t  *)addr;
     case 2: return *(uint16_t *)addr;
     case 4: return *(uint32_t *)addr;
+    case 8: return *(uint64_t *)addr;
   }
   assert(0);
 }
@@ -19,6 +20,7 @@ static inline void host_write(void *addr, int len, word_t data) {
     case 1: *(uint8_t  *)addr = data; return;
     case 2: *(uint16_t *)addr = data; return;
     case 4: *(uint32_t *)addr = data; return;
+    case 8: *(uint64_t *)addr = data; return;
   }
   assert(0);
 }
@@ -29,7 +31,7 @@ static inline bool in_pmem(paddr_t addr) {
 
 static void out_of_bound(paddr_t addr) {
   printf("out of bound addr: 0x%x\n");
-  // assert(0);
+  assert(0);
 }
 
 word_t pmem_read(paddr_t addr, int len) {
@@ -41,6 +43,7 @@ word_t pmem_read(paddr_t addr, int len) {
 void pmem_write(paddr_t addr, int len, word_t data) {
   if (in_pmem(addr) == false) { out_of_bound(addr); return; }
   host_write(guest_to_host(addr), len, data);
+  printf("wirte mem 0x%x 0x%x\n", addr, data);
 }
 
 // word_t vmem_read(paddr_t addr, int len) {

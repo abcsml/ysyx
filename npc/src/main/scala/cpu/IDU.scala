@@ -76,7 +76,7 @@ class IDU extends Module {
     BaseType.B.asUInt -> immB(io.inst),
   ))
   io.src1 := MuxLookup(baseType.asUInt, rs1, Array(
-    BaseType.I.asUInt -> regs(rs1),   // ?
+    BaseType.I.asUInt -> regs(rs1),
     BaseType.U.asUInt -> immU(io.inst),
     BaseType.S.asUInt -> regs(rs1),
     BaseType.J.asUInt -> immJ(io.inst),
@@ -97,12 +97,76 @@ class IDU extends Module {
       "b000".U -> addi,
       "b010".U -> slti,
       "b011".U -> sltiu,
+      "b100".U -> xori,
+      "b110".U -> ori,
+      "b111".U -> andi,
+      "b001".U -> Mux(io.inst(31,26) === "b000000".U, slli, inv),
+      "b101".U -> MuxLookup(io.inst(31,26), inv, Array(
+        "b000000".U -> srli,
+        "b010000".U -> srai,
+      )),
+    )),
+    Opcode.OP.asUInt -> MuxLookup(funct3, inv, Array(
+      "b000".U -> MuxLookup(funct7, inv, Array(
+        "b0000000".U -> add,
+        "b0100000".U -> sub,
+        "b0000001".U -> mul,
+      )),
+      "b001".U -> Mux(funct7 === "b0000000".U, sll, inv),
+      "b010".U -> Mux(funct7 === "b0000000".U, slt, inv),
+      "b011".U -> Mux(funct7 === "b0000000".U, sltu, inv),
+      "b101".U -> MuxLookup(funct7, inv, Array(
+        "b0000000".U -> srl,
+        "b0100000".U -> sra,
+      )),
+      "b100".U -> Mux(funct7 === "b0000000".U, xor, inv),
+      "b110".U -> Mux(funct7 === "b0000000".U, or, inv),
+      "b111".U -> Mux(funct7 === "b0000000".U, and, inv),
+    )),
+    Opcode.BRANCH.asUInt -> MuxLookup(funct3, inv, Array(
+      "b000".U -> beq,
+      "b001".U -> bne,
+      "b100".U -> blt,
+      "b101".U -> bge,
+      "b110".U -> bltu,
+      "b111".U -> bgeu,
+    )),
+    Opcode.LOAD.asUInt -> MuxLookup(funct3, inv, Array(
+      "b000".U -> lb,
+      "b001".U -> lh,
+      "b010".U -> lw,
+      "b011".U -> ld,
+      "b100".U -> lbu,
+      "b101".U -> lhu,
+      "b110".U -> lwu,
     )),
     Opcode.STORE.asUInt -> MuxLookup(funct3, inv, Array(
       "b000".U -> sb,
       "b001".U -> sh,
       "b010".U -> sw,
       "b011".U -> sd,
+    )),
+    Opcode.OP_IMM_32.asUInt -> MuxLookup(funct3, inv, Array(
+      "b000".U -> addiw,
+      "b001".U -> Mux(funct7 === "b0000000".U, slliw, inv),
+      "b101".U -> MuxLookup(funct7, inv, Array(
+        "b0000000".U -> srliw,
+        "b0100000".U -> sraiw,
+      )),
+    )),
+    Opcode.OP_32.asUInt -> MuxLookup(funct3, inv, Array(
+      "b000".U -> MuxLookup(funct7, inv, Array(
+        "b0000000".U -> addw,
+        "b0100000".U -> subw,
+        "b0000001".U -> mulw,
+      )),
+      "b001".U -> Mux(funct7 === "b0000000".U, sllw, inv),
+      "b100".U -> Mux(funct7 === "b0000001".U, divw, inv),
+      "b101".U -> MuxLookup(funct7, inv, Array(
+        "b0000000".U -> srlw,
+        "b0100000".U -> sraw,
+      )),
+      "b110".U -> Mux(funct7 === "b0000001".U, remw, inv),
     )),
     Opcode.LUI.asUInt -> lui,
     Opcode.AUIPC.asUInt -> auipc,

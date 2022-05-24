@@ -5,13 +5,22 @@
 #include "mem.h"
 
 void vmem_read(
+  svBit en,
+  svBit rw,
   const svBitVecVal* addr,
   const svBitVecVal* len,
-  svBitVecVal* data,
+  const svBitVecVal* dataIn,
+  svBitVecVal* dataOut,
   svBit reset
 ) {
-  if (reset != 1) {
-    *data = pmem_read(*addr, *len);
+  if (reset == 1 || en == 0) {
+    return;
   }
-  printf("%x,%x,0x%08x,%d\n", *addr, *len, *data, reset);
+  if (rw == 1) {
+    *dataOut = pmem_read(*addr, *len);
+  } else {
+    pmem_write(*addr, *len, *dataIn);
+    *dataOut = *dataIn;
+  }
+  // printf("%x,%x,0x%08x,%d\n", *addr, *len, *data, reset);
 }
