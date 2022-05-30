@@ -7,6 +7,7 @@ VerilatedContext* contextp = NULL;
 VerilatedVcdC* tfp = NULL;
 
 static VCPU* top;
+CPU_state cpu;
 
 // NPCState npc_state = { .state = NPC_STOP };
 
@@ -42,13 +43,29 @@ void sim_exit() {
 #define DISPLAY_REGS(i,j) printf("%s : 0x%08lx \t %s : 0x%08lx\n", regs[i], top->io_regs_##i, regs[j], top->io_regs_##j);
 void display() {
   printf("pc : 0x%lx \n", top->io_pc);
-  DISPLAY_REGS(0,1); DISPLAY_REGS(2,3); DISPLAY_REGS(4,5); DISPLAY_REGS(6,7);
-  DISPLAY_REGS(8,9); DISPLAY_REGS(10,11); DISPLAY_REGS(12,13); DISPLAY_REGS(14,15);
-  DISPLAY_REGS(16,17); DISPLAY_REGS(18,19); DISPLAY_REGS(20,21); DISPLAY_REGS(22,23);
-  DISPLAY_REGS(24,25); DISPLAY_REGS(26,27); DISPLAY_REGS(28,29); DISPLAY_REGS(30,31);
+  // DISPLAY_REGS(0,1); DISPLAY_REGS(2,3); DISPLAY_REGS(4,5); DISPLAY_REGS(6,7);
+  // DISPLAY_REGS(8,9); DISPLAY_REGS(10,11); DISPLAY_REGS(12,13); DISPLAY_REGS(14,15);
+  // DISPLAY_REGS(16,17); DISPLAY_REGS(18,19); DISPLAY_REGS(20,21); DISPLAY_REGS(22,23);
+  // DISPLAY_REGS(24,25); DISPLAY_REGS(26,27); DISPLAY_REGS(28,29); DISPLAY_REGS(30,31);
+  uint64_t *p_regs = &top->io_regs_0;
+    for (int i = 0; i < 32; i += 2) {
+      printf("%s : 0x%08lx \t %s : 0x%08lx\n", regs[i], p_regs[i], regs[i+1], p_regs[i+1]);
+    }
 }
 
-bool cpu_step() {   // false: over
+void cpu_exec(int n) {
+  for (int i = 0; i < n; i ++) {
+    step_and_dump_wave();
+    step_and_dump_wave();
+    cpu.pc = top->io_pc;
+    uint64_t *p_regs = &top->io_regs_0;
+    for (int j = 0; j < 32; j ++) {
+      cpu.gpr[i] = p_regs[i];
+    }
+  }
+}
+
+bool cpu_run() {   // false: over
   sim_init();
   // top->reset = 1;
   // top->eval();
@@ -61,8 +78,7 @@ bool cpu_step() {   // false: over
   int i = 18;
   while (top->io_pc != 0x87ffffff) {
     display();
-    step_and_dump_wave();
-    step_and_dump_wave();
+    cpu_exec(1);
     if (top->io_pc == 0x87fffff0) {
       printf("------- not impl --------\n");
       sim_exit();

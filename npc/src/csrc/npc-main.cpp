@@ -63,6 +63,6 @@ int main(int argc, char *argv[]) {
   long img_size = load_img();
   
   // while (true) {
-    cpu_step();
+    cpu_run();
   // }
 }

@@ -7,11 +7,17 @@
 
 #include "common.h"
 
+typedef struct {
+  word_t pc;
+  word_t gpr[32];
+} CPU_state;
+
 // void step_and_dump_wave();
 // void sim_init();
 // void sim_exit();
 
-bool cpu_step();
+extern CPU_state cpu;
+bool cpu_run();
 
 
 #endif
