@@ -1,5 +1,5 @@
 #include <dlfcn.h>
-#include "sim.h"
+#include "cpu.h"
 #include "mem.h"
 
 enum { DIFFTEST_TO_DUT, DIFFTEST_TO_REF };
@@ -12,6 +12,7 @@ void (*ref_difftest_raise_intr)(uint64_t NO) = NULL;
 static bool is_skip_ref = false;
 static int skip_dut_nr_inst = 0;
 
+#ifdef CONFIG_DIFFTEST
 void init_difftest(char *ref_so_file, long img_size, int port) {
   // printf("diff %s",ref_so_file);
   assert(ref_so_file != NULL);
@@ -38,11 +39,12 @@ void init_difftest(char *ref_so_file, long img_size, int port) {
   printf("Differential testing: %s", "ON");
   printf("The result of every instruction will be compared with %s. "
       "This will help you a lot for debugging, but also significantly reduce the performance. "
-      "If it is not necessary, you can turn it off in menuconfig.", ref_so_file);
+      "\n", ref_so_file);
 
   ref_difftest_init(0);
   ref_difftest_memcpy(CONFIG_MBASE, guest_to_host(CONFIG_MBASE), img_size, DIFFTEST_TO_REF);
   ref_difftest_regcpy(&cpu, DIFFTEST_TO_REF);
+  printf("ref cpu pc : %lx\n", cpu.pc);
 }
 
 static bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
@@ -75,7 +77,7 @@ void difftest_step(vaddr_t pc, vaddr_t npc) {
     }
     skip_dut_nr_inst --;
     if (skip_dut_nr_inst == 0)
-      printf("can not catch up with ref.pc = 0x%x at pc = 0x%x", ref_r.pc, pc);
+      printf("can not catch up with ref.pc = 0x%lx at pc = 0x%lx", ref_r.pc, pc);
     return;
   }
 
@@ -91,3 +93,6 @@ void difftest_step(vaddr_t pc, vaddr_t npc) {
 
   checkregs(&ref_r, pc);
 }
+#else
+void init_difftest(char *ref_so_file, long img_size, int port) { }
+#endif

@@ -14,6 +14,5 @@ class MEM extends BlackBox with HasBlackBoxPath {
     val dataIn = Input(UInt(64.W))
     val dataOut = Output(UInt(64.W))
   })
-  // val reg = Reg(Bool())
   addPath("./src/vsrc/MEM.v")
 }

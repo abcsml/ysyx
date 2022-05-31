@@ -1,15 +1,14 @@
-#include "sim.h"
+#include "cpu.h"
 #include "mem.h"
 #include <getopt.h>
 
+static char default_img_file[] = "/home/ad/ysyx-workbench/npc/src/test/dummy-riscv64-nemu.bin";
 static char *img_file = NULL;
 static char *diff_so_file = NULL;
 
 long load_img() {
   if (img_file == NULL) {
-    img_file = "/home/ad/ysyx-workbench/npc/src/test/dummy-riscv64-nemu.bin";
-    // printf("No image is given. Use the default build-in image.");
-    // return 4096; // built-in image size
+    img_file = default_img_file;
   }
 
   FILE *fp = fopen(img_file, "rb");
@@ -59,14 +58,14 @@ static int parse_args(int argc, char *argv[]) {
 }
 
 int main(int argc, char *argv[]) {
-  printf("hello\n");
+  printf("------ hello ----------\n");
   parse_args(argc, argv);
   long img_size = load_img();
   
   init_cpu();
 
   init_difftest(diff_so_file, img_size, 0);
-  // while (true) {
-    cpu_run();
-  // }
+
+  // run
+  cpu_run();
 }
