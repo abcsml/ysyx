@@ -1,4 +1,5 @@
 #include "mem.h"
+#include "cpu.h"
 
 static uint8_t pmem[CONFIG_MSIZE] = {};
 
@@ -30,20 +31,26 @@ static inline bool in_pmem(paddr_t addr) {
 }
 
 static void out_of_bound(paddr_t addr) {
-  printf("out of bound addr: 0x%x\n");
+  printf("out of bound addr: 0x%x\n", addr);
   assert(0);
 }
 
 word_t pmem_read(paddr_t addr, int len) {
   if (in_pmem(addr) == false) { out_of_bound(addr); return 0; }
   word_t ret = host_read(guest_to_host(addr), len);
+#ifdef CONFIG_MTRACE    // MTRACE
+  if (addr != cpu.pc)   // filter pc read
+    printf("READ  MEM 0x%08x: 0x%08lx\n", addr, ret);
+#endif
   return ret;
 }
 
 void pmem_write(paddr_t addr, int len, word_t data) {
   if (in_pmem(addr) == false) { out_of_bound(addr); return; }
   host_write(guest_to_host(addr), len, data);
-  printf("wirte mem 0x%x 0x%x\n", addr, data);
+#ifdef CONFIG_MTRACE
+  printf("WRITE MEM 0x%08x: 0x%08lx [len:%d]\n", addr, data, len);
+#endif
 }
 
 // word_t vmem_read(paddr_t addr, int len) {

@@ -10,5 +10,6 @@
 
 typedef uint32_t paddr_t;
 typedef uint64_t word_t;
+typedef word_t vaddr_t;
 
 #endif
