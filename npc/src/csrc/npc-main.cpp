@@ -3,6 +3,7 @@
 #include <getopt.h>
 
 static char *img_file = NULL;
+static char *diff_so_file = NULL;
 
 long load_img() {
   if (img_file == NULL) {
@@ -31,7 +32,7 @@ static int parse_args(int argc, char *argv[]) {
   const struct option table[] = {
     // {"batch"    , no_argument      , NULL, 'b'},
     // {"log"      , required_argument, NULL, 'l'},
-    // {"diff"     , required_argument, NULL, 'd'},
+    {"diff"     , required_argument, NULL, 'd'},
     // {"port"     , required_argument, NULL, 'p'},
     // {"help"     , no_argument      , NULL, 'h'},
     {0          , 0                , NULL,  0 },
@@ -42,13 +43,13 @@ static int parse_args(int argc, char *argv[]) {
       // case 'b': sdb_set_batch_mode(); break;
       // case 'p': sscanf(optarg, "%d", &difftest_port); break;
       // case 'l': log_file = optarg; break;
-      // case 'd': diff_so_file = optarg; break;
+      case 'd': diff_so_file = optarg; break;
       case 1: img_file = optarg; return 0;
       default:
         printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
         // printf("\t-b,--batch              run with batch mode\n");
         // printf("\t-l,--log=FILE           output log to FILE\n");
-        // printf("\t-d,--diff=REF_SO        run DiffTest with reference REF_SO\n");
+        printf("\t-d,--diff=REF_SO        run DiffTest with reference REF_SO\n");
         // printf("\t-p,--port=PORT          run DiffTest with port PORT\n");
         printf("\n");
         exit(0);
@@ -62,7 +63,10 @@ int main(int argc, char *argv[]) {
   parse_args(argc, argv);
   long img_size = load_img();
   
+  init_cpu();
+
+  init_difftest(diff_so_file, img_size, 0);
   // while (true) {
-    cpu_step();
+    cpu_run();
   // }
 }

@@ -148,17 +148,17 @@ config ITRACE_COND
 
 # ---------
 config MTRACE
-  depends on TRACE
+  depends on ITRACE
   bool "Enable memory trace"
   default y
 
 config FTRACE
-  depends on TRACE
+  depends on ITRACE
   bool "Enable function trace"
   default y
 
 config WATCHPOINT
-  depends on TRACE
+  depends on ITRACE
   bool "Enable watch point tracer"
   default y
 

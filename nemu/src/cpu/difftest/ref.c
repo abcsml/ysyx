@@ -25,12 +25,12 @@ void difftest_regcpy(void *dut, bool direction) {
   CPU_state *ref_cpu = dut;
   if (direction == DIFFTEST_TO_REF) {
     cpu.pc = ref_cpu->pc;
-    for (int i = 0;i < 32;i += 2) {
+    for (int i = 0;i < 32;i += 1) {
       cpu.gpr[i] = ref_cpu->gpr[i];
     }
   } else if (direction == DIFFTEST_TO_DUT) {
     ref_cpu->pc = cpu.pc;
-    for (int i = 0;i < 32;i += 2) {
+    for (int i = 0;i < 32;i += 1) {
       ref_cpu->gpr[i] = cpu.gpr[i];
     }
   }
