@@ -123,5 +123,6 @@ class EXU extends Module {
   // Command.all.foreach
   // println(Command(io.command.asUInt))
   // println(Command.all(2))
+  printf("mem %x\n",mem.io.dataOut)
   printf("command %x %x %x\n",io.regsOut(io.dest),io.src1,io.src2)
 }
