@@ -69,7 +69,7 @@ static void cpu_exec_once() {
 // }
 
 bool cpu_run() {   // false: over
-  int i = 1010;
+  int i = 1700;
   while (cpu.pc != 0x87ffffff && i--) {
     display();
     word_t last_pc = top->io_pc;
