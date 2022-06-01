@@ -57,7 +57,7 @@ class EXU extends Module {
     jal.asUInt    -> (io.pc + 4.U),
     jalr.asUInt   -> (io.pc + 4.U),
 
-    addi.asUInt   -> (io.src1 + io.src2 + 1.U),
+    addi.asUInt   -> (io.src1 + io.src2),
     slti.asUInt   -> Mux(io.src1.asSInt < io.src2.asSInt, 1.U, 0.U),
     sltiu.asUInt  -> Mux(io.src1 < io.src2, 1.U, 0.U),
     xori.asUInt   -> (io.src1 ^ io.src2),
