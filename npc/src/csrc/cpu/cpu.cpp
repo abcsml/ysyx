@@ -69,7 +69,8 @@ void cpu_exec(int n) {
 }
 
 bool cpu_run() {   // false: over
-  while (cpu.pc != 0x87ffffff) {
+  int i = 10;
+  while (cpu.pc != 0x87ffffff && i--) {
     display();
     word_t last_pc = top->io_pc;
     cpu_exec_once();
