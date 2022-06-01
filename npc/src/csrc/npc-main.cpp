@@ -30,7 +30,7 @@ long load_img() {
 static int parse_args(int argc, char *argv[]) {
   const struct option table[] = {
     // {"batch"    , no_argument      , NULL, 'b'},
-    // {"log"      , required_argument, NULL, 'l'},
+    {"log"      , required_argument, NULL, 'l'},
     {"diff"     , required_argument, NULL, 'd'},
     // {"port"     , required_argument, NULL, 'p'},
     // {"help"     , no_argument      , NULL, 'h'},
@@ -47,7 +47,7 @@ static int parse_args(int argc, char *argv[]) {
       default:
         printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
         // printf("\t-b,--batch              run with batch mode\n");
-        // printf("\t-l,--log=FILE           output log to FILE\n");
+        printf("\t-l,--log=FILE           output log to FILE\n");
         printf("\t-d,--diff=REF_SO        run DiffTest with reference REF_SO\n");
         // printf("\t-p,--port=PORT          run DiffTest with port PORT\n");
         printf("\n");

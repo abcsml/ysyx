@@ -38,7 +38,7 @@ void display() {
   printf("pc : 0x%lx \n", top->io_pc);
   word_t *p_regs = &top->io_regs_0;
     for (int i = 0; i < 32; i += 2) {
-      printf("%s : 0x%lx \t %s : 0x%lx\n", regs[i], p_regs[i], regs[i+1], p_regs[i+1]);
+      printf("%s : 0x%08lx \t %s : 0x%08lx\n", regs[i], p_regs[i], regs[i+1], p_regs[i+1]);
     }
 }
 
