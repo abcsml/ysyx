@@ -69,8 +69,8 @@ class EXU extends Module {
 
     addiw.asUInt  -> sext((io.src1 + io.src2), 32),
     slliw.asUInt  -> sext((io.src1(31,0) << io.src2(4,0)), 32),
-    srliw.asUInt  -> sext((io.src1(31,0) << io.src2(4,0)), 32),
-    sraiw.asUInt  -> sext((io.src1(31,0).asSInt << io.src2(4,0)).asUInt, 32),
+    srliw.asUInt  -> sext((io.src1(31,0) >> io.src2(4,0)), 32),
+    sraiw.asUInt  -> sext((io.src1(31,0).asSInt >> io.src2(4,0)).asUInt, 32),
 
     add.asUInt    -> (io.src1 + io.src2),
     sub.asUInt    -> (io.src1 - io.src2),
@@ -90,8 +90,8 @@ class EXU extends Module {
     srlw.asUInt   -> sext((io.src1(31,0) >> io.src2(4,0)), 32),
     sraw.asUInt   -> sext((io.src1(31,0).asSInt >> io.src2(4,0)).asUInt, 32),
     mulw.asUInt   -> sext((io.src1(31,0) * io.src2(31,0)), 32),
-    // divw.asUInt   -> sext((io.src1(31,0).asSInt / io.src2(31,0).asSInt).asUInt, 32),
-    // remw.asUInt   -> sext((io.src1(31,0).asSInt % io.src2(31,0).asSInt).asUInt, 32),
+    divw.asUInt   -> sext((io.src1(31,0).asSInt / io.src2(31,0).asSInt).asUInt, 32),  //??
+    remw.asUInt   -> sext((io.src1(31,0).asSInt % io.src2(31,0).asSInt).asUInt, 32),
 
     lb.asUInt     -> sext(mem.io.dataOut, 8),
     lh.asUInt     -> sext(mem.io.dataOut, 16),
@@ -123,5 +123,5 @@ class EXU extends Module {
   // Command.all.foreach
   // println(Command(io.command.asUInt))
   // println(Command.all(2))
-  printf("command %x %x %x\n",io.regsOut(io.dest),io.src1,io.src2)
+  // printf("command %x %x %x\n",io.regsOut(io.dest),io.src1,io.src2)
 }

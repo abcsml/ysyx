@@ -4,6 +4,8 @@
 #include "VMEM__Dpi.h"
 #include "mem.h"
 
+word_t data;
+
 void vmem_read(
   svBit en,
   svBit rw,
@@ -17,10 +19,14 @@ void vmem_read(
     return;
   }
   if (rw == 1) {
-    *dataOut = pmem_read(*addr, *len);
+    data = pmem_read(*addr, *len);
+    *dataOut = data;
+    *(dataOut + 1) = data >> 32;
   } else {
-    pmem_write(*addr, *len, *dataIn);
+    data = *dataIn | (*(dataIn + 1) << 32);
+    pmem_write(*addr | (*(addr + 1) << 32), *len, data);
     *dataOut = *dataIn;
+    *(dataOut + 1) = *(dataIn + 1);
   }
-  // printf("%x,%x,0x%08x,%d\n", *addr, *len, *data, reset);
+  // printf("%lx,%x,0x%lx,%d\n", *addr, *len, *dataOut, reset);
 }

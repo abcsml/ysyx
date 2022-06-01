@@ -3,7 +3,7 @@ TOP = CPU
 CPP_PATH = $(NPC_HOME)/src/csrc
 INC_PATH = $(NPC_HOME)/src/csrc/include
 
-CONFIG_MTRACE = y
+# CONFIG_MTRACE = y
 CONFIG_DIFFTEST = y
 
 
@@ -16,7 +16,7 @@ ifdef CONFIG_DIFFTEST
 endif
 LDFLAGS = -lpthread -lSDL2 -fsanitize=address -ldl
 
-SIMFLAGS = $(ALL)
+SIMFLAGS =
 ifdef CONFIG_DIFFTEST
 	SIMFLAGS += -d $(NEMU_HOME)/build/riscv64-nemu-interpreter-so
 endif
@@ -50,6 +50,9 @@ sim: $(OBJ_DIR)/V$(TOP)
 	./build/obj_dir/V$(TOP) $(SIMFLAGS)
 	@# $(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	@echo "sim over"
+
+run: $(OBJ_DIR)/V$(TOP)
+	./build/obj_dir/V$(TOP) $(SIMFLAGS) $(ARGS) $(IMG)
 
 clean-obj:
 	-rm -rf $(OBJ_DIR)

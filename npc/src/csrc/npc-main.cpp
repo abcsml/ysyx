@@ -10,7 +10,7 @@ long load_img() {
   if (img_file == NULL) {
     img_file = default_img_file;
   }
-
+  // printf("img: %s\n", img_file);
   FILE *fp = fopen(img_file, "rb");
   assert(fp != NULL);
 
@@ -30,7 +30,7 @@ long load_img() {
 static int parse_args(int argc, char *argv[]) {
   const struct option table[] = {
     // {"batch"    , no_argument      , NULL, 'b'},
-    // {"log"      , required_argument, NULL, 'l'},
+    {"log"      , required_argument, NULL, 'l'},
     {"diff"     , required_argument, NULL, 'd'},
     // {"port"     , required_argument, NULL, 'p'},
     // {"help"     , no_argument      , NULL, 'h'},
@@ -47,7 +47,7 @@ static int parse_args(int argc, char *argv[]) {
       default:
         printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
         // printf("\t-b,--batch              run with batch mode\n");
-        // printf("\t-l,--log=FILE           output log to FILE\n");
+        printf("\t-l,--log=FILE           output log to FILE\n");
         printf("\t-d,--diff=REF_SO        run DiffTest with reference REF_SO\n");
         // printf("\t-p,--port=PORT          run DiffTest with port PORT\n");
         printf("\n");
@@ -67,5 +67,6 @@ int main(int argc, char *argv[]) {
   init_difftest(diff_so_file, img_size, 0);
 
   // run
-  cpu_run();
+  if (cpu_run()) return 0;
+  else return 123;
 }

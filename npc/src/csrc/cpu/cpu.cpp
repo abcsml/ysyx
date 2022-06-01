@@ -36,7 +36,7 @@ static void sim_exit() {
 
 void display() {
   printf("pc : 0x%lx \n", top->io_pc);
-  uint64_t *p_regs = &top->io_regs_0;
+  word_t *p_regs = &top->io_regs_0;
     for (int i = 0; i < 32; i += 2) {
       printf("%s : 0x%08lx \t %s : 0x%08lx\n", regs[i], p_regs[i], regs[i+1], p_regs[i+1]);
     }
@@ -46,31 +46,37 @@ static void cpu_exec_once() {
   step_and_dump_wave();
   step_and_dump_wave();
   cpu.pc = top->io_pc;
-  uint64_t *p_regs = &top->io_regs_0;
+  word_t *p_regs = &top->io_regs_0;
   for (int i = 0; i < 32; i ++) {
     cpu.gpr[i] = p_regs[i];
   }
 }
 
-void cpu_exec(int n) {
-  for (int i = 0; i < n; i ++) {
-    word_t pc = top->io_pc;
-    step_and_dump_wave();
-    step_and_dump_wave();
-    cpu.pc = top->io_pc;
-    uint64_t *p_regs = &top->io_regs_0;
-    for (int i = 0; i < 32; i ++) {
-      cpu.gpr[i] = p_regs[i];
-    }
-#ifdef CONFIG_DIFFTEST
-    difftest_step(pc, cpu.pc);
-#endif
-  }
-}
+// void cpu_exec(int n) {
+//   for (int i = 0; i < n; i ++) {
+//     word_t pc = top->io_pc;
+//     step_and_dump_wave();
+//     step_and_dump_wave();
+//     cpu.pc = top->io_pc;
+//     uint64_t *p_regs = &top->io_regs_0;
+//     for (int i = 0; i < 32; i ++) {
+//       cpu.gpr[i] = p_regs[i];
+//     }
+// #ifdef CONFIG_DIFFTEST
+//     difftest_step(pc, cpu.pc);
+// #endif
+//   }
+// }
+
+// void npc_trap(int code) {
+//   printf("catch you %d",code);
+//   cpu.pc = 0x87ffffff;
+// }
 
 bool cpu_run() {   // false: over
-  while (cpu.pc != 0x87ffffff) {
-    display();
+  int i = -1;
+  while (cpu.pc != 0x87ffffff && i--) {
+    // display();
     word_t last_pc = top->io_pc;
     cpu_exec_once();
 #ifdef CONFIG_DIFFTEST
@@ -93,6 +99,7 @@ bool cpu_run() {   // false: over
   sim_exit();
   if (cpu.gpr[10] == 0) {
     printf("--------- good trap -----------\n");
+    return true;
   } else {
     printf("--------------- bad trap ------------------\n");
   }
