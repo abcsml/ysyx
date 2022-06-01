@@ -69,8 +69,8 @@ class EXU extends Module {
 
     addiw.asUInt  -> sext((io.src1 + io.src2), 32),
     slliw.asUInt  -> sext((io.src1(31,0) << io.src2(4,0)), 32),
-    srliw.asUInt  -> sext((io.src1(31,0) << io.src2(4,0)), 32),
-    sraiw.asUInt  -> sext((io.src1(31,0).asSInt << io.src2(4,0)).asUInt, 32),
+    srliw.asUInt  -> sext((io.src1(31,0) >> io.src2(4,0)), 32),
+    sraiw.asUInt  -> sext((io.src1(31,0).asSInt >> io.src2(4,0)).asUInt, 32),
 
     add.asUInt    -> (io.src1 + io.src2),
     sub.asUInt    -> (io.src1 - io.src2),
