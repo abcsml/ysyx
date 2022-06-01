@@ -33,7 +33,7 @@ checkformat:
 clean:
 	-rm -rf $(BUILD_DIR)
 
-.PHONY: test help compile bsp reformat checkformat clean
+.PHONY: test verilog help compile bsp reformat checkformat clean
 
 include $(NPC_HOME)/scripts/sim.mk
 

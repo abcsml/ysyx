@@ -10,7 +10,7 @@ long load_img() {
   if (img_file == NULL) {
     img_file = default_img_file;
   }
-
+  // printf("img: %s\n", img_file);
   FILE *fp = fopen(img_file, "rb");
   assert(fp != NULL);
 
