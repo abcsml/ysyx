@@ -90,7 +90,7 @@ class EXU extends Module {
     srlw.asUInt   -> sext((io.src1(31,0) >> io.src2(4,0)), 32),
     sraw.asUInt   -> sext((io.src1(31,0).asSInt >> io.src2(4,0)).asUInt, 32),
     mulw.asUInt   -> sext((io.src1(31,0) * io.src2(31,0)), 32),
-    divw.asUInt   -> sext((io.src1(31,0).asSInt / io.src2(31,0).asSInt)(31,0).asUInt, 32),  //??
+    divw.asUInt   -> sext((io.src1(31,0).asSInt / io.src2(31,0).asSInt)(31,0).asUInt, 33),  //??
     remw.asUInt   -> sext((io.src1(31,0).asSInt % io.src2(31,0).asSInt).asUInt, 32),
 
     lb.asUInt     -> sext(mem.io.dataOut, 8),
