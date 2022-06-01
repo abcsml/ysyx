@@ -68,10 +68,15 @@ static void cpu_exec_once() {
 //   }
 // }
 
+// void npc_trap(int code) {
+//   printf("catch you %d",code);
+//   cpu.pc = 0x87ffffff;
+// }
+
 bool cpu_run() {   // false: over
-  int i = 1700;
+  int i = -1;
   while (cpu.pc != 0x87ffffff && i--) {
-    display();
+    // display();
     word_t last_pc = top->io_pc;
     cpu_exec_once();
 #ifdef CONFIG_DIFFTEST
@@ -94,6 +99,7 @@ bool cpu_run() {   // false: over
   sim_exit();
   if (cpu.gpr[10] == 0) {
     printf("--------- good trap -----------\n");
+    return true;
   } else {
     printf("--------------- bad trap ------------------\n");
   }

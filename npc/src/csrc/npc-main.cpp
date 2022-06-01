@@ -67,5 +67,6 @@ int main(int argc, char *argv[]) {
   init_difftest(diff_so_file, img_size, 0);
 
   // run
-  cpu_run();
+  if (cpu_run()) return 0;
+  else return 123;
 }

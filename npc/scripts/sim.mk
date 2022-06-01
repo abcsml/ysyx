@@ -3,7 +3,7 @@ TOP = CPU
 CPP_PATH = $(NPC_HOME)/src/csrc
 INC_PATH = $(NPC_HOME)/src/csrc/include
 
-CONFIG_MTRACE = y
+# CONFIG_MTRACE = y
 CONFIG_DIFFTEST = y
 
 
