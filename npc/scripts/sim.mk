@@ -16,7 +16,7 @@ ifdef CONFIG_DIFFTEST
 endif
 LDFLAGS = -lpthread -lSDL2 -fsanitize=address -ldl
 
-# SIMFLAGS = $(ALL)
+SIMFLAGS =
 ifdef CONFIG_DIFFTEST
 	SIMFLAGS += -d $(NEMU_HOME)/build/riscv64-nemu-interpreter-so
 endif
