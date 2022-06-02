@@ -15,10 +15,10 @@ static uint8_t fstack[256];    // stack record, use funcs index
 static int point = 0;
 
 void init_ftrace(const char *elf_file) {
-  printf("%s\n", elf_file);
 #ifndef CONFIG_FTRACE
   return;
 #endif
+  printf("elf got:%s\n", elf_file);
   if (elf_file == NULL)
     assert(0);
 
