@@ -7,11 +7,19 @@
 
 int printf(const char *fmt, ...) {
   char out[256];
-  int n = sprintf(out, fmt);
+  // int n = sprintf(out, fmt);
+  // for (int i = 0; i < 256 && out[i] != '\0'; i ++) {
+  //   putch(out[i]);
+  // }
+  // return n;
+  va_list ap;
+  va_start(ap, fmt);
+  int ret = vsprintf(out, fmt, ap);
   for (int i = 0; i < 256 && out[i] != '\0'; i ++) {
     putch(out[i]);
   }
-  return n;
+  va_end(ap);
+  return ret;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
