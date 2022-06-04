@@ -79,7 +79,7 @@ int printf(const char *fmt, ...) {
   va_list ap;
   va_start(ap, fmt);
   int ret = vsprintf(out, fmt, ap);
-  for (int i = 0; i < 256 && out[i] != '\0'; i ++) {
+  for (int i = 0; i < MAX_STR_LEN && out[i] != '\0'; i ++) {
     putch(out[i]);
   }
   va_end(ap);
@@ -88,18 +88,18 @@ int printf(const char *fmt, ...) {
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
   int i = MAX_STR_LEN;
-  const char *fmtl = fmt;
+  // const char *fmtl = fmt;
 
-  while (*fmtl != '\0' && i --) {
-    if (*fmtl == '%') {
-      fmtl++;
-      fmtl2str(out, fmtl, ap);
+  while (*fmt != '\0' && i --) {
+    if (*fmt == '%') {
+      fmt++;
+      fmtl2str(out, fmt, ap);
     }
-    strncpy(out, fmtl, 1);
+    strncpy(out, fmt, 1);
     out ++;
-    fmtl ++;
+    fmt ++;
   }
-  strncpy(out, fmtl, 1);
+  strncpy(out, fmt, 1);
   return 0;
 }
 
