@@ -13,7 +13,9 @@ typedef struct {
   char specifier;
 } fmt_label;
 
-static void fmtl2str(char *out, const char *fmtl, va_list ap) {
+static int fmtl2str(char *out, const char *fmtl, va_list ap) {
+  // char *fmtl = **fmt;
+  int fmt_len = 0;
   char buf[65];
   memset(buf, 0, 65);
   char *s;
@@ -25,11 +27,13 @@ static void fmtl2str(char *out, const char *fmtl, va_list ap) {
   if (*fmtl == '0') {
     l.flags = '0';
     fmtl ++;
+    fmt_len ++;
   }
   l.width = atoi(fmtl);
   for (int i = 0; i < 2; i ++) {      // max width 99
     if (*fmtl > '0' && *fmtl < '9') {
       fmtl ++;
+      fmt_len ++;
     }
   }
   switch (*fmtl) {
@@ -67,6 +71,8 @@ static void fmtl2str(char *out, const char *fmtl, va_list ap) {
     break;
   }
   fmtl ++;
+  fmt_len ++;
+  return fmt_len;
 }
 
 int printf(const char *fmt, ...) {
@@ -93,7 +99,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   while (*fmt != '\0' && i --) {
     if (*fmt == '%') {
       fmt++;
-      fmtl2str(out, fmt, ap);
+      fmt += fmtl2str(out, fmt, ap);
     }
     strncpy(out, fmt, 1);
     out ++;
