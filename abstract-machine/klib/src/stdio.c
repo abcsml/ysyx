@@ -32,7 +32,7 @@ static int fmtl2str(char *out, const char *fmtl, va_list *ap) {
   }
   l.width = atoi(fmtl);
   for (int i = 0; i < 2; i ++) {      // max width 99
-    if (*fmtl > '0' && *fmtl < '9') {
+    if (*fmtl >= '0' && *fmtl < '9') {
       fmtl ++;
       fmt_len ++;
     }
