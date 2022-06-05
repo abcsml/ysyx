@@ -13,7 +13,7 @@ typedef struct {
   char specifier;
 } fmt_label;
 
-static int fmtl2str(char *out, const char *fmtl, va_list ap) {
+static int fmtl2str(char *out, const char *fmtl, va_list *ap) {
   // char *fmtl = **fmt;
   int fmt_len = 0;
   // int out_len = 0;
@@ -39,13 +39,13 @@ static int fmtl2str(char *out, const char *fmtl, va_list ap) {
   }
   switch (*fmtl) {
   case 's':
-    s = va_arg(ap, char *);
+    s = va_arg(*ap, char *);
     int sl = strlen(s);
     strncpy(out, s, sl);
     out += sl;
     break;
   case 'd':
-    d = va_arg(ap, int);
+    d = va_arg(*ap, int);
     // char *d_buf = buf;
 
     // int neg = 0;
@@ -101,7 +101,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   while (*fmt != '\0' && i --) {
     if (*fmt == '%') {
       fmt++;
-      fmt += fmtl2str(buf, fmt, ap);
+      fmt += fmtl2str(buf, fmt, &ap);
       strncpy(out, buf, strlen(buf));
       out += strlen(buf);
     } else {
