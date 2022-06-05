@@ -38,7 +38,7 @@ void *malloc(size_t size) {
 #if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
   if (!addr) addr = heap.start;
   void *a = addr;
-  addr += 2;
+  addr += size+32;
   // panic("Not implemented");
   printf("%d,%d\n", a, size);
 #endif
