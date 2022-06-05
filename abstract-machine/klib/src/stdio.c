@@ -125,12 +125,14 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       strncpy(out, buf, strlen(buf));
       out += strlen(buf);
     } else {
-      strncpy(out, fmt, 1);
+      *out = *fmt;
+      // strncpy(out, fmt, 1);
       out ++;
       fmt ++;
     }
   }
-  strncpy(out, fmt, 1);
+  *out = *fmt;
+  // strncpy(out, fmt, 1);
   return 0;
 }
 
