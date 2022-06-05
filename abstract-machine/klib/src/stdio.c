@@ -68,12 +68,12 @@ static int fmtl2str(char *out, const char *fmtl, va_list ap) {
       d /= 10;
     }
     out += d_len;
-    *out = '\0';
     break;
   default:
     assert(0);
     break;
   }
+  *out = '\0';
   fmtl ++;
   fmt_len ++;
   return fmt_len;
@@ -104,10 +104,11 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       fmt += fmtl2str(buf, fmt, ap);
       strncpy(out, buf, strlen(buf));
       out += strlen(buf);
+    } else {
+      strncpy(out, fmt, 1);
+      out ++;
+      fmt ++;
     }
-    strncpy(out, fmt, 1);
-    out ++;
-    fmt ++;
   }
   strncpy(out, fmt, 1);
   return 0;
