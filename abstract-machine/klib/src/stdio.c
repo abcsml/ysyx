@@ -52,6 +52,7 @@ static int fmtl2str(char *out, const char *fmtl, va_list *ap) {
     if (d < 0) {
       *out = '-';
       out++;
+      d = -d;
     }
 
     int d_len = 1;
