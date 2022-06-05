@@ -40,6 +40,7 @@ void *malloc(size_t size) {
   void *a = addr;
   addr += size;
   // panic("Not implemented");
+  printf("%d,%d\n", a, size);
 #endif
   return a;
 }
