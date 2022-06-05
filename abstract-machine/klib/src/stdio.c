@@ -95,7 +95,7 @@ int printf(const char *fmt, ...) {
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
   int i = MAX_STR_LEN;
-  char buf[MAX_STR_LEN];
+  char buf[MAX_STR_LEN/2];
   // int fmt_len = 0;
   // const char *fmtl = fmt;
 
