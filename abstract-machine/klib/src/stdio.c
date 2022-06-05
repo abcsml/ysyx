@@ -102,7 +102,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     if (*fmt == '%') {
       fmt++;
       fmt += fmtl2str(buf, fmt, ap);
-      strcpy(out, buf);
+      strncpy(out, buf, strlen(buf));
       out += strlen(buf);
     }
     strncpy(out, fmt, 1);
