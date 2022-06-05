@@ -5,17 +5,107 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
+#define MAX_STR_LEN 256
+
+typedef struct {
+  char flags;
+  uint8_t width;
+  char specifier;
+} fmt_label;
+
+static int fmtl2str(char *out, const char *fmtl, va_list *ap) {
+  // char *fmtl = **fmt;
+  int fmt_len = 0;
+  // int out_len = 0;
+  // char buf[65];
+  // memset(buf, 0, 65);
+  char *s;
+  int d;
+  int d_len;
+  int d_var;
+
+  fmt_label l;
+  l.flags = ' ';
+  l.width = 0;
+  if (*fmtl == '0') {
+    l.flags = '0';
+    fmtl ++;
+    fmt_len ++;
+  }
+  l.width = atoi(fmtl);
+  for (int i = 0; i < 2; i ++) {      // max width 99
+    if (*fmtl >= '0' && *fmtl < '9') {
+      fmtl ++;
+      fmt_len ++;
+    }
+  }
+  switch (*fmtl) {
+  case 's':
+    s = va_arg(*ap, char *);
+    int sl = strlen(s);
+    strncpy(out, s, sl);
+    out += sl;
+    break;
+  case 'd':
+    d = va_arg(*ap, int);
+    // char *d_buf = buf;
+
+    // int neg = 0;
+    if (d < 0) {
+      *out = '-';
+      out++;
+      d = -d;
+    }
+
+    d_len = 1;
+    d_var = d/10;
+    while (d_var != 0) { d_var /= 10; d_len ++; }
+    
+    for (int i = 0; i < (l.width - d_len); i ++) {
+      *out = l.flags;
+      out ++;
+    }
+
+    for (int i = 0 ;i < d_len; i++) {
+      out[d_len - 1 - i] = d%10+'0';
+      d /= 10;
+    }
+    out += d_len;
+    break;
+  case 'u':case 'x':case 'l':
+    d = va_arg(*ap, uint32_t);
+    d_len = 1;
+    d_var = d/10;
+    while (d_var != 0) { d_var /= 10; d_len ++; }
+    
+    for (int i = 0; i < (l.width - d_len); i ++) {
+      *out = l.flags;
+      out ++;
+    }
+
+    for (int i = 0 ;i < d_len; i++) {
+      out[d_len - 1 - i] = d%10+'0';
+      d /= 10;
+    }
+    out += d_len;
+    break;
+  default:
+    assert(0);
+    break;
+  }
+  *out = '\0';
+  fmtl ++;
+  fmt_len ++;
+  return fmt_len;
+}
+
 int printf(const char *fmt, ...) {
-  char out[256];
-  // int n = sprintf(out, fmt);
-  // for (int i = 0; i < 256 && out[i] != '\0'; i ++) {
-  //   putch(out[i]);
-  // }
-  // return n;
+  char out[MAX_STR_LEN];
+  
   va_list ap;
   va_start(ap, fmt);
   int ret = vsprintf(out, fmt, ap);
-  for (int i = 0; i < 256 && out[i] != '\0'; i ++) {
+  for (int i = 0; i < MAX_STR_LEN && out[i] != '\0'; i ++) {
     putch(out[i]);
   }
   va_end(ap);
@@ -23,50 +113,26 @@ int printf(const char *fmt, ...) {
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
-  // char *head = out;
-  // char *p = out;
+  int i = MAX_STR_LEN;
+  char buf[MAX_STR_LEN/2];
+  // int fmt_len = 0;
+  // const char *fmtl = fmt;
 
-  char *s;
-  int n;
-
-  char buf[65];
-  memset(buf, 0, sizeof(buf));
-
-  while (*fmt != '\0') {
+  while (*fmt != '\0' && i --) {
     if (*fmt == '%') {
       fmt++;
-      switch (*fmt) {
-      case 's':
-        s = va_arg(ap, char *);
-        strncpy(out, s, strlen(s));
-        out += strlen(s);
-        break;
-      case 'd':
-        n = va_arg(ap, int);
-        int n_len = 1;
-        int n_var = n/10;
-        while (n_var != 0) {
-          n_var /= 10;
-          n_len ++;
-        }
-        for (int i = 0 ;i < n_len; i++) {
-          buf[n_len - 1 - i] = n%10+'0';
-          n /= 10;
-        }
-        strncpy(out, buf, n_len);
-        out += n_len;
-        break;
-      default:
-        assert(0);
-        break;
-      }
+      fmt += fmtl2str(buf, fmt, &ap);
+      strncpy(out, buf, strlen(buf));
+      out += strlen(buf);
     } else {
-      strncpy(out, fmt, 1);
+      *out = *fmt;
+      // strncpy(out, fmt, 1);
       out ++;
+      fmt ++;
     }
-    fmt ++;
   }
-  strncpy(out, fmt, 1);
+  *out = *fmt;
+  // strncpy(out, fmt, 1);
   return 0;
 }
 
