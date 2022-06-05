@@ -21,6 +21,8 @@ static int fmtl2str(char *out, const char *fmtl, va_list *ap) {
   // memset(buf, 0, 65);
   char *s;
   int d;
+  int d_len;
+  int d_var;
 
   fmt_label l;
   l.flags = ' ';
@@ -55,8 +57,25 @@ static int fmtl2str(char *out, const char *fmtl, va_list *ap) {
       d = -d;
     }
 
-    int d_len = 1;
-    int d_var = d/10;
+    d_len = 1;
+    d_var = d/10;
+    while (d_var != 0) { d_var /= 10; d_len ++; }
+    
+    for (int i = 0; i < (l.width - d_len); i ++) {
+      *out = l.flags;
+      out ++;
+    }
+
+    for (int i = 0 ;i < d_len; i++) {
+      out[d_len - 1 - i] = d%10+'0';
+      d /= 10;
+    }
+    out += d_len;
+    break;
+  case 'u':case 'x':case 'l':
+    d = va_arg(*ap, uint32_t);
+    d_len = 1;
+    d_var = d/10;
     while (d_var != 0) { d_var /= 10; d_len ++; }
     
     for (int i = 0; i < (l.width - d_len); i ++) {
