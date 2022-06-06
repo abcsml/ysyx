@@ -14,8 +14,8 @@ void __am_gpu_init() {
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
-  w = inl(VGACTL_ADDR + 2);
-  h = inl(VGACTL_ADDR);
+  w = inw(VGACTL_ADDR + 2);
+  h = inw(VGACTL_ADDR);
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
     .width = w, .height = h,
@@ -27,7 +27,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   uint32_t *p = ctl->pixels;
   for (int i = ctl->y; i < ctl->y + ctl->h; i ++) {
     for (int j = ctl->x; j < ctl-> x + ctl->w; j ++) {
-      outl(FB_ADDR + (i+1-1)*w + j, *p);
+      outl(FB_ADDR + (i-1)*w + j, *p);
       p ++;
     }
   }
