@@ -3,8 +3,8 @@
 
 #define SYNC_ADDR (VGACTL_ADDR + 4)
 
-static int w;
-static int h;
+static uint32_t w;
+static uint32_t h;
 
 void __am_gpu_init() {
   // int i;
