@@ -58,7 +58,20 @@ static inline void update_screen() {
 void vga_update_screen() {
   // TODO: call `update_screen()` when the sync register is non-zero,
   // then zero out the sync register
+  uint32_t sync = vgactl_port_base[1];
+  if (sync == 1) {
+    update_screen();
+    vgactl_port_base[1] = 0;
+  }
 }
+
+// void fb_vmem_handler(uint32_t offset, int len, bool is_write) {
+//   // if (offset != 4 || len != 32 || is_write != true) {
+//   //   printf("?????\n");
+//   //   assert(0);
+//   // }
+//   printf("handler: %d,%d,%d\n",offset,len,is_write);
+// }
 
 void init_vga() {
   vgactl_port_base = (uint32_t *)new_space(8);
